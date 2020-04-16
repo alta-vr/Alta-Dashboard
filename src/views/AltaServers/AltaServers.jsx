@@ -49,6 +49,10 @@ class AltaServer extends React.Component {
     )).catch(e => console.log("error: " +e));
   }
 
+  goToServerInfo = serverId => {
+    Servers.getFavorites();
+  }
+
   componentDidMount(){
     console.log("mounted");
     this.getServers()
@@ -109,7 +113,7 @@ class AltaServer extends React.Component {
           <TableBody>
             {
               this.state.servers.map(server => 
-                <TableRow >
+                <TableRow onClick={this.goToServerInfo(server[fields.label])}>
                     {fields.map(field => <TableCell>{server[field.name]}</TableCell>)}
                 </TableRow>
             )}
