@@ -102,7 +102,7 @@ class AltaServer extends React.Component {
             <TableRow>
               {fields.map(field => {
                 return (
-                  <TableCell
+                  <TableCell key={field.name}
                   >
                     {field.label}
                   </TableCell>
@@ -113,8 +113,8 @@ class AltaServer extends React.Component {
           <TableBody>
             {
               this.state.servers.map(server => 
-                <TableRow onClick={this.goToServerInfo(server[fields.label])}>
-                    {fields.map(field => <TableCell>{server[field.name]}</TableCell>)}
+                <TableRow key={server.id} onClick={this.goToServerInfo(server[fields.label])}>
+                    {fields.map(field => <TableCell key={field.name}>{server[field.name]}</TableCell>)}
                 </TableRow>
             )}
             <TableRow>
