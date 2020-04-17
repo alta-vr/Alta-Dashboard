@@ -7,27 +7,29 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-export default function DropDownMenu ({ listNames, handleChange }) {
-    const [list, setList] = useState(listNames);
+export default function DropDownMenu ({ values, handleChange }) {
+    const [current, setCurrent] = useState(values[0]);
 
     useEffect(() => {
-        setList(listNames);
-        console.log("lists: " + listNames)
-    }, [listNames]);
+        setCurrent(current);
+        console.log("Values: " + values)
+    }, [values]);
+
+    const handleChangeInternal = (event) => {
+        setCurrent(event.target.value);
+        handleChange(event);
+      };
 
     return (
         <FormControl>
             <FormHelperText>Select a list of Servers</FormHelperText>
             <Select
                 id="dropDownMenu"
-                value=""
-                onChange={handleChange}
-                inputProps={{ readOnly: true }}
+                value={current}
+                onChange={handleChangeInternal}
             >
-                <MenuItem value="select">
-                </MenuItem>
-                {listNames.map(list =>
-                    <MenuItem value={list} key={list}>{list}</MenuItem>
+                {values.map(value =>
+                    <MenuItem value={value} key={value.label}>{value.label}</MenuItem>
                 )}
             </Select>
         </FormControl>

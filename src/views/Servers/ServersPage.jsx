@@ -10,20 +10,20 @@ import DropDownMenu from "components/Menu/DropDownMenu.jsx"
 
 import { Sessions, Servers } from 'alta-jsapi';
 
-const listsNames = [
-  { console: "Console" },
-  { controllable: "Controllable"},
-  { joined: "Joined"},
-  {open: "Open"},
-  {public: "Public"},
-  {favorites: "Favorites"}
+const lists = [
+  { func: Servers.getConsoleServers, label: "Console" },
+  { func: Servers.getControllable, label: "Controllable" },
+  { func: Servers.getJoined, label: "Joined" },
+  { func: Servers.getOpen, label: "Open" },
+  { func: Servers.getPublic, label: "Public" },
+  { func: Servers.getFavorites, label: "Favorites" }
 ]
 
 class ServersPage extends React.Component {
 
   state = {
     loading: false,
-    list: "open",
+    currentList: lists[0],
     serverRegions: []
   };
 
@@ -41,8 +41,9 @@ class ServersPage extends React.Component {
   //   Servers.getRegions().then(regions => this.setState({ serverRegions : regions })).catch(e => console.log("Error: " + e));
   // }
 
-  handleDropDown = () => {
-   
+  handleDropDown = (event) => {
+    console.log("changed drop down");
+    this.setState({currentList : event.target.value});
   }
   
   render() {
@@ -57,14 +58,14 @@ class ServersPage extends React.Component {
               <SearchBar searchFor />
           </CardHeader>
           <CardBody>
-            list name: {listsNames[this.state.list]}
-            <DropDownMenu listNames={listsNames} handleChange={() => this.handleDropDown} />
+            list name: {this.state.currentList.label}
+            <DropDownMenu values={lists} handleChange={(event) => this.handleDropDown(event)} />
           </CardBody>
         </Card>
 
         {/* insert a drop down that calls
         setState(this.state.list : newList) */}
-        <ServerList list={this.state.list} />
+        <ServerList getListFunc={this.state.currentList.func} />
       </>
     );
   };

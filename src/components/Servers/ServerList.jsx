@@ -7,41 +7,30 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const lists = {
-    console: Servers.getConsoleServers,
-    controllable: Servers.getControllable,
-    joined: Servers.getJoined,
-    open: Servers.getOpen,
-    public: Servers.getPublic,
-    favorites: Servers.getFavorites
-}
-
 const fields = [
   {label: "ID", name: "id"},
   {label: "Name", name: "name"},
   {label: "Region", name: "region"},
   {label: "Status", name: "server_status"},
-];
+  ];
 
- function ServerList({ list }) {
+ function ServerList({ getListFunc }) {
 
     const [serverList, setServerList] = useState([]);
 
     useEffect(() => {
-        lists[list]().then(setServerList).catch(e => console.log("Error: " + e));
-      }, [list]);
+        getListFunc().then(setServerList).catch(e => console.log("Error: " + e));
+      }, [getListFunc]);
 
     return (
         <Table>
           <TableHead>
             <TableRow>
-              {fields.map(field => {
-                return (
+              {fields.map(field =>
                   <TableCell key={field.name}>
                     {field.label}
                   </TableCell>
-                );
-              })}
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
