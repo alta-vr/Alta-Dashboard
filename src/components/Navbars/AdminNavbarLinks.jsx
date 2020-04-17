@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -14,15 +13,11 @@ import Poppers from "@material-ui/core/Popper";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
-// core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 import { Sessions } from "alta-jsapi";
 
-const { REACT_APP_SERVER_URL } = process.env;
 
 class HeaderLinks extends React.Component {
   state = {
@@ -47,7 +42,6 @@ class HeaderLinks extends React.Component {
 
   logout = async () => {
     const { history } = this.props;
-    let logoutRequest
     try {
 
       Sessions.logout();

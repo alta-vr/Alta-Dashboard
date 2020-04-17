@@ -1,8 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
-import axios from "axios";
+import { Switch, Route } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -23,7 +22,6 @@ import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 const logoText = "Alta VR";
-const { REACT_APP_SERVER_URL } = process.env;
 let userInfo = {};
 
 const switchRoutes = (
@@ -130,11 +128,9 @@ class Admin extends React.Component {
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
-          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
+          <div className={classes.content}>
+            <div className={classes.container}>{switchRoutes}</div>
+          </div>
           {this.getRoute() ? <Footer /> : null}
         </div>
       </div>

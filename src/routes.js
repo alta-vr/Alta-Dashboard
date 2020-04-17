@@ -3,8 +3,9 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import Login from "@material-ui/icons/LockOpen";
 // core components/views for Auth layout
 import LoginPage from "views/AuthPages/LoginPage.jsx";
-import AltaServers from "views/Servers/AltaServers.jsx";
-import ServerView from "views/Servers/ServerView.jsx";
+import ServersPage from "views/Servers/ServersPage.jsx";
+import ServerViewer from "views/Servers/ServerViewer.jsx";
+// import ServerGroups from "./views/Servers/ServerGroups";
 
 const dashboardRoutes = [
   {
@@ -19,15 +20,15 @@ const dashboardRoutes = [
     path: "/Servers/:serverId",
     name: "Server : serverId",
     icon: Dashboard,
-    component: ServerView,
+    component: ServerViewer,
     layout: "/admin",
     hidden: true
   },
   {
     path: "/Servers",
-    name: "Township Tale Servers",
+    name: "All Servers",
     icon: Dashboard,
-    component: AltaServers,
+    component: ServersPage,
     layout: "/admin"
   },
 ];

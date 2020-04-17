@@ -1,20 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
-
-// @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-
-// core components
 import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
 import Footer from "components/Footer/AuthFooter.jsx";
-
 import routes from "routes.js";
-
 import pagesStyle from "assets/jss/material-dashboard-react/layouts/authStyle.jsx";
-
 import register from "assets/img/register.jpeg";
 import login from "assets/img/login.jpeg";
+// material-ui
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const switchRoutes = (
   <Switch>
@@ -34,6 +28,7 @@ const switchRoutes = (
 );
 
 class AuthPages extends React.Component {
+  
   componentDidMount() {
     document.body.style.overflow = "unset";
   }
@@ -44,6 +39,7 @@ class AuthPages extends React.Component {
       return login;
     }
   };
+
   getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
@@ -55,6 +51,7 @@ class AuthPages extends React.Component {
     }
     return activeRoute;
   };
+  
   render() {
     const { classes, ...rest } = this.props;
     return (

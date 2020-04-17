@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -22,14 +21,12 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import route from "routes.js"
 
 // login API
 import { Sessions } from 'alta-jsapi';
 import loginPageStyle from "assets/jss/material-dashboard-react/views/loginPageStyle.jsx";
 
 
-const { REACT_APP_SERVER_URL } = process.env;
 const errorMessage = "Wrong username or password, please check your details";
 const welcomeMessage = "Please enter your username and password";
 
@@ -92,7 +89,6 @@ class LoginPage extends React.Component {
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
-
           <GridItem xs={12} sm={8}>
             <h4 className={classes.textCenter} style={{ marginTop: 0 }}>
                 {this.state.failedLogin ?
@@ -100,10 +96,9 @@ class LoginPage extends React.Component {
                 <span>{welcomeMessage}</span>}
             </h4>
           </GridItem>
-
         </GridContainer>
-        <GridContainer justify="center">
 
+        <GridContainer justify="center">
           <GridItem xs={12} sm={6} md={4}>
             <form onSubmit={this.login}>
               <Card className={classes[this.state.cardAnimaton]}>

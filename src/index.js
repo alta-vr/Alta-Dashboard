@@ -7,15 +7,11 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Admin from "layouts/Admin.jsx";
 import Auth from "layouts/Auth.jsx";
 import { Sessions } from 'alta-jsapi';
-import { CookiesProvider, withCookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
-const { Provider, Consumer } = React.createContext();
 const hist = createBrowserHistory();
-const state = {
-  message: "message time"
-}
 
 const SessionConnect = withCookies(props => Sessions.connectToCookies(props.cookies) || null)
 
