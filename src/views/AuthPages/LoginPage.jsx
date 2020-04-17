@@ -56,21 +56,19 @@ class LoginPage extends React.Component {
     try {
       console.log("username: "+ username);
       console.log("password: "+ hashedPassword);
+
       await Sessions.loginWithUsername(username, hashedPassword);
       Sessions.remember();
-      console.log("Session.cookie:" + Sessions.getLocalTokens)
       this.setState({failedLogin: false});
-      return history.push("/admin/AltaServers");
-    } catch ({ response }) {
+
+      return history.push("/admin/Servers");
+    }
+    catch ({ response }) {
       console.log("error");
       // update welcome message to error logging in
       this.setState({failedLogin: true});
     }
   };
-
-  // handleLogin = () => {
-  //   route
-  // }
 
   handleToggle = value => {
     const { checked } = this.state;
@@ -94,16 +92,19 @@ class LoginPage extends React.Component {
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
+
           <GridItem xs={12} sm={8}>
             <h4 className={classes.textCenter} style={{ marginTop: 0 }}>
-                {this.state.failedLogin ? <span>{errorMessage}</span> : <span>{welcomeMessage}</span>}
-
+                {this.state.failedLogin ?
+                <span>{errorMessage}</span> :
+                <span>{welcomeMessage}</span>}
             </h4>
           </GridItem>
+
         </GridContainer>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={6} md={4}>
 
+          <GridItem xs={12} sm={6} md={4}>
             <form onSubmit={this.login}>
               <Card className={classes[this.state.cardAnimaton]}>
                 <CardHeader
@@ -111,32 +112,8 @@ class LoginPage extends React.Component {
                   color="primary"
                 >
                   <h4 className={classes.cardTitle}>Log in</h4>
-                  <div className={classes.socialLine}>
-                    {[
-                      "fa fa-facebook-square",
-                      "fa fa-twitter",
-                      "fa fa-google-plus"
-                    ].map((prop, key) => {
-                      return (
-                        <Button
-                          color="transparent"
-                          justIcon
-                          key={key}
-                          className={classes.customButtonClass}
-                        >
-                          <i className={prop} />
-                        </Button>
-                      );
-                    })}
-                  </div>
                 </CardHeader>
                 <CardBody>
-                  {/* <p
-                    className={`${classes.textCenter} ${classes.checkboxLabel}`}
-                  >
-                    Or Sign in with <strong>admin@material.com</strong> and the
-                    password <strong>secret</strong>{" "}
-                  </p> */}
                   <CustomInput
                     labelText="Email..."
                     id="email"

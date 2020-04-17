@@ -11,21 +11,20 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.jsx";
-import RTLNavbarLinks from "./RTLNavbarLinks.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
 function Header({ ...props }) {
 
-  const { routes, location, rtlActive,  classes, color} = props;
+  const { routes, location,  classes, color} = props;
 
   function makeBrand() {
     var name;
 
     routes.map((prop, key) => {
       if (prop.layout + prop.path === location.pathname) {
-        name = rtlActive ? prop.rtlName : prop.name;
+        name = prop.name;
       }
       return null;
     });

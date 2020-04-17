@@ -120,8 +120,6 @@ material-dashboard-react
     │   │   └── CustomInput.jsx
     │   ├── CustomTabs
     │   │   └── CustomTabs.jsx
-    │   ├── FixedPlugin
-    │   │   └── FixedPlugin.jsx
     │   ├── Footer
     │   │   └── Footer.jsx
     │   ├── Grid
@@ -130,7 +128,6 @@ material-dashboard-react
     │   ├── Navbars
     │   │   ├── AdminNavbarLinks.jsx
     │   │   ├── Navbar.jsx
-    │   │   └── RTLNavbarLinks.jsx
     │   ├── Sidebar
     │   │   └── Sidebar.jsx
     │   ├── Snackbar
@@ -150,7 +147,6 @@ material-dashboard-react
     │       └── Warning.jsx
     ├── layouts
     │   ├── Admin.jsx
-    │   └── RTL.jsx
     ├── variables
     │   ├── charts.jsx
     │   └── general.jsx
@@ -163,8 +159,6 @@ material-dashboard-react
         │   └── Maps.jsx
         ├── Notifications
         │   └── Notifications.jsx
-        ├── RTLPage
-        │   └── RTLPage.jsx
         ├── TableList
         │   └── TableList.jsx
         ├── Typography

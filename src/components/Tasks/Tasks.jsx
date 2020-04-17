@@ -37,10 +37,8 @@ class Tasks extends React.Component {
     });
   };
   render() {
-    const { classes, tasksIndexes, tasks, rtlActive } = this.props;
-    const tableCellClasses = classnames(classes.tableCell, {
-      [classes.tableCellRTL]: rtlActive
-    });
+    const { classes, tasksIndexes, tasks } = this.props;
+    const tableCellClasses = classnames(classes.tableCell);
     return (
       <Table className={classes.table}>
         <TableBody>
@@ -108,7 +106,6 @@ Tasks.propTypes = {
   classes: PropTypes.object.isRequired,
   tasksIndexes: PropTypes.arrayOf(PropTypes.number),
   tasks: PropTypes.arrayOf(PropTypes.node),
-  rtlActive: PropTypes.bool
 };
 
 export default withStyles(tasksStyle)(Tasks);

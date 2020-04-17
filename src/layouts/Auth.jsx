@@ -33,7 +33,7 @@ const switchRoutes = (
   </Switch>
 );
 
-class Pages extends React.Component {
+class AuthPages extends React.Component {
   componentDidMount() {
     document.body.style.overflow = "unset";
   }
@@ -74,8 +74,8 @@ class Pages extends React.Component {
   }
 }
 
-Pages.propTypes = {
+AuthPages.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pagesStyle)(Pages);
+export default withStyles(pagesStyle)(AuthPages);

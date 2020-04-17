@@ -17,7 +17,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Search from "@material-ui/icons/Search";
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 //API stuff
 import { Servers, Sessions } from 'alta-jsapi';
@@ -62,8 +61,7 @@ class AltaServer extends React.Component {
     // const { classes } = this.props;
     const classes = {};
     return (
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+      <>
           <Card plain>
             <CardHeader plain color="primary">
               <h4>
@@ -87,16 +85,8 @@ class AltaServer extends React.Component {
               </div>
             </CardHeader>
             <CardBody>
-
-
-              {/* <Table
-                tableHeaderColor="primary"
-                tableHead={["ID", "Name", "Region", "Status"]}
-                tableData={this.state.servers.map(server => [server.id, server.name, server.region, server.status])}
-              /> */}
             </CardBody>
           </Card>
-        </GridItem>
         <Table>
           <TableHead>
             <TableRow>
@@ -122,7 +112,7 @@ class AltaServer extends React.Component {
             </TableRow>
           </TableBody>
         </Table>
-      </GridContainer>
+      </>
     );
   };
 };
