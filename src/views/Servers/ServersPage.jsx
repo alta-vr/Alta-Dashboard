@@ -22,8 +22,7 @@ const lists = [
 class ServersPage extends React.Component {
 
   state = {
-    loading: false,
-    currentList: lists[0],
+    currentList: lists[3],
     serverRegions: []
   };
 
@@ -33,7 +32,6 @@ class ServersPage extends React.Component {
   }
 
   getUsername = () => {
-    console.log("Username: " + Sessions.getUserId())
     return Sessions.getUsername();
   }
 
@@ -42,7 +40,6 @@ class ServersPage extends React.Component {
   // }
 
   handleDropDown = (event) => {
-    console.log("changed drop down");
     this.setState({currentList : event.target.value});
   }
   
@@ -55,16 +52,12 @@ class ServersPage extends React.Component {
               All {this.getUsername()}'s servers
               <hr></hr>
             </h3>
-              <SearchBar searchFor />
+            <SearchBar searchFor />
           </CardHeader>
           <CardBody>
-            list name: {this.state.currentList.label}
             <DropDownMenu values={lists} handleChange={(event) => this.handleDropDown(event)} />
           </CardBody>
         </Card>
-
-        {/* insert a drop down that calls
-        setState(this.state.list : newList) */}
         <ServerList getListFunc={this.state.currentList.func} />
       </>
     );

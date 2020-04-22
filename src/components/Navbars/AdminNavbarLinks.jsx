@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -20,6 +20,7 @@ import { Sessions } from "alta-jsapi";
 
 
 class HeaderLinks extends React.Component {
+  
   state = {
     open: false,
     profilePopupOpen: false,
@@ -52,12 +53,21 @@ class HeaderLinks extends React.Component {
     }
   }
 
+  // goBack = () => {
+  //   // let history = this.props.history
+  //   // history.goBack;
+  //   this.context.router.history.goBack();
+  // } 
+
   render() {
     const { classes } = this.props;
     const { open, profilePopupOpen } = this.state;
     return (
       <div>
         <div className={classes.manager}>
+          <Button>
+            Go Back
+          </Button>
           <Button
             buttonRef={node => {
               this.buttonRef = node;
@@ -71,7 +81,7 @@ class HeaderLinks extends React.Component {
             className={classes.buttonLink}
           >
             <Notifications className={classes.icons} />
-            <span className={classes.notifications}>5</span>
+          {/* <span className={classes.notifications}>{Notifications.getMessages}</span> */}
             <Hidden mdUp implementation="css">
               <p onClick={this.handleClick} className={classes.linkText}>
                 Notification
@@ -153,7 +163,7 @@ class HeaderLinks extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      <NavLink to="/admin/user">
+                      <NavLink to={"/admin/UserProfile/" + Sessions.getUserId()}>
                         <MenuItem
                           onClick={this.handleClose}
                           className={classes.dropdownItem}
@@ -161,24 +171,6 @@ class HeaderLinks extends React.Component {
                           Profile
                         </MenuItem>
                       </NavLink>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Settings
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Activity
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Support
-                      </MenuItem>
                       <MenuItem
                         onClick={this.logout}
                         className={classes.dropdownItem}

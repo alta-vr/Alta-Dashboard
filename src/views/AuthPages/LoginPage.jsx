@@ -1,14 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// @material-ui/core components
+// @material-ui
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
-// @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import Check from "@material-ui/icons/Check";
 

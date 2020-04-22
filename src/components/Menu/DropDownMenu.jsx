@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-export default function DropDownMenu ({ values, handleChange }) {
-    const [current, setCurrent] = useState(values[0]);
+function DropDownMenu ({ values, handleChange }) {
+    const [current, setCurrent] = useState(values[3]);
 
     useEffect(() => {
         setCurrent(current);
-        console.log("Values: " + values)
     }, [values]);
 
     const handleChangeInternal = (event) => {
@@ -22,7 +18,7 @@ export default function DropDownMenu ({ values, handleChange }) {
 
     return (
         <FormControl>
-            <FormHelperText>Select a list of Servers</FormHelperText>
+            <FormHelperText>Select server group</FormHelperText>
             <Select
                 id="dropDownMenu"
                 value={current}
@@ -40,5 +36,5 @@ export default function DropDownMenu ({ values, handleChange }) {
 //   classes: PropTypes.object.isRequired,
 // };
 
-// export default DropDownMenu;
+export default DropDownMenu;
 

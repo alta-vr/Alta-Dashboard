@@ -5,6 +5,8 @@ import Login from "@material-ui/icons/LockOpen";
 import LoginPage from "views/AuthPages/LoginPage.jsx";
 import ServersPage from "views/Servers/ServersPage.jsx";
 import ServerViewer from "views/Servers/ServerViewer.jsx";
+import ServerConsole from "views/Servers/ServerConsole.jsx";
+import UserProfile from "./views/UserProfile/UserProfile";
 // import ServerGroups from "./views/Servers/ServerGroups";
 
 const dashboardRoutes = [
@@ -14,6 +16,22 @@ const dashboardRoutes = [
     icon: Login,
     component: LoginPage,
     layout: "/auth",
+    hidden: true
+  },
+  {
+    path: "/UserProfile",
+    name: "User Profile",
+    icon: Login,
+    component: UserProfile,
+    layout: "/admin",
+    hidden: true
+  },
+  {
+    path: "/Servers/:serverId/Console",
+    name: "Server Console",
+    icon: Dashboard,
+    component: ServerConsole,
+    layout: "/admin",
     hidden: true
   },
   {

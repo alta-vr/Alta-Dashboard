@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Servers, Sessions } from 'alta-jsapi';
-// material-ui
+import React, {useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Button } from '@material-ui/core';
 
 const fields = [
   {label: "ID", name: "id"},
@@ -17,10 +17,18 @@ const fields = [
  function ServerList({ getListFunc }) {
 
     const [serverList, setServerList] = useState([]);
+    let currentPath = useLocation().pathname;
+    let history = useHistory();
 
     useEffect(() => {
         getListFunc().then(setServerList).catch(e => console.log("Error: " + e));
       }, [getListFunc]);
+
+
+    function handleClick(serverId) {
+      history.push(currentPath + "/" + serverId);
+      // let gotoPath = currentPath + "/" + server.id;
+    }
 
     return (
         <Table>
@@ -41,6 +49,12 @@ const fields = [
                     <TableCell key={field.name}>
                       {server[field.name]}
                     </TableCell>)}
+                    <Button 
+                      variant="contained"
+                      color="default"
+                      // href={currentPath + "/" + server.id}
+                      onClick={() => handleClick(server.id)}
+                      >DashBoard</Button>
                 </TableRow>)}
           </TableBody>
         </Table>

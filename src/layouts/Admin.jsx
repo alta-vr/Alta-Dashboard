@@ -2,8 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
-// creates a beautiful scrollbar
-import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -11,6 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
+import { Button } from "@material-ui/core";
 
 import routes from "routes.js";
 
@@ -85,15 +84,6 @@ class Admin extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    const { history } = this.props;
-
-    if (navigator.platform.indexOf("Win") > -1) {
-      const ps = new PerfectScrollbar(this.refs.mainPanel);
-    }
-    window.addEventListener("resize", this.resizeFunction);
-  }
-
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
       this.refs.mainPanel.scrollTop = 0;
@@ -133,6 +123,7 @@ class Admin extends React.Component {
           </div>
           {this.getRoute() ? <Footer /> : null}
         </div>
+
       </div>
     );
   }

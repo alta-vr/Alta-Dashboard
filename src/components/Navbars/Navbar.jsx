@@ -21,7 +21,7 @@ function Header({ ...props }) {
 
   function makeBrand() {
     var name;
-
+    
     routes.map((prop, key) => {
       if (prop.layout + prop.path === location.pathname) {
         name = prop.name;
