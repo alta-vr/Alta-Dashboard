@@ -12,12 +12,6 @@ import { useHistory } from "react-router-dom";
  function UserProfile() {
 
   let history = useHistory();
-  // let userInfo = {
-  //   userName: "",
-  //   userId: "",
-  //   supporter: "",
-  //   policy: ""
-  // }
 
   let [userInfo, setUserInfo] = useState({
     userName: "",
@@ -47,12 +41,6 @@ import { useHistory } from "react-router-dom";
     }
   }
 
-  function changeSupporter(){
-    // setUserInfo({...userInfo, supporter : true});
-    // console.log("Supporter: " + userInfo.supporter);
-    // console.log("userInfo: " + userInfo.userName);
-  }
-
   return (
     <div>
       {}
@@ -74,7 +62,6 @@ import { useHistory } from "react-router-dom";
         </CardBody>
           <CardBody>
             Supporter: {showSupporter()}
-            <Button onClick={changeSupporter}>Change supporter</Button>
           </CardBody>
         <CardBody>
           <List>

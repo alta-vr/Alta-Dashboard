@@ -12,6 +12,7 @@ import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import SimpleBreadcrumbs from 'components/Breadcrumbs/SimpleBreadcrumbs.jsx'
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
@@ -19,18 +20,6 @@ function Header({ ...props }) {
 
   const { routes, location,  classes, color} = props;
 
-  function makeBrand() {
-    var name;
-    
-    routes.map((prop, key) => {
-      if (prop.layout + prop.path === location.pathname) {
-        name = prop.name;
-      }
-      return null;
-    });
-    
-    return name;
-  }
 
   const appBarClasses = classNames({
     [" " + classes[color]]: color
@@ -41,9 +30,7 @@ function Header({ ...props }) {
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
-          <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
-          </Button>
+          <SimpleBreadcrumbs/>
         </div>
         <Hidden smDown implementation="css">
           <AdminNavbarLinks {...props} classes={undefined}/>

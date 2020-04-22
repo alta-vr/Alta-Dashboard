@@ -44,7 +44,7 @@ class Admin extends React.Component {
     super(props);
     this.state = {
       image: image,
-      color: "blue",
+      color: "green",
       hasImage: true,
       fixedClasses: "dropdown show",
       mobileOpen: false,      
@@ -90,7 +90,7 @@ class Admin extends React.Component {
             {...rest}
           />
           <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
+            <div className={classes.container}>Routes: {switchRoutes}</div>
           </div>
           <Footer />
         </div>
