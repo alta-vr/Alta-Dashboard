@@ -18,13 +18,14 @@ import Button from "components/CustomButtons/Button.jsx";
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 import { Sessions } from "alta-jsapi";
 
-
 class HeaderLinks extends React.Component {
-  
   state = {
     open: false,
     profilePopupOpen: false,
   };
+  constructor(props){
+    super(props);
+  }
   handleToggle = () => {
     this.setState(state => ({ open: !state.open, profilePopupOpen: false }));
   };
@@ -54,8 +55,8 @@ class HeaderLinks extends React.Component {
   }
 
   // goBack = () => {
-  //   // let history = this.props.history
-  //   // history.goBack;
+  //   let history = this.props.history
+  //   history.goBack;
   //   this.context.router.history.goBack();
   // } 
 
@@ -65,9 +66,6 @@ class HeaderLinks extends React.Component {
     return (
       <div>
         <div className={classes.manager}>
-          <Button>
-            Go Back
-          </Button>
           <Button
             buttonRef={node => {
               this.buttonRef = node;

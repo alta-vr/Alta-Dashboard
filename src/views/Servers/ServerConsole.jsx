@@ -6,6 +6,9 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
+//background image stuff
+// import image from "assets/img/att_splashscreen.png";
+// style={{backgroundImage: "url(" + image + ")"}}
 
 function ServerConsole() {
 

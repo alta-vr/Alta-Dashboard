@@ -7,6 +7,8 @@ import routes from "routes.js";
 import pagesStyle from "assets/jss/material-dashboard-react/layouts/authStyle.jsx";
 import register from "assets/img/register.jpeg";
 import login from "assets/img/login.jpeg";
+import image from "assets/img/att_splashscreen.png";
+
 // material-ui
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -33,11 +35,12 @@ class AuthPages extends React.Component {
     document.body.style.overflow = "unset";
   }
   getBgImage = () => {
-    if (window.location.pathname.indexOf("/auth/register-page") !== -1) {
-      return register;
-    } else if (window.location.pathname.indexOf("/auth/login-page") !== -1) {
-      return login;
-    }
+    return image;
+    // if (window.location.pathname.indexOf("/auth/register-page") !== -1) {
+    //   return register;
+    // } else if (window.location.pathname.indexOf("/auth/login-page") !== -1) {
+    //   return login;
+    // }
   };
 
   getActiveRoute = routes => {
@@ -60,7 +63,7 @@ class AuthPages extends React.Component {
         <div className={classes.wrapper}>
           <div
             className={classes.fullPage}
-            style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
+            style={{ backgroundImage: "url(" + image + ")" }}
           >
             {switchRoutes}
             <Footer white />

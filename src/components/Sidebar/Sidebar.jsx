@@ -12,6 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
+import SimpleBreadcrumbs from 'components/Breadcrumbs/SimpleBreadcrumbs.jsx'
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
@@ -23,6 +24,9 @@ const Sidebar = ({ ...props }) => {
   const { classes, color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
+      <ListItem style={{background:"white"}}>
+        <SimpleBreadcrumbs/>
+      </ListItem>
       {routes.map((prop, key) => {
         if (prop.hidden){
           return null;

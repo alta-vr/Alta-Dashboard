@@ -15,10 +15,8 @@ import routes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
-// TODO change this to township tale image
-import image from "assets/img/sidebar-2.jpg";
-// TODO change this to Alta VR
-import logo from "assets/img/reactlogo.png";
+import image from "assets/img/att_splashscreen.png";
+import logo from "assets/img/Alta_Logo_Light.png";
 
 const logoText = "Alta VR";
 let userInfo = {};

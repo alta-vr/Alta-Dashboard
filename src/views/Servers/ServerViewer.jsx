@@ -1,12 +1,11 @@
 import React, { useState,  useEffect } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Button } from "@material-ui/core";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
+import SimpleBreadcrumbs from 'components/Breadcrumbs/SimpleBreadcrumbs.jsx'
 
 import { Servers } from 'alta-jsapi';
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -28,7 +27,7 @@ function ServerViewer () {
 
     function goBack() {
         history.goBack();
-    }  
+    }
 
     function goToConsole() {
         history.push(currentPath + "/Console")
@@ -44,6 +43,7 @@ function ServerViewer () {
     
     return (
       <div className="container">
+          <SimpleBreadcrumbs></SimpleBreadcrumbs>
         <GridContainer>
             <Button variant="contained" onClick={goBack}>Go Back</Button>
             <Button variant="contained" onClick={goToConsole}>Console</Button>

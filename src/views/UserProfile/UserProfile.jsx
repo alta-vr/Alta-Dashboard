@@ -7,9 +7,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "components/CustomButtons/Button";
+import { useHistory } from "react-router-dom";
 
  function UserProfile() {
 
+  let history = useHistory();
   // let userInfo = {
   //   userName: "",
   //   userId: "",
@@ -31,6 +33,10 @@ import Button from "components/CustomButtons/Button";
       supporter : Sessions.getSupporter(),
       policies : Sessions.getPolicies()});
   }, [userInfo]);
+
+  function goBack() {
+    history.goBack();
+}
 
   function showSupporter(){
     if (userInfo.supporter){
@@ -55,6 +61,7 @@ import Button from "components/CustomButtons/Button";
 
         </CardHeader>
       </Card> */}
+      <Button variant="contained" onClick={goBack}>Go Back</Button>
       <Card>
         <CardHeader plain color="primary">
           User Profile
