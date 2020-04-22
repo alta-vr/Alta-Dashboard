@@ -40,10 +40,6 @@ const Sidebar = ({ ...props }) => {
             activeClassName="active"
             key={key}
           >
-            {console.log("Classes.item: " + classes.itemLink + listItemClasses)}
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              plain item
-            </ListItem>
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === "string" ? (
                 <Icon

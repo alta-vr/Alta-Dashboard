@@ -43,12 +43,6 @@ import { useHistory } from "react-router-dom";
 
   return (
     <div>
-      {}
-      {/* <Card>
-        <CardHeader hidden={}>
-
-        </CardHeader>
-      </Card> */}
       <Button variant="contained" onClick={goBack}>Go Back</Button>
       <Card>
         <CardHeader plain color="primary">
@@ -60,9 +54,9 @@ import { useHistory } from "react-router-dom";
         <CardBody>
           Id: {userInfo.userId}
         </CardBody>
-          <CardBody>
-            Supporter: {showSupporter()}
-          </CardBody>
+        <CardBody>
+          Supporter: {showSupporter()}
+        </CardBody>
         <CardBody>
           <List>
             Policies:

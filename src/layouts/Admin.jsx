@@ -90,7 +90,7 @@ class Admin extends React.Component {
             {...rest}
           />
           <div className={classes.content}>
-            <div className={classes.container}>Routes: {switchRoutes}</div>
+            <div className={classes.container}>{switchRoutes}</div>
           </div>
           <Footer />
         </div>
