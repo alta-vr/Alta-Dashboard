@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
-import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -51,35 +50,9 @@ class Admin extends React.Component {
       mobileOpen: false,      
     };
   }
-  
-  handleImageClick = image => {
-    this.setState({ image: image });
-  };
-  
-  handleColorClick = color => {
-    this.setState({ color: color });
-  };
-
-  handleFixedClick = () => {
-    if (this.state.fixedClasses === "dropdown") {
-      this.setState({ fixedClasses: "dropdown show" });
-    } else {
-      this.setState({ fixedClasses: "dropdown" });
-    }
-  };
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
-  };
-
-  getRoute() {
-    return this.props.location.pathname !== "/admin/maps";
-  }
-
-  resizeFunction = () => {
-    if (window.innerWidth >= 960) {
-      this.setState({ mobileOpen: false });
-    }
   };
 
   componentDidUpdate(e) {
@@ -119,7 +92,7 @@ class Admin extends React.Component {
           <div className={classes.content}>
             <div className={classes.container}>{switchRoutes}</div>
           </div>
-          {this.getRoute() ? <Footer /> : null}
+          <Footer />
         </div>
 
       </div>

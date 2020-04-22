@@ -133,13 +133,13 @@ h6 {
 }
 
 a {
-  color: #9c27b0;
+  color: #2f44ff;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #89229b;
+  color: #2f44ff;
   text-decoration: none;
 }
 
@@ -221,7 +221,7 @@ footer ul li a:hover {
   text-decoration: none;
 }
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   body,
   html {
     position: relative;
@@ -240,7 +240,7 @@ footer ul li a:hover {
     z-index: 9999;
     overflow-x: hidden;
   }
-}
+} */
 .fixed-plugin {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
