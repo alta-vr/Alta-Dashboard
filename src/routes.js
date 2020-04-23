@@ -6,7 +6,9 @@ import LoginPage from "views/AuthPages/LoginPage.jsx";
 import ServersPage from "views/Servers/ServersPage.jsx";
 import ServerViewer from "views/Servers/ServerViewer.jsx";
 import ServerConsole from "views/Servers/ServerConsole.jsx";
-import UserProfile from "./views/UserProfile/UserProfile";
+import UserProfile from "views/UserProfile/UserProfile";
+import Moderator from "views/UserProfile/Moderator";
+import ModeratorMenu from "views/UserProfile/Moderator";
 // import ServerGroups from "./views/Servers/ServerGroups";
 
 const dashboardRoutes = [
@@ -49,6 +51,16 @@ const dashboardRoutes = [
     component: ServersPage,
     layout: "/admin"
   },
+  {
+    path: "/Moderator",
+    name: "Moderator",
+    icon: Login,
+    component: Moderator,
+    menuComponents: ModeratorMenu,
+    layout: "/admin",
+    hidden: false,
+    moderator: true
+  }
 ];
 
 export default dashboardRoutes;

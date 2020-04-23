@@ -8,8 +8,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "components/CustomButtons/Button";
 import { useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import ServersPage from "views/Servers/ServersPage.jsx";
 
- function UserProfile() {
+function UserProfile() {
 
   let history = useHistory();
 
@@ -30,7 +32,7 @@ import { useHistory } from "react-router-dom";
 
   function goBack() {
     history.goBack();
-}
+  }
 
   function showSupporter(){
     if (userInfo.supporter){
@@ -43,6 +45,9 @@ import { useHistory } from "react-router-dom";
 
   return (
     <div>
+      <Switch>
+      <Route path="/admin/Servers" component={ServersPage}>Servers</Route>
+    </Switch>
       <Button variant="contained" onClick={goBack}>Go Back</Button>
       <Card>
         <CardHeader plain color="primary">

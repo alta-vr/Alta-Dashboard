@@ -23,9 +23,7 @@ class HeaderLinks extends React.Component {
     open: false,
     profilePopupOpen: false,
   };
-  constructor(props){
-    super(props);
-  }
+  
   handleToggle = () => {
     this.setState(state => ({ open: !state.open, profilePopupOpen: false }));
   };
@@ -46,6 +44,7 @@ class HeaderLinks extends React.Component {
     const { history } = this.props;
     try {
 
+      Sessions.forget();
       Sessions.logout();
       history.push('/auth/login-page');
 
@@ -53,12 +52,6 @@ class HeaderLinks extends React.Component {
       console.log(request);
     }
   }
-
-  // goBack = () => {
-  //   let history = this.props.history
-  //   history.goBack;
-  //   this.context.router.history.goBack();
-  // } 
 
   render() {
     const { classes } = this.props;
@@ -79,7 +72,6 @@ class HeaderLinks extends React.Component {
             className={classes.buttonLink}
           >
             <Notifications className={classes.icons} />
-          {/* <span className={classes.notifications}>{Notifications.getMessages}</span> */}
             <Hidden mdUp implementation="css">
               <p onClick={this.handleClick} className={classes.linkText}>
                 Notification

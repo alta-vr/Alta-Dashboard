@@ -33,15 +33,31 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       failedLogin: false,
-      checked: [],
+      checked: false,
       errors: {}
     };
   }
 
+  componentDidMount(){
+    Sessions.checkRemembered().then(Sessions.ensureLoggedIn)
+    .then(this.onLoggedIn.bind(this))
+    .catch(console.error);
+  }
+
+  onLoggedIn(){
+
+    try{
+      this.props.history.push("/admin/Servers");
+    }
+    catch (e) {
+      console.log(e)
+    }
+    console.log(this.props.history);
+
+  }
+
   login = async e => {
     e.preventDefault();
-
-    const { history } = this.props;
     const formElements = e.target.elements;
 
     let username = formElements.namedItem("username").value;
@@ -53,10 +69,12 @@ class LoginPage extends React.Component {
       console.log("password: "+ hashedPassword);
 
       await Sessions.loginWithUsername(username, hashedPassword);
-      Sessions.remember();
-      this.setState({failedLogin: false});
 
-      return history.push("/admin/Servers");
+      if (this.state.checked){
+        Sessions.remember();
+      }
+
+      this.onLoggedIn();
     }
     catch ({ response }) {
       console.log("error");
@@ -65,19 +83,10 @@ class LoginPage extends React.Component {
     }
   };
 
-  handleToggle = value => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
+  handleToggle = (event, value) => {
 
     this.setState({
-      checked: newChecked
+      checked: value
     });
   };
 
@@ -156,7 +165,7 @@ class LoginPage extends React.Component {
                     control={
                       <Checkbox
                         tabIndex={-1}
-                        onClick={() => this.handleToggle(1)}
+                        onChange={this.handleToggle}
                         checkedIcon={<Check className={classes.checkedIcon} />}
                         icon={<Check className={classes.uncheckedIcon} />}
                         classes={{

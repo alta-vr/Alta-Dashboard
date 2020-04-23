@@ -8,10 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
 
 const fields = [
-  {label: "ID", name: "id"},
-  {label: "Name", name: "name"},
-  {label: "Region", name: "region"},
-  {label: "Status", name: "server_status"},
+  {label: "ID", getValue : s => s.id},
+  {label: "Name", getValue : s => s.name},
+  {label: "Online Players", getValue : s => s.online_players.length},
+  {label: "Region", getValue : s => s.region},
+  {label: "Status", getValue : s => s.server_status},
   ];
 
  function ServerList({ getListFunc }) {
@@ -21,13 +22,12 @@ const fields = [
     let history = useHistory();
 
     useEffect(() => {
-        getListFunc().then(setServerList).catch(e => console.log("Error: " + e));
-      }, [getListFunc]);
-
+      getListFunc().then(setServerList).catch(e => console.log("Error: " + e));
+      
+    }, [getListFunc]);
 
     function handleClick(serverId) {
       history.push(currentPath + "/" + serverId);
-      // let gotoPath = currentPath + "/" + server.id;
     }
 
     return (
@@ -43,16 +43,14 @@ const fields = [
           </TableHead>
           <TableBody>
             {serverList.map(server => 
-            // onClick={(event) => generateList(event)}
                 <TableRow key={server.id} >
                     {fields.map(field =>
                     <TableCell key={field.name}>
-                      {server[field.name]}
+                      {field.getValue(server)}
                     </TableCell>)}
                     <Button 
                       variant="contained"
                       color="default"
-                      // href={currentPath + "/" + server.id}
                       onClick={() => handleClick(server.id)}
                       >DashBoard</Button>
                 </TableRow>)}

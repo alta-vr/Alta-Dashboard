@@ -29,12 +29,6 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {/* Here we create navbar brand, based on route name */}
-          <SimpleBreadcrumbs/>
-        </div>
-        <Hidden smDown implementation="css">
-          <AdminNavbarLinks {...props} classes={undefined}/>
-        </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"
@@ -43,6 +37,11 @@ function Header({ ...props }) {
           >
             <Menu />
           </IconButton>
+        </Hidden>
+        <SimpleBreadcrumbs/>
+        </div>
+        <Hidden smDown implementation="css">
+          <AdminNavbarLinks {...props} classes={undefined}/>
         </Hidden>
       </Toolbar>
     </AppBar>
