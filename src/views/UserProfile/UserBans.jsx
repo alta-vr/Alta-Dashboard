@@ -9,12 +9,14 @@ import { useHistory } from "react-router-dom";
 import SearchBar from '../../components/SearchBar/SearchBar';
 
 export default function UserBans() {
+
   return (
     <div>
-      <CardHeader color="success">
-        <h3>User Bans</h3>
-      </CardHeader>
-      {/* style={{height : "200px"}} */}
+      <GridContainer>
+        <CardHeader color="success">
+          <h3>User Bans</h3>
+        </CardHeader>
+      </GridContainer>
       <GridContainer>
         <GridItem>
           <SearchBar searchFor="by user ID"/>

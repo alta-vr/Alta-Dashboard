@@ -69,13 +69,13 @@ class HeaderLinks extends React.Component {
             aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
             onClick={this.handleToggle}
-            className={classes.buttonLink}
+            className={{}}
           >
-            <Notifications className={classes.icons} />
-            <Hidden mdUp implementation="css">
-              <p onClick={this.handleClick} className={classes.linkText}>
+            <Hidden smDown implementation="css">
+              <Notifications className={classes.icons} />
+              {/* <p onClick={this.handleClick} className={classes.linkText}>
                 Notification
-              </p>
+              </p> */}
             </Hidden>
           </Button>
           <Poppers
@@ -123,11 +123,11 @@ class HeaderLinks extends React.Component {
             aria-owns={profilePopupOpen ? "menu-list-grow" : null}
             aria-haspopup="true"
             onClick={this.handleToggleProfile}
-            className={classes.buttonLink}
+            className={{}}
           >
-            <Person className={classes.icons} />
-            <Hidden mdUp implementation="css">
-              <p className={classes.linkText}>Profile</p>
+            <Hidden smDown implementation="css">
+              <Person className={classes.icons} />
+              {/* <p className={classes.linkText}>Profile</p> */}
             </Hidden>
           </Button>
           <Poppers
@@ -135,10 +135,7 @@ class HeaderLinks extends React.Component {
             anchorEl={this.buttonRef}
             transition
             disablePortal
-            className={
-              classNames({ [classes.popperClose]: !profilePopupOpen }) +
-              " " +
-              classes.pooperNav
+            className={{}
             }
           >
             {({ TransitionProps, placement }) => (

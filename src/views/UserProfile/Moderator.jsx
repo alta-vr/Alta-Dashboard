@@ -6,6 +6,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import { useHistory, useLocation } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 export default function Moderator() {
 
@@ -41,8 +42,7 @@ export default function Moderator() {
     }
 
   return (
-    <div className="container">
-        <Button variant="contained" onClick={goBack}>Go Back</Button>
+    <div>
       <Card plain>
         <CardHeader color="success">
           <h3>Moderator Dashboard</h3>

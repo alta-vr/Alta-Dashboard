@@ -23,7 +23,22 @@ let userInfo = {};
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      
+      if (prop.path === "/Moderator"){
+        // put drop down menu thing here
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={props => {
+              const Component = prop.component;
+              return <Component {...props} {...userInfo}/>
+            }}
+            key={key}
+          />
+        );
+        console.log("yep");
+      }
+      else if (prop.layout === "/admin") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -90,7 +105,7 @@ class Admin extends React.Component {
             {...rest}
           />
           <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
+            <div className={{}}>{switchRoutes}</div>
           </div>
           <Footer />
         </div>

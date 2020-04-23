@@ -2,14 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
 import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
-import Footer from "components/Footer/AuthFooter.jsx";
+import Footer from "components/Footer/Footer.jsx";
 import routes from "routes.js";
 import pagesStyle from "assets/jss/material-dashboard-react/layouts/authStyle.jsx";
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
 import image from "assets/img/att_splashscreen.png";
-
-// material-ui
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const switchRoutes = (
@@ -31,44 +27,18 @@ const switchRoutes = (
 
 class AuthPages extends React.Component {
   
-  componentDidMount() {
-    document.body.style.overflow = "unset";
-  }
-  getBgImage = () => {
-    return image;
-    // if (window.location.pathname.indexOf("/auth/register-page") !== -1) {
-    //   return register;
-    // } else if (window.location.pathname.indexOf("/auth/login-page") !== -1) {
-    //   return login;
-    // }
-  };
-
-  getActiveRoute = routes => {
-    let activeRoute = "Default Brand Text";
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-      ) {
-        return routes[i].name;
-      }
-    }
-    return activeRoute;
-  };
-  
   render() {
     const { classes, ...rest } = this.props;
     return (
       <div>
         <AuthNavbar brandText="Alta VR" {...rest} />
-        <div className={classes.wrapper}>
           <div
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + image + ")" }}
           >
             {switchRoutes}
-            <Footer white />
+            <Footer />
           </div>
-        </div>
       </div>
     );
   }

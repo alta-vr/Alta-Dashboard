@@ -130,7 +130,6 @@ const pagesHeaderStyle = theme => ({
     paddingBottom: "15px",
     fontWeight: "500",
     fontSize: "12px",
-    textTransform: "uppercase",
     borderRadius: "3px",
     lineHeight: "20px",
     position: "relative",

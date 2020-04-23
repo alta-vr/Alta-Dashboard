@@ -2,24 +2,25 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
+import Poppers from "@material-ui/core/Popper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
-// core components
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
-// import Expandable from "components/Menu/Expandable.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Person from "@material-ui/icons/Person";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 import { Sessions } from "alta-jsapi";
-// import Moderator from "../../views/UserProfile/Moderator";
-import ModeratorMenu from "../../views/UserProfile/ModeratorMenu";
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
@@ -98,7 +99,7 @@ const Sidebar = ({ ...props }) => {
 
   return (
     <div>
-      <Hidden mdUp implementation="css">
+      {/* <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
           anchor={"left"}
@@ -123,9 +124,9 @@ const Sidebar = ({ ...props }) => {
             />
           ) : null}
         </Drawer>
-      </Hidden>
+      </Hidden> */}
 
-      <Hidden smDown implementation="css">
+      {/* <Hidden smDown implementation="css"> */}
         <Drawer
           anchor={"left"}
           variant="permanent"
@@ -136,7 +137,7 @@ const Sidebar = ({ ...props }) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-        {links}
+            {links}
           </div>
           {image !== undefined ? (
             <div
@@ -145,66 +146,7 @@ const Sidebar = ({ ...props }) => {
             />
           ) : null}
         </Drawer>
-        
-      </Hidden>
-          {/* <Button
-            color={window.innerWidth > 959 ? "transparent" : "white"}
-            justIcon={window.innerWidth > 959}
-            simple={!(window.innerWidth > 959)}
-            aria-label="Person"
-            // aria-owns={profilePopupOpen ? "menu-list-grow" : null}
-            aria-haspopup="true"
-            // onClick={this.handleToggleProfile}
-            className={classes.buttonLink}
-          >
-            <Person className={classes.icons} />
-            <Hidden mdUp implementation="css">
-              <p className={classes.linkText}>Profile</p>
-            </Hidden>
-          </Button>
-          <Poppers
-            open={profilePopupOpen}
-            anchorEl={this.buttonRef}
-            transition
-            disablePortal
-            className={{}
-              // classNames({ [classes.popperClose]: !profilePopupOpen }) +
-              // " " +
-              // classes.pooperNav
-            }
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                id="menu-list-grow"
-                style={{
-                  transformOrigin:
-                    placement === "bottom" ? "center top" : "center bottom"
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={this.handleClose}>
-                    <MenuList role="menu">
-                      <NavLink to={"/admin/UserProfile/" + Sessions.getUserId()}>
-                        <MenuItem
-                          onClick={this.handleClose}
-                          className={classes.dropdownItem}
-                        >
-                          Profile
-                        </MenuItem>
-                      </NavLink>
-                      <MenuItem
-                        onClick={this.logout}
-                        className={classes.dropdownItem}
-                      >
-                        Logout
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Poppers> */}
+      {/* </Hidden> */}
     </div>
   );
 };
