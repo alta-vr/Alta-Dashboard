@@ -36,11 +36,18 @@ export default function Moderator() {
     // history.push();
   }
 
+    function goBack() {
+        history.goBack();
+    }
+
   return (
-    <div>
-      <CardHeader color="success">
-        <h3>Moderator Dashboard</h3>
-      </CardHeader>
+    <div className="container">
+        <Button variant="contained" onClick={goBack}>Go Back</Button>
+      <Card plain>
+        <CardHeader color="success">
+          <h3>Moderator Dashboard</h3>
+        </CardHeader>
+      </Card>
       {/* style={{height : "200px"}} */}
       <GridContainer>
         <GridItem>
