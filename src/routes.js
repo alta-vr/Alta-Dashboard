@@ -8,7 +8,9 @@ import ServerViewer from "views/Servers/ServerViewer.jsx";
 import ServerConsole from "views/Servers/ServerConsole.jsx";
 import UserProfile from "views/UserProfile/UserProfile";
 import Moderator from "views/UserProfile/Moderator";
-import ModeratorMenu from "views/UserProfile/Moderator";
+import UserBans from "views/UserProfile/UserBans";
+
+// import ModeratorMenu from "views/UserProfile/Moderator";
 // import ServerGroups from "./views/Servers/ServerGroups";
 
 const dashboardRoutes = [
@@ -18,14 +20,6 @@ const dashboardRoutes = [
     icon: Login,
     component: LoginPage,
     layout: "/auth",
-    hidden: true
-  },
-  {
-    path: "/UserProfile",
-    name: "User Profile",
-    icon: Login,
-    component: UserProfile,
-    layout: "/admin",
     hidden: true
   },
   {
@@ -52,14 +46,32 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path: "/Moderator/UserBans",
+    name: "User bans",
+    icon: Login,
+    component: UserBans,
+    // menuComponents: ModeratorMenu,
+    layout: "/admin",
+    hidden: true,
+    moderator: true
+  },
+  {
     path: "/Moderator",
     name: "Moderator",
     icon: Login,
     component: Moderator,
-    menuComponents: ModeratorMenu,
+    // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: false,
     moderator: true
+  },
+  {
+    path: "/UserProfile",
+    name: "User Profile",
+    icon: Login,
+    component: UserProfile,
+    layout: "/admin",
+    hidden: true
   }
 ];
 

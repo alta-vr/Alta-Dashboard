@@ -12,7 +12,7 @@ export default function SearchBar(props) {
             className: "Search-" + searchFor
           }}
           inputProps={{
-            placeholder: "Search",
+            placeholder: "Search " + searchFor,
             inputProps: {
               "aria-label": "Search"
             }

@@ -1,157 +1,85 @@
-import React from "react";
-import classNames from "classnames";
-import { NavLink, useHistory } from "react-router-dom";
-// @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Hidden from "@material-ui/core/Hidden";
-import Poppers from "@material-ui/core/Popper";
-// @material-ui/icons
-import Person from "@material-ui/icons/Person";
-import Notifications from "@material-ui/icons/Notifications";
+import React from 'react'
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import Card from "components/Card/Card.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import { useHistory, useLocation } from 'react-router-dom';
 
-import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
-import { Sessions } from "alta-jsapi";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+export default function Moderator() {
 
-// function Moderator() {
+  var history = useHistory();
+  let currentPath = useLocation().pathname;
 
-//   return (
-//     <div>
-//       Moderator Tabs
-//       List of user options
-//     </div>
-//   )
-// }
-
-class ModeratorMenu extends React.Component {
-
-  constructor(props){
-    super(props);
-    const {classes} = this.props;
+  function handleClick(event) {
+    console.log("Clicked");
   }
 
-    state = {
-      open: false,
-      profilePopupOpen: false
-    }
-  
+  function goToBans(){
+    console.log("go to bans");
+    history.push(currentPath + "/UserBans");
+  }
 
-  handleToggle = () => {
-    this.setState(state => ({ profilePopupOpen: !state.profilePopupOpen, open: false }));
-  };
+  function goToView(){
+    console.log("go to view");
+    // history.push();
+  }
 
-  handleClose = event => {
-    if (this.buttonRef.contains(event.target)) {
-      return;
-    }
+  function goToSecret(){
+    console.log("go to secret");
+    // history.push();
+  }
 
-    this.setState({ open: false, profilePopupOpen: false });
-  };
+  function goToNext(){
+    console.log("go to next");
+    // history.push();
+  }
 
-  menu = () => {
-    const { classes } = this.props;
-    const { open, profilePopupOpen } = this.state;
-    return(
+  return (
     <div>
-    <div className="MuiListItemText-root Sidebar-itemText-16  Sidebar-whiteFont-17">
-    <Button
-        buttonRef={node => {
-          this.buttonRef = node;
-        }}
-        color={window.innerWidth > 959 ? "transparent" : "white"}
-        justIcon={window.innerWidth > 959}
-        simple={!(window.innerWidth > 959)}
-        aria-owns={open ? "menu-list-grow" : null}
-        aria-haspopup="true"
-        onClick={this.handleToggle}
-        className={{}}
-        // className={"MuiButtonBase-root MuiButton-root MuiButton-text RegularButton-button-95 RegularButton-white-96 RegularButton-simple-103 HeaderLinks-buttonLink-242"}
-      >
-      <Person className={classes.icons} />
-      {/* <Hidden mdUp implementation="css"> */}
-        <p className={{}}>Profile</p>
-      {/* </Hidden> */}
-    </Button>
-    <Poppers
-      open={profilePopupOpen}
-      anchorEl={this.buttonRef}
-      transition
-      disablePortal
-      className={{}
-        // classNames({ [classes.popperClose]: !profilePopupOpen }) +
-        // " " +
-        // classes.pooperNav
-      }
-    >
-      {({ TransitionProps, placement }) => (
-        <Grow
-          {...TransitionProps}
-          id="menu-list-grow"
-          style={{
-            transformOrigin:
-              placement === "bottom" ? "center top" : "center bottom"
-          }}
-        >
-          <Paper>
-            <ClickAwayListener onClickAway={this.handleClose}>
-              <MenuList role="menu">
-                <NavLink to={"/admin/UserProfile/" + Sessions.getUserId()}>
-                  <MenuItem
-                    onClick={this.handleClose}
-                    className={classes.dropdownItem}
-                  >
-                    Profile
-                  </MenuItem>
-                  <MenuItem
-                    onClick={this.handleClose}
-                    className={classes.dropdownItem}
-                  >
-                    Profile
-                  </MenuItem>
-                </NavLink>
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
-        </Grow>
-      )}
-    </Poppers>
-  </div>
-  </div>
-    )
-  }
-  
-  render(){
-    const { classes } = this.props;
-    return(
-      // <List className={classes.list}>
-        <NavLink
-          to={"/admin/UserProfile/Moderator"}
-          className={classes.item}
-          activeClassName="active"
-        >
-        <ListItem button className={classes.itemLink }>
-          <ListItemText
-            primary={this.menu}
-            className={classNames(classes.itemText)}
-            disableTypography={true}
-          />
-        </ListItem>
-        </NavLink>
-        // </List>
-    );
-  }
+      <CardHeader color="success">
+        <h3>Moderator Dashboard</h3>
+      </CardHeader>
+      {/* style={{height : "200px"}} */}
+      <GridContainer>
+        <GridItem>
+          <Button onClick={goToBans}>
+              <Card>
+                <CardHeader plain color="warning">
+                  Ban user
+                </CardHeader>
+              </Card>
+          </Button>
+        </GridItem>
+        <GridItem>
+          <Button onClick={goToView}>
+              <Card>
+                <CardHeader plain color="success">
+                  View user
+                </CardHeader>
+              </Card>
+          </Button>
+        </GridItem>
+        <GridItem>
+          <Button onClick={goToSecret}>
+              <Card>
+                <CardHeader plain color="success">
+                  Secret users
+                </CardHeader>
+              </Card>
+          </Button>
+        </GridItem>
+        <GridItem>
+          <Button onClick={goToNext}>
+              <Card>
+                <CardHeader plain color="success">
+                  What next?
+                </CardHeader>
+              </Card>
+          </Button>
+        </GridItem>
+      </GridContainer>
+    </div>
+  )
 }
-
-export default withStyles(headerLinksStyle)(ModeratorMenu);
-// export {
-//   Moderator
-// };
-// withStyles(headerLinksStyle)(HeaderLinks)

@@ -19,7 +19,7 @@ import Person from "@material-ui/icons/Person";
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 import { Sessions } from "alta-jsapi";
 // import Moderator from "../../views/UserProfile/Moderator";
-import ModeratorMenu from "../../views/UserProfile/Moderator";
+import ModeratorMenu from "../../views/UserProfile/ModeratorMenu";
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
