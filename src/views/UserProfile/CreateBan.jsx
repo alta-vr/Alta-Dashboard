@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
@@ -27,6 +27,9 @@ export default function CreateBan() {
 
   const history = useHistory();
 
+  // useRef();
+
+
   let userInfo = {
     userID: "",
 
@@ -35,6 +38,17 @@ export default function CreateBan() {
   function handleBan(event){
     event.preventDefault();
 
+    const formElements = event.target.elements;
+    const banInfo ={
+      userid: formElements['user'].value, //whatever the UserInput returns
+      duration_hours: formElements['duration'].value,
+      type: formElements['type'].value,
+      // method: formElements['method'].value,
+      reason: formElements['reason'].value,
+      // servers: formElements['servers'].value
+    }
+
+    console.log(banInfo);
     // history.goBack();
   }
     
@@ -46,45 +60,10 @@ export default function CreateBan() {
             <form onSubmit={handleBan}>
               <Card style={{width: '800px'}}>
                 <CardBody>
-                  <UserInputField>
+                  <UserInputField >
+                  {/* ref={valid, {userid,username}} */}
 
                   </UserInputField>
-                  <CustomInput
-                    labelText="Id..."
-                    id="userid"
-                    formControlProps={{
-                      fullWidth: true,
-                      className: ""
-                    }}
-                    inputProps={{
-                      required: false,
-                      name: "userid",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Icon>
-                            lock_outline
-                          </Icon>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Name..."
-                    id="name"
-                    formControlProps={{
-                      fullWidth: true,
-                      className: ""
-                    }}
-                    inputProps={{
-                      required: false,
-                      name: "username",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Face  />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
                   <CustomInput
                     labelText="Duration..."
                     id="duration"

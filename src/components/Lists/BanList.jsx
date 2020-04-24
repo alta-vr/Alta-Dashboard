@@ -18,9 +18,7 @@ const fields = [
     let history = useHistory();
 
     useEffect(() => {
-      setBanList(getListFunc());
-      //.then(setBanList).catch(e => console.log("Error: " + e));
-      
+      getListFunc().then(setBanList).catch(e => console.log("Error: " + e))
     }, [getListFunc]);
 
     function goToDetails(banId) {
