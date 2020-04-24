@@ -21,7 +21,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import { useHistory } from 'react-router';
-import { Users } from 'alta-jsapi'
+import UserInputField from "components/Validator/UserInputField.jsx";
 
 export default function CreateBan() {
 
@@ -32,19 +32,10 @@ export default function CreateBan() {
 
   }
 
-  let handleBan = e => {
-    e.preventDefault();
-    const formElements = e.target.elements;
-    const user = formElements['user'].value;
-    // var func = Users.getInfo;
+  function handleBan(event){
+    event.preventDefault();
 
-    // if (isNaN(user)){
-    //     func = Users.getUserByUsername;
-    // }
-
-    // func(user).then().catch();
-
-      // history.goBack();
+    // history.goBack();
   }
     
   return (
@@ -55,6 +46,9 @@ export default function CreateBan() {
             <form onSubmit={handleBan}>
               <Card style={{width: '800px'}}>
                 <CardBody>
+                  <UserInputField>
+
+                  </UserInputField>
                   <CustomInput
                     labelText="Id..."
                     id="userid"
