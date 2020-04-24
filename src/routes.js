@@ -9,6 +9,8 @@ import ServerConsole from "views/Servers/ServerConsole.jsx";
 import UserProfile from "views/UserProfile/UserProfile";
 import Moderator from "views/UserProfile/Moderator";
 import UserBans from "views/UserProfile/UserBans";
+import CreateBan from "views/UserProfile/CreateBan";
+import ViewBans from "views/UserProfile/ViewBans";
 
 // import ModeratorMenu from "views/UserProfile/Moderator";
 // import ServerGroups from "./views/Servers/ServerGroups";
@@ -44,6 +46,26 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: ServersPage,
     layout: "/admin"
+  },
+  {
+    path: "/Moderator/UserBans/ViewBans",
+    name: "View bans",
+    icon: Login,
+    component: ViewBans,
+    // menuComponents: ModeratorMenu,
+    layout: "/admin",
+    hidden: true,
+    moderator: true
+  },
+  {
+    path: "/Moderator/UserBans/CreateBan",
+    name: "Create ban",
+    icon: Login,
+    component: CreateBan,
+    // menuComponents: ModeratorMenu,
+    layout: "/admin",
+    hidden: true,
+    moderator: true
   },
   {
     path: "/Moderator/UserBans",

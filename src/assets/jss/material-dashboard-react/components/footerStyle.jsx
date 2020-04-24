@@ -9,7 +9,6 @@ const footerStyle = {
   block: {
     color: "inherit",
     padding: "15px",
-    textTransform: "uppercase",
     borderRadius: "3px",
     textDecoration: "none",
     position: "relative",

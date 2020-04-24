@@ -5,7 +5,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import SearchBar from 'components/SearchBar/SearchBar.jsx'
-import ServerList from 'components/Servers/ServerList.jsx'
+import ServerList from 'components/Lists/ServerList.jsx'
 import DropDownMenu from "components/Menu/DropDownMenu.jsx"
 
 import { Sessions, Servers } from 'alta-jsapi';
@@ -52,10 +52,14 @@ class ServersPage extends React.Component {
               All {this.getUsername()}'s servers
               <hr></hr>
             </h3>
-            <SearchBar searchFor />
+            <SearchBar searchFor="servers" />
           </CardHeader>
           <CardBody>
-            <DropDownMenu values={lists} handleChange={(event) => this.handleDropDown(event)} />
+            <DropDownMenu
+              title="server list"
+              values={lists}
+              handleChange={(event) => this.handleDropDown(event)}
+            />
           </CardBody>
         </Card>
         <ServerList getListFunc={this.state.currentList.func} />

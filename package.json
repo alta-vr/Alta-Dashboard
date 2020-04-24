@@ -7,6 +7,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "3.0.2",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "alta-jsapi": "git+https://github.com/alta-vr/alta-jsapi.git",
     "axios": "^0.18.0",
     "chartist": "0.10.1",

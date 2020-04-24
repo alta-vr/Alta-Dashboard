@@ -8,26 +8,23 @@ import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
 
 const fields = [
-  {label: "ID", getValue : s => s.id},
-  {label: "Name", getValue : s => s.name},
-  {label: "Online Players", getValue : s => s.online_players.length},
-  {label: "Region", getValue : s => s.region},
-  {label: "Status", getValue : s => s.server_status},
+  {label: "ID", getValue : b => b.id}
   ];
 
- function ServerList({ getListFunc }) {
+ function BanList({ getListFunc }) {
 
-    const [serverList, setServerList] = useState([]);
+    const [banList, setBanList] = useState([]);
     let currentPath = useLocation().pathname;
     let history = useHistory();
 
     useEffect(() => {
-      getListFunc().then(setServerList).catch(e => console.log("Error: " + e));
+      setBanList(getListFunc());
+      //.then(setBanList).catch(e => console.log("Error: " + e));
       
     }, [getListFunc]);
 
-    function handleClick(serverId) {
-      history.push(currentPath + "/" + serverId);
+    function goToDetails(banId) {
+      history.push(currentPath + "/" + banId);
     }
 
     return (
@@ -42,21 +39,21 @@ const fields = [
             </TableRow>
           </TableHead>
           <TableBody>
-            {serverList.map(server => 
-                <TableRow key={server.id} >
+            {banList.map(ban => 
+                <TableRow key={ban.id} >
                     {fields.map(field =>
                     <TableCell key={field.name}>
-                      {field.getValue(server)}
+                      {field.getValue(ban)}
                     </TableCell>)}
-                    <Button 
+                    {/* <Button 
                       variant="contained"
                       color="default"
-                      onClick={() => handleClick(server.id)}
-                      >DashBoard</Button>
+                      onClick={() => goToDetails(ban.id)}
+                      >Info</Button> */}
                 </TableRow>)}
           </TableBody>
         </Table>
     )
 }
 
-export default ServerList
+export default BanList

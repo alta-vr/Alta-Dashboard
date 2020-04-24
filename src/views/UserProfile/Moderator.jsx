@@ -6,7 +6,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import { useHistory, useLocation } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import Container from '@material-ui/core/Container';
 
 export default function Moderator() {
 
@@ -24,30 +24,26 @@ export default function Moderator() {
 
   function goToView(){
     console.log("go to view");
-    // history.push();
+    // history.push(currentPath + "/UserBans");
   }
 
   function goToSecret(){
     console.log("go to secret");
-    // history.push();
+    // history.push(currentPath + "/UserBans");
   }
 
   function goToNext(){
     console.log("go to next");
-    // history.push();
+    // history.push(currentPath + "/UserBans");
   }
 
-    function goBack() {
-        history.goBack();
-    }
+  function goBack() {
+      history.goBack();
+  }
 
   return (
     <div>
-      <Card plain>
-        <CardHeader color="success">
-          <h3>Moderator Dashboard</h3>
-        </CardHeader>
-      </Card>
+      <Container><h2>Moderator Dashboard</h2></Container>
       {/* style={{height : "200px"}} */}
       <GridContainer>
         <GridItem>
