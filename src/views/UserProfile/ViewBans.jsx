@@ -14,9 +14,9 @@ import { Bans } from 'alta-jsapi';
 
 const lists = [
   // functions to get ban lists
-  // { func: () => [{id: "All bans"}], label: "All" },
-  // { func: () => [{id: "Mod bans"}], label: "Some" },
-  // { func: () => [{id: "User bans"}], label: "Some" }
+  { func: () => [{id: "All bans"}], label: "All" },
+  { func: () => [{id: "Mod bans"}], label: "Some" },
+  { func: () => [{id: "User bans"}], label: "Some" }
   { func: Bans.getAll, label: "All" },
   { func: Bans.getModBans, label: "Created by" },
   { func: Bans.getUserBans, label: "For user" }
