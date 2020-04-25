@@ -4,20 +4,10 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Hidden from "@material-ui/core/Hidden";
-import Poppers from "@material-ui/core/Popper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import Person from "@material-ui/icons/Person";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 import { Sessions } from "alta-jsapi";
@@ -28,8 +18,7 @@ const Sidebar = ({ ...props }) => {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
-  var userPolicys = Sessions.getPolicies();
-
+  // var userPolicys = Sessions.getPolicies();
   var listItemClasses = null;
   var whiteFontClasses = null;
   const { classes, color, logo, image, logoText, routes } = props;
