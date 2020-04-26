@@ -9,7 +9,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import { useHistory, useLocation } from 'react-router';
+// import { useHistory, useLocation } from 'react-router';
 import UserInputField from "components/Validator/UserInputField.jsx";
 import DropDownMenu from '../../components/Menu/DropDownMenu';
 
@@ -21,11 +21,6 @@ const dropDownOptions = [
 
 export default function CreateBan() {
 
-  const history = useHistory();
-  const location = useLocation();
-  const path = location.pathname.split("/");
-  console.log(location)
-  console.log(path.slice(0,path.length-1))
   const banInfo ={
     user: null, //whatever the UserInput returns
     duration_hours: "",
