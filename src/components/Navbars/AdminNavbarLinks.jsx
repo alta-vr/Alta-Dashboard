@@ -10,11 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
-// @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Button from "components/CustomButtons/Button.jsx";
-
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 import { Sessions } from "alta-jsapi";
 
@@ -40,16 +38,16 @@ class HeaderLinks extends React.Component {
     this.setState({ open: false, profilePopupOpen: false });
   };
 
-  logout = async () => {
+  logout = () => {
     const { history } = this.props;
     try {
 
-      Sessions.forget();
       Sessions.logout();
-      history.push('/auth/login-page');
+      console.log("after logout:");
+      history.push("/auth/login-page");
 
     } catch ({ request }) {
-      console.log(request);
+      console.log("Request:" ,request);
     }
   }
 

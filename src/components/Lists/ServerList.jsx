@@ -15,7 +15,7 @@ const fields = [
   {label: "Status", getValue : s => s.server_status},
   ];
 
- function ServerList({ getListFunc }) {
+  export default function ServerList({ getListFunc }) {
 
     const [serverList, setServerList] = useState([]);
     let currentPath = useLocation().pathname;
@@ -26,9 +26,32 @@ const fields = [
       
     }, [getListFunc]);
 
+    useEffect(() => {
+      console.log("Changed");
+      
+    }, [serverList]);
+
     function goToDetails(serverId) {
       history.push(currentPath + "/" + serverId);
     }
+
+    function sortColumn(event){
+      // Insert sorting alg
+      console.log("Sorting column: " , event)
+      var tempServerList = serverList;
+
+      // console.log("Templist1: " , tempServerList);
+      tempServerList.sort(function(a,b) {return a.online_players.length - b.online_players.length});
+      // console.log("Templist2: " , tempServerList);
+      // tempServerList = [];
+      setServerList(tempServerList);
+      console.log("ServerList: " , serverList)
+    }
+
+    // function cmpPlayers(a,b){
+    //   // console.log("a: " , a.online_players.length, " b: ", b);
+    //   return a.online_players.length - b.online_players.length;
+    // }
 
     return (
         <Table>
@@ -36,7 +59,11 @@ const fields = [
             <TableRow>
               {fields.map(field =>
                   <TableCell key={field.label}>
-                    {field.label}
+                    <Button
+                      onClick={() => sortColumn(field.label)}
+                      >
+                      {field.label}
+                    </Button>
                   </TableCell>
               )}
             </TableRow>
@@ -58,5 +85,3 @@ const fields = [
         </Table>
     )
 }
-
-export default ServerList

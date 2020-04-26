@@ -5,18 +5,18 @@ import { Button } from "@material-ui/core";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-
 import { Servers } from 'alta-jsapi';
 import GridContainer from "components/Grid/GridContainer.jsx";
 
-function ServerViewer () {
+export default function ServerViewer () {
 
     let { serverId } = useParams();
     let history = useHistory();
     let currentPath = useLocation().pathname;
 
     let [server, setServer] = useState(undefined);
-    let loading = true;
+    // Maybe use loading state later?
+    // let loading = true;
 
     useEffect( () => {
         Servers.getDetails(serverId)
@@ -76,10 +76,5 @@ function ServerViewer () {
         </GridContainer>
         </div>
     );
-
 };
 
-ServerViewer.propTypes = {
-};
-
-export default ServerViewer;

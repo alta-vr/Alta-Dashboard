@@ -9,14 +9,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import { Users } from 'alta-jsapi'
 
-export default function UserInputField() {
+export default function UserInputField( {onValidate}) {
 
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  useEffect(() => {
-
-  }, [error])
 
   let validateUserEntry = (e, value) => {
     e.preventDefault();
@@ -35,15 +31,16 @@ export default function UserInputField() {
       console.log(userInfo);
       setError(false);
       setSuccess(true);
+      onValidate(true);
     }).catch((e)=> {
       console.log(e);
       setError(true);
       setSuccess(false);
+      onValidate(false);
     });
   }
 
   return (
-    // <FormControl>
     <>
         <InputLabel>
           {"User..."}
@@ -68,7 +65,6 @@ export default function UserInputField() {
         <Check style={{color:'green'}} />
       ) : null}
       </>
-    // </FormControl>
   );
 }
 

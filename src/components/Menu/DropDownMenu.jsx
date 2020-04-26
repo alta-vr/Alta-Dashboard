@@ -6,51 +6,22 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import {Autocomplete} from '@material-ui/lab/';
 
-function DropDownMenu ({ title, values, handleChange }) {
-    const [current, setCurrent] = useState(values[3]);
+export default function DropDownMenu (props) {
 
+    const { title, values, handleChange } = props;
+    const [current, setCurrent] = useState(values[0]);
 
     useEffect(() => {
         setCurrent(current);
     }, [values]);
 
-    // useEffect(() => {
-    //     setCurrent(current);
-    // }, [current]);
-
     const handleChangeInternal = (event) => {
         setCurrent(event.target.value);
+        console.log("Event: ", event.target)
         handleChange(event);
       };
 
-    // function getOptions(){
-    //     // let options = values.map(value =>
-    //     //     value.label
-    //     //     );
-    //     // console.log(options);
-    //     console.log("Got options");
-    //     return [
-    //         {label: "label 1"},
-    //         {label:"labal 2"}
-    //     ]
-    // }
-
-    // const getOptions = [
-    //     {label: "label 1"},
-    //     {label:"labal 2"}
-    // ]
-
     return (
-        // <Autocomplete
-        //   id="dropDownBox"
-        //   options={getOptions()}
-        //   getOptionLabel={(option) => option.label}
-        //   style={{ width: 300 }}
-        //   autoHighlight
-        //   onClick={getOptions}
-        //   renderInput={(params) =>
-        //   <TextField {...params} label={title} variant="outlined" />}
-        // />
         <FormControl>
             <FormHelperText>Select {title}</FormHelperText>
             <Select
@@ -65,10 +36,3 @@ function DropDownMenu ({ title, values, handleChange }) {
         </FormControl>
     );
 }
-
-// DropDownMenu.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-export default DropDownMenu;
-

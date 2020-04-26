@@ -1,55 +1,75 @@
 import React, {useRef} from 'react'
-import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Container from '@material-ui/core/Container';
-
-// @material-ui/icons
-import Email from "@material-ui/icons/Email";
-import Check from "@material-ui/icons/Check";
-import Face from "@material-ui/icons/Face";
-
-// core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import UserInputField from "components/Validator/UserInputField.jsx";
+import DropDownMenu from '../../components/Menu/DropDownMenu';
+
+const dropDownOptions = [
+  // Check if value needs to be enum BanType
+  {label: "Server", name: "server"},
+  {label: "Global", name: "global"}
+]
 
 export default function CreateBan() {
 
   const history = useHistory();
+  const location = useLocation();
+  const path = location.pathname.split("/");
+  console.log(location)
+  console.log(path.slice(0,path.length-1))
+  const banInfo ={
+    user: null, //whatever the UserInput returns
+    duration_hours: "",
+    type: "Global",
+    // method: formElements['method'].value,
+    reason: "",
+    // servers: formElements['servers'].value
+  }
+  let validUser = false;
 
-  // useRef();
+  function handleUserInput(isValid){
+    validUser = isValid;
+  }
 
+  function handleType(event){
+    banInfo.type = event.target.value.name;
+    console.log("Baninfo: " ,banInfo.type);
+  }
 
-  let userInfo = {
-    userID: "",
-
+  function clearFields(){
+    window.location.reload(false);
   }
 
   function handleBan(event){
     event.preventDefault();
 
     const formElements = event.target.elements;
-    const banInfo ={
-      userid: formElements['user'].value, //whatever the UserInput returns
-      duration_hours: formElements['duration'].value,
-      type: formElements['type'].value,
-      // method: formElements['method'].value,
-      reason: formElements['reason'].value,
-      // servers: formElements['servers'].value
+    banInfo.user = formElements['user'].value;
+    banInfo.duration_hours = formElements['duration'].value;
+    banInfo.reason = formElements['reason'].value;
+
+    // method: formElements['method'].value,
+    // servers: formElements['servers'].value
+
+    if (!validUser){
+      // Show more text?
+      console.log("Invalid user")
+      return;
     }
 
-    console.log(banInfo);
-    // history.goBack();
+    // Call API createBan
+    // Display confirmation message
+    console.log("Valid user: ", banInfo)
+    clearFields();
   }
     
   return (
@@ -60,10 +80,9 @@ export default function CreateBan() {
             <form onSubmit={handleBan}>
               <Card style={{width: '800px'}}>
                 <CardBody>
-                  <UserInputField >
-                  {/* ref={valid, {userid,username}} */}
-
-                  </UserInputField>
+                  <UserInputField
+                    onValidate={handleUserInput}
+                  />
                   <CustomInput
                     labelText="Duration..."
                     id="duration"
@@ -72,8 +91,9 @@ export default function CreateBan() {
                       className: ""
                     }}
                     inputProps={{
-                      required: false,
+                      required: true,
                       name: "duration",
+                      type:"number",
                       endAdornment: (
                         <InputAdornment position="end">
                           <Icon>
@@ -91,7 +111,7 @@ export default function CreateBan() {
                       className: ""
                     }}
                     inputProps={{
-                      required: false,
+                      required: true,
                       name: "reason",
                       endAdornment: (
                         <InputAdornment position="end">
@@ -102,24 +122,10 @@ export default function CreateBan() {
                       )
                     }}
                   />
-                  <CustomInput
-                    labelText="Type..."
-                    id="type"
-                    formControlProps={{
-                      fullWidth: true,
-                      className: ""
-                    }}
-                    inputProps={{
-                      required: false,
-                      name: "type",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Icon>
-                            lock_outline
-                          </Icon>
-                        </InputAdornment>
-                      )
-                    }}
+                  <DropDownMenu
+                    title={"type"}
+                    handleChange={handleType}
+                    values={dropDownOptions}
                   />
                 </CardBody>
                 <CardFooter >

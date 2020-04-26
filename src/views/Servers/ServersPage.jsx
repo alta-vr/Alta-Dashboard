@@ -1,74 +1,52 @@
-import React from "react";
-
-// core components
+import React, { useState } from "react";
 import CardBody from "components/Card/CardBody.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import SearchBar from 'components/SearchBar/SearchBar.jsx'
 import ServerList from 'components/Lists/ServerList.jsx'
 import DropDownMenu from "components/Menu/DropDownMenu.jsx"
-
 import { Sessions, Servers } from 'alta-jsapi';
 
 const lists = [
+  { func: Servers.getOpen, label: "Open" },
   { func: Servers.getConsoleServers, label: "Console" },
   { func: Servers.getControllable, label: "Controllable" },
+  { func: Servers.getFavorites, label: "Favorites" },
   { func: Servers.getJoined, label: "Joined" },
-  { func: Servers.getOpen, label: "Open" },
-  { func: Servers.getPublic, label: "Public" },
-  { func: Servers.getFavorites, label: "Favorites" }
+  { func: Servers.getPublic, label: "Public" }
 ]
 
-class ServersPage extends React.Component {
+export default function ServersPage() {
 
-  state = {
-    currentList: lists[3],
-    serverRegions: []
-  };
+  const [currentList, setCurrentList] = useState(lists[0]);
 
-  getUserID = () => {
-    console.log("User ID: " + Sessions.getUserId())
-    return Sessions.getUserId();
-  }
-
-  getUsername = () => {
+  function getUsername() {
     return Sessions.getUsername();
   }
 
-  // componentDidMount(){
-  //   Servers.getRegions().then(regions => this.setState({ serverRegions : regions })).catch(e => console.log("Error: " + e));
-  // }
-
-  handleDropDown = (event) => {
-    this.setState({currentList : event.target.value});
+  function handleDropDown (event) {
+    setCurrentList(event.target.value);
   }
   
-  render() {
-    return (
-      <>
-        <Card plain>
-          <CardHeader color="primary">
-            <h3>
-              All {this.getUsername()}'s servers
-              <hr></hr>
-            </h3>
-            <SearchBar searchFor="servers" />
-          </CardHeader>
-          <CardBody>
-            <DropDownMenu
-              title="server list"
-              values={lists}
-              handleChange={(event) => this.handleDropDown(event)}
-            />
-          </CardBody>
-        </Card>
-        <ServerList getListFunc={this.state.currentList.func} />
-      </>
-    );
-  };
+  return (
+    <>
+      <Card plain>
+        <CardHeader color="primary">
+          <h3>
+            All {getUsername()}'s servers
+            <hr></hr>
+          </h3>
+          <SearchBar searchFor="servers" />
+        </CardHeader>
+        <CardBody>
+          <DropDownMenu
+            title="server list"
+            values={lists}
+            handleChange={(event) => handleDropDown(event)}
+          />
+        </CardBody>
+      </Card>
+      <ServerList getListFunc={currentList.func} />
+    </>
+  );
 };
-
-ServersPage.propTypes = {
-};
-
-export default (ServersPage);
