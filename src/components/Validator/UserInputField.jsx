@@ -1,68 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Clear from "@material-ui/icons/Clear";
 import Check from "@material-ui/icons/Check";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
-import { Users } from 'alta-jsapi'
+import { Users } from "alta-jsapi";
 
-export default function UserInputField( {onValidate}) {
-
+export default function UserInputField({ onValidateInput }) {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  let validateUserEntry = (e, value) => {
+  let validateUserEntry = (e) => {
     e.preventDefault();
     var userEntry = e.target.value;
     let getUserInfo = Users.getInfo;
 
-    if (isNaN(userEntry)){
+    if (isNaN(userEntry)) {
       getUserInfo = Users.findUserByUsername;
-    }
-    else {
+    } else {
       userEntry = parseInt(userEntry);
     }
 
     console.log(getUserInfo);
-    getUserInfo(userEntry).then((userInfo)=>{
-      console.log(userInfo);
-      setError(false);
-      setSuccess(true);
-      onValidate(true);
-    }).catch((e)=> {
-      console.log(e);
-      setError(true);
-      setSuccess(false);
-      onValidate(false);
-    });
-  }
+    getUserInfo(userEntry)
+      .then((userInfo) => {
+        console.log(userInfo);
+        setError(false);
+        setSuccess(true);
+        onValidateInput(userInfo);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(true);
+        setSuccess(false);
+        onValidateInput(undefined);
+      });
+  };
 
   return (
     <>
-        <InputLabel>
-          {"User..."}
-        </InputLabel>
-      <Input 
-      onChange={validateUserEntry}
+      <InputLabel>{"User..."}</InputLabel>
+      <Input
+        onChange={validateUserEntry}
         inputProps={{
           required: true,
           name: "user",
           endAdornment: (
             <InputAdornment position="end">
-              <Icon>
-                lock_outline
-              </Icon>
+              <Icon>lock_outline</Icon>
             </InputAdornment>
-          )
-        }} />
-      
+          ),
+        }}
+      />
+
       {error ? (
-        <Clear style={{color:'red'}} />
+        <Clear style={{ color: "red" }} />
       ) : success ? (
-        <Check style={{color:'green'}} />
+        <Check style={{ color: "green" }} />
       ) : null}
-      </>
+    </>
   );
 }
-

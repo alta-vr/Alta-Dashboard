@@ -6,11 +6,12 @@ import LoginPage from "views/AuthPages/LoginPage.jsx";
 import ServersPage from "views/Servers/ServersPage.jsx";
 import ServerViewer from "views/Servers/ServerViewer.jsx";
 import ServerConsole from "views/Servers/ServerConsole.jsx";
-import UserProfile from "views/UserProfile/UserProfile";
-import Moderator from "views/UserProfile/Moderator";
-import UserBans from "views/UserProfile/UserBans";
-import CreateBan from "views/UserProfile/CreateBan";
-import ViewBans from "views/UserProfile/ViewBans";
+import UserProfile from "views/UserProfile/UserProfile.jsx";
+import Moderator from "views/Moderator/Moderator.jsx";
+import UserBans from "views/Moderator/Bans/UserBans";
+import CreateBan from "views/Moderator/Bans/CreateBan";
+import ViewBans from "views/Moderator/Bans/ViewBans";
+import BanViewer from "views/Moderator/Bans/BanViewer";
 
 // import ModeratorMenu from "views/UserProfile/Moderator";
 // import ServerGroups from "./views/Servers/ServerGroups";
@@ -22,7 +23,7 @@ const dashboardRoutes = [
     icon: Login,
     component: LoginPage,
     layout: "/auth",
-    hidden: true
+    hidden: true,
   },
   {
     path: "/Servers/:serverId/Console",
@@ -30,7 +31,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: ServerConsole,
     layout: "/admin",
-    hidden: true
+    hidden: true,
   },
   {
     path: "/Servers/:serverId",
@@ -38,14 +39,24 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: ServerViewer,
     layout: "/admin",
-    hidden: true
+    hidden: true,
   },
   {
     path: "/Servers",
     name: "All Servers",
     icon: Dashboard,
     component: ServersPage,
-    layout: "/admin"
+    layout: "/admin",
+  },
+  {
+    path: "/Moderator/UserBans/ViewBans/:banId",
+    name: "View bans",
+    icon: Login,
+    component: BanViewer,
+    // menuComponents: ModeratorMenu,
+    layout: "/admin",
+    hidden: true,
+    moderator: true,
   },
   {
     path: "/Moderator/UserBans/ViewBans",
@@ -55,7 +66,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true
+    moderator: true,
   },
   {
     path: "/Moderator/UserBans/CreateBan",
@@ -65,7 +76,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true
+    moderator: true,
   },
   {
     path: "/Moderator/UserBans",
@@ -75,7 +86,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true
+    moderator: true,
   },
   {
     path: "/Moderator",
@@ -85,7 +96,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: false,
-    moderator: true
+    moderator: true,
   },
   {
     path: "/UserProfile",
@@ -93,8 +104,8 @@ const dashboardRoutes = [
     icon: Login,
     component: UserProfile,
     layout: "/admin",
-    hidden: true
-  }
+    hidden: true,
+  },
 ];
 
 export default dashboardRoutes;
