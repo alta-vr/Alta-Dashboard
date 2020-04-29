@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import CardBody from "components/Card/CardBody.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import SearchBar from 'components/SearchBar/SearchBar.jsx'
-import ServerList from 'components/Lists/ServerList.jsx'
-import DropDownMenu from "components/Menu/DropDownMenu.jsx"
-import { Sessions, Servers } from 'alta-jsapi';
+import SearchBar from "components/SearchBar/SearchBar.jsx";
+import ServerList from "components/Lists/ServerList.jsx";
+import DropDownMenu from "components/Menu/DropDownMenu.jsx";
+import { Sessions, Servers } from "alta-jsapi";
 
 const lists = [
   { func: Servers.getOpen, label: "Open" },
@@ -13,28 +13,27 @@ const lists = [
   { func: Servers.getControllable, label: "Controllable" },
   { func: Servers.getFavorites, label: "Favorites" },
   { func: Servers.getJoined, label: "Joined" },
-  { func: Servers.getPublic, label: "Public" }
-]
+  { func: Servers.getPublic, label: "Public" },
+];
 
 export default function ServersPage() {
-
   const [currentList, setCurrentList] = useState(lists[0]);
 
   function getUsername() {
     return Sessions.getUsername();
   }
 
-  function handleDropDown (event) {
-    setCurrentList(event.target.value);
+  function handleDropDown(event) {
+    setCurrentList(event);
   }
-  
+
   return (
     <>
       <Card plain>
         <CardHeader color="primary">
           <h3>
             All {getUsername()}'s servers
-            <hr></hr>
+            <hr />
           </h3>
           <SearchBar searchFor="servers" />
         </CardHeader>
@@ -49,4 +48,4 @@ export default function ServersPage() {
       <ServerList getListFunc={currentList.func} />
     </>
   );
-};
+}
