@@ -8,6 +8,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import { Bans } from "alta-jsapi";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
+import FormattedDate from "../../../components/Formats/FormattedDate";
 
 export default function BanViewer(props) {
   let { banInfo } = useLocation();
@@ -68,9 +69,21 @@ export default function BanViewer(props) {
             <h4>Reason: {banInfo.reason ? banInfo.reason : "N/A"}</h4>
             <h4>Type: {banInfo.type ? banInfo.type : "N/A"}</h4>
             <h4>
-              Created at: {banInfo.created_at ? banInfo.created_at : "N/A"}
+              Created at:{" "}
+              {banInfo.created_at ? (
+                <FormattedDate date={banInfo.created_at} />
+              ) : (
+                "N/A"
+              )}
             </h4>
-            <h4>End time: {banInfo.end_time ? banInfo.end_time : "N/A"}</h4>
+            <h4>
+              End time:{" "}
+              {banInfo.end_time ? (
+                <FormattedDate date={banInfo.end_time} />
+              ) : (
+                "N/A"
+              )}
+            </h4>
             <h4>
               Created by: {banInfo.created_by ? banInfo.created_by : "N/A"}
             </h4>

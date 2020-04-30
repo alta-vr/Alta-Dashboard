@@ -22,25 +22,26 @@ const dropDownOptions = [
 ];
 
 export default function CreateBan() {
+  let [validUser, setValidUser] = useState(false);
   var [banInfo, setBanInfo] = useState({
     user: undefined,
     duration_hours: "",
-    type: "server",
+    type: dropDownOptions[0].name,
     reason: "",
     method: 7,
     servers: [],
   });
-  let validUser = false;
 
   function handleUserInput(userInfo) {
     if (userInfo == undefined) {
-      validUser = false;
+      setValidUser(false);
       setBanInfo({ ...banInfo, user: undefined });
       return;
     }
+    console.log("Valid user: ", userInfo);
 
     setBanInfo({ ...banInfo, user: userInfo });
-    validUser = true;
+    setValidUser(true);
   }
 
   function handleType(event) {
@@ -52,10 +53,11 @@ export default function CreateBan() {
   }
 
   function handleConfirmation(response) {
-    //   if (!response) {
-    //     console.log("Cancelled");
-    //     return;
-    //   }
+    if (!response) {
+      console.log("Cancelled");
+      return;
+    }
+    console.log("Confirmed");
     //   if (!validUser) {
     //     // Show more text?
     //     console.log("Invalid user");
@@ -79,14 +81,6 @@ export default function CreateBan() {
   function handleBan(event) {
     event.preventDefault();
 
-    // const formElements = event.target.elements;
-    // // banInfo.user = formElements["user"].value;
-    // banInfo.duration_hours = formElements["duration"].value;
-    // banInfo.reason = formElements["reason"].value;
-
-    // method: formElements['method'].value,
-    // servers: formElements['servers'].value
-
     if (!validUser) {
       // Show more text?
       console.log("Invalid user");
@@ -95,7 +89,7 @@ export default function CreateBan() {
 
     // Call API createBan
     // Display confirmation message
-    console.log("Valid user: ", banInfo);
+    console.log("Createban Valid user: ", banInfo);
     Bans.createBan(
       banInfo.user.id,
       banInfo.duration_hours,
@@ -120,13 +114,14 @@ export default function CreateBan() {
   }
 
   function formatDateTime() {
-    var formatedDate = "";
+    console.log("Createban duration: ", banInfo.duration_hours);
+    var untilDate;
     var currentDate = new Date();
-    formatedDate += currentDate.getDay() + ", ";
-    formatedDate += currentDate.getMonth() + ", ";
-    formatedDate += currentDate.getYear();
+    untilDate = currentDate.setTime(
+      currentDate.getTime() + banInfo.duration_hours * 60 * 60 * 1000
+    );
 
-    return formatedDate;
+    return currentDate.toLocaleString();
   }
 
   return (
@@ -159,7 +154,11 @@ export default function CreateBan() {
                     ),
                   }}
                 />
-                <label>Lasts until: {formatDateTime()}</label>
+                {banInfo.duration_hours == "" ? (
+                  <></>
+                ) : (
+                  <label>Lasts until: {formatDateTime()}</label>
+                )}
                 <CustomInput
                   labelText="Reason..."
                   id="reason"
@@ -185,11 +184,15 @@ export default function CreateBan() {
                 />
               </CardBody>
               <CardFooter>
-                <PopupDialog
-                  title={"Create Ban"}
-                  info={`Are you sure you want to ban user for ?`}
-                  handleResponse={handleConfirmation}
-                />
+                {validUser ? (
+                  <PopupDialog
+                    title={"Create Ban"}
+                    info={`Are you sure you want to ban user for ?`}
+                    handleResponse={handleConfirmation}
+                  />
+                ) : (
+                  <></>
+                )}
                 {/* <Button type="submit" color="primary" simple size="lg" block>
                   Let's Go
                 </Button> */}

@@ -47,6 +47,7 @@ export default function UserBans() {
     if (userId != undefined) {
       handleCurrentFunc(currentListType);
     }
+    setCurrentList([]);
   }, [userId]);
 
   function getAllBans() {

@@ -11,7 +11,9 @@ export default function PopupDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (handleResponse != null) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
