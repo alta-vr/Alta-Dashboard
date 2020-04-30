@@ -35,18 +35,11 @@ function BanList({ currentList }) {
     setBanList(currentList);
   }, [currentList]);
 
-  function formatDateTime(date) {
-    var formatedDate = "";
-    var currentDate = new Date(Date.parse(date));
-
-    return currentDate.toDateString();
-  }
-
   function goToDetails(ban) {
     console.log("Ban: ", ban);
     history.push({
       pathname: currentPath + "/" + ban.ban_id,
-      banInfo: ban, // your data array of objects
+      banInfo: ban,
     });
   }
 
