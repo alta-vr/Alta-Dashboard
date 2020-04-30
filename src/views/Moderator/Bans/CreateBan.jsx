@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Container from "@material-ui/core/Container";
@@ -13,6 +13,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import UserInputField from "components/Validator/UserInputField.jsx";
 import DropDownMenu from "../../../components/Menu/DropDownMenu";
 import { Bans } from "alta-jsapi";
+import PopupDialog from "components/Notifications/PopupDialog.jsx";
 
 const dropDownOptions = [
   // Check if value needs to be enum BanType
@@ -21,42 +22,67 @@ const dropDownOptions = [
 ];
 
 export default function CreateBan() {
-  var banInfo = {
-    user: undefined, //whatever the UserInput returns
+  var [banInfo, setBanInfo] = useState({
+    user: undefined,
     duration_hours: "",
     type: "server",
-    // method: formElements['method'].value,
     reason: "",
     method: 7,
     servers: [],
-  };
+  });
   let validUser = false;
 
   function handleUserInput(userInfo) {
     if (userInfo == undefined) {
       validUser = false;
+      setBanInfo({ ...banInfo, user: undefined });
       return;
     }
-    banInfo.user = userInfo;
+
+    setBanInfo({ ...banInfo, user: userInfo });
     validUser = true;
   }
 
   function handleType(event) {
     banInfo.type = event.name;
-    console.log("Baninfo: ", banInfo.type);
   }
 
   function clearFields() {
     window.location.reload(false);
   }
 
+  function handleConfirmation(response) {
+    //   if (!response) {
+    //     console.log("Cancelled");
+    //     return;
+    //   }
+    //   if (!validUser) {
+    //     // Show more text?
+    //     console.log("Invalid user");
+    //     return;
+    //   }
+    //   // Call API createBan
+    //   // Display confirmation message
+    //   console.log("Valid user: ", banInfo);
+    //   Bans.createBan(
+    //     banInfo.user.id,
+    //     banInfo.duration_hours,
+    //     banInfo.type,
+    //     banInfo.method,
+    //     banInfo.reason,
+    //     banInfo.servers
+    //   )
+    //     .then((data) => console.log("Data: ", data))
+    //     .catch((e) => console.log("Create ban error: ", e));
+  }
+
   function handleBan(event) {
     event.preventDefault();
 
-    const formElements = event.target.elements;
-    // banInfo.user = formElements["user"].value;
-    banInfo.duration_hours = formElements["duration"].value;
-    banInfo.reason = formElements["reason"].value;
+    // const formElements = event.target.elements;
+    // // banInfo.user = formElements["user"].value;
+    // banInfo.duration_hours = formElements["duration"].value;
+    // banInfo.reason = formElements["reason"].value;
 
     // method: formElements['method'].value,
     // servers: formElements['servers'].value
@@ -81,6 +107,16 @@ export default function CreateBan() {
       .then((data) => console.log("Data: ", data))
       .catch((e) => console.log("Create ban error: ", e));
     // clearFields();
+  }
+
+  function handleDurationChange(input) {
+    setBanInfo({ ...banInfo, duration_hours: input.target.value });
+    console.log("duration input: ", input.target.value);
+  }
+
+  function handleReasonChange(input) {
+    setBanInfo({ ...banInfo, reason: input.target.value });
+    console.log("reason input: ", input.target.value);
   }
 
   function formatDateTime() {
@@ -112,6 +148,7 @@ export default function CreateBan() {
                     className: "",
                   }}
                   inputProps={{
+                    onChange: handleDurationChange,
                     required: true,
                     name: "duration",
                     type: "number",
@@ -131,6 +168,7 @@ export default function CreateBan() {
                     className: "",
                   }}
                   inputProps={{
+                    onChange: handleReasonChange,
                     required: true,
                     name: "reason",
                     endAdornment: (
@@ -147,9 +185,14 @@ export default function CreateBan() {
                 />
               </CardBody>
               <CardFooter>
-                <Button type="submit" color="primary" simple size="lg" block>
+                <PopupDialog
+                  title={"Create Ban"}
+                  info={`Are you sure you want to ban user for ?`}
+                  handleResponse={handleConfirmation}
+                />
+                {/* <Button type="submit" color="primary" simple size="lg" block>
                   Let's Go
-                </Button>
+                </Button> */}
               </CardFooter>
             </Card>
           </form>

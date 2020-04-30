@@ -19,7 +19,7 @@ export default function UserBans() {
   }
 
   function goToView() {
-    console.log("go to view");
+    console.log("go to view ");
     history.push(currentPath + "/ViewBans");
   }
 

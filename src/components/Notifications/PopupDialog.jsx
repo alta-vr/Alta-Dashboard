@@ -26,7 +26,12 @@ export default function PopupDialog(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        type="submit"
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
+      >
         {title}
       </Button>
       <Dialog
