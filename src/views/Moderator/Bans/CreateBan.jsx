@@ -61,27 +61,44 @@ export default function CreateBan() {
       console.log("serverId undefined");
       return;
     }
-    console.log("Selected server: ", serverId);
-    var tempList = selectedServers;
-    var removeIndex = selectedServers.indexOf(-1);
-    console.log("removeindex: ", removeIndex);
-    tempList.splice(removeIndex, 1, serverId);
-    selectedServer = serverId;
+    var tempList = banInfo.servers;
+    tempList = tempList.filter((id) => {
+      return id != -1;
+    });
+    // tempList = tempList.filter(filter);
+    // var removeIndex = selectedServers.indexOf(-1);
+    // console.log("removeindex: ", removeIndex);
+    // tempList.splice(removeIndex, 1, serverId);
+    // selectedServer = serverId;
+    setBanInfo({ ...banInfo, servers: [...tempList, serverId] });
+  }
+
+  function filter(filter) {
+    return filter != -1;
   }
 
   function handleAddServer() {
     // selectedServer = event;
-    console.log("Adding server: ", selectedServer);
-    setSelectedServers([...selectedServers, -1]);
+    console.log("Adding server: ");
+    setBanInfo({ ...banInfo, servers: [...banInfo.servers, -1] });
   }
 
   function handleRemoveServer(server) {
+    var tempList = banInfo.servers;
+    if (server == undefined) {
+      tempList = tempList.filter((id) => {
+        return id != -1;
+      });
+      setBanInfo({ ...banInfo, servers: [...tempList] });
+    }
     // selectedServer = event.name;
     console.log("Removing server: ", server);
-    console.log("current list before temp : ", server);
-    var tempList = selectedServers.filter((id) => id != server);
+    console.log("current list before temp : ", tempList);
+    tempList = tempList.filter((id) => {
+      return id != server;
+    });
     console.log("tempList after : ", tempList);
-    setSelectedServers(tempList);
+    setBanInfo({ ...banInfo, servers: [...tempList] });
   }
 
   function clearFields() {
@@ -219,16 +236,16 @@ export default function CreateBan() {
                   values={dropDownOptions}
                 />
                 <br />
-                {banType == "server" ? (
+                {banInfo.type == "server" ? (
                   <>
-                    {selectedServers.map((server) => (
-                      <>
+                    {banInfo.servers.map((serverId) => (
+                      <div key={serverId}>
                         <ServerInputField onValidateInput={handleValidServer} />
-                        <Button onClick={() => handleRemoveServer(server)}>
+                        <Button onClick={() => handleRemoveServer(serverId)}>
                           Remove
                         </Button>
                         <br />
-                      </>
+                      </div>
                     ))}
                     <Button onClick={handleAddServer}>Add</Button>
                   </>
