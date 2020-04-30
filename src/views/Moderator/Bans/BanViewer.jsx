@@ -5,7 +5,7 @@ import { Button } from "@material-ui/core";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import { Servers } from "alta-jsapi";
+import { Bans } from "alta-jsapi";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
 
@@ -21,8 +21,11 @@ export default function BanViewer(props) {
   }
 
   function handleDelete(response) {
+    console.log("banviewer Response: ", response);
+    console.log("banviewer banInfo: ", banInfo);
     if (response) {
-      console.log("DELETE");
+      Bans.deleteBan(banInfo.ban_id);
+      history.goBack();
       return;
     }
     console.log("Cancelled");

@@ -22,10 +22,8 @@ export default function UserInputField({ onValidateInput }) {
       userEntry = parseInt(userEntry);
     }
 
-    console.log(getUserInfo);
     getUserInfo(userEntry)
       .then((userInfo) => {
-        console.log(userInfo);
         setError(false);
         setSuccess(true);
         onValidateInput(userInfo);

@@ -43,6 +43,12 @@ export default function UserBans() {
     }
   }, []);
 
+  useEffect(() => {
+    if (userId != undefined) {
+      handleCurrentFunc(currentListType);
+    }
+  }, [userId]);
+
   function getAllBans() {
     Bans.getAll()
       .then((bans) => setCurrentList(bans))
@@ -56,21 +62,20 @@ export default function UserBans() {
   }
 
   function getModBans() {
+    console.log("viewbans getmod userId: ", userId);
     Bans.getModBans(userId)
       .then((bans) => setCurrentList(bans))
       .catch((e) => console.log("viewbans error: ", e));
   }
 
-  function handleUserInput(userInfo, selection) {
+  function handleUserInput(userInfo) {
     if (userInfo == undefined) {
       validUser = false;
       setUserId(undefined);
-      handleCurrentFunc();
       return;
     }
     validUser = true;
     setUserId(userInfo.id);
-    handleCurrentFunc();
   }
 
   function handleDropDown(banListType) {
@@ -93,7 +98,7 @@ export default function UserBans() {
         setShowInput(true);
         break;
     }
-    console.log("Current func: ", banListType);
+    console.log("Current list: ", currentList);
   }
 
   return (
