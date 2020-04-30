@@ -10,6 +10,7 @@ import { Users } from "alta-jsapi";
 export default function UserInputField({ onValidateInput }) {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [userName, setUserName] = useState(undefined);
 
   let validateUserEntry = (e) => {
     e.preventDefault();
@@ -18,14 +19,21 @@ export default function UserInputField({ onValidateInput }) {
 
     if (isNaN(userEntry)) {
       getUserInfo = Users.findUserByUsername;
+      setUserName(undefined);
     } else {
       userEntry = parseInt(userEntry);
+      setUserName("");
     }
 
     getUserInfo(userEntry)
       .then((userInfo) => {
         setError(false);
         setSuccess(true);
+        console.log("user name: ", userInfo.username);
+        if (userName != undefined) {
+          console.log("defined: ");
+          setUserName(userInfo.username);
+        }
         onValidateInput(userInfo);
       })
       .catch((e) => {
@@ -57,6 +65,7 @@ export default function UserInputField({ onValidateInput }) {
       ) : success ? (
         <Check style={{ color: "green" }} />
       ) : null}
+      {userName == undefined ? <></> : <label>{userName}</label>}
     </>
   );
 }

@@ -56,7 +56,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true,
+    isModOnly: true,
   },
   {
     path: "/Moderator/UserBans/ViewBans",
@@ -66,7 +66,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true,
+    isModOnly: true,
   },
   {
     path: "/Moderator/UserBans/CreateBan",
@@ -76,7 +76,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true,
+    isModOnly: true,
   },
   {
     path: "/Moderator/UserBans",
@@ -86,7 +86,7 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: true,
-    moderator: true,
+    isModOnly: true,
   },
   {
     path: "/Moderator",
@@ -96,10 +96,10 @@ const dashboardRoutes = [
     // menuComponents: ModeratorMenu,
     layout: "/admin",
     hidden: false,
-    moderator: true,
+    isModOnly: true,
   },
   {
-    path: "/UserProfile",
+    path: "/UserProfile/:userId",
     name: "User Profile",
     icon: Login,
     component: UserProfile,

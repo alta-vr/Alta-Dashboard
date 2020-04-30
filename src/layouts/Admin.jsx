@@ -23,28 +23,26 @@ let userInfo = {};
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      
-      if (prop.path === "/Moderator"){
+      if (!prop.isModOnly) {
         // put drop down menu thing here
         return (
           <Route
             path={prop.layout + prop.path}
-            component={props => {
+            component={(props) => {
               const Component = prop.component;
-              return <Component {...props} {...userInfo}/>
+              return <Component {...props} {...userInfo} />;
             }}
             key={key}
           />
         );
         console.log("yep");
-      }
-      else if (prop.layout === "/admin") {
+      } else if (prop.layout === "/admin") {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={props => {
+            component={(props) => {
               const Component = prop.component;
-              return <Component {...props} {...userInfo}/>
+              return <Component {...props} {...userInfo} />;
             }}
             key={key}
           />
@@ -62,7 +60,7 @@ class Admin extends React.Component {
       color: "green",
       hasImage: true,
       fixedClasses: "dropdown show",
-      mobileOpen: false,      
+      mobileOpen: false,
     };
   }
 
@@ -109,14 +107,13 @@ class Admin extends React.Component {
           </div>
           <Footer />
         </div>
-
       </div>
     );
   }
 }
 
 Admin.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(dashboardStyle)(Admin);

@@ -100,7 +100,7 @@ export default function CreateBan() {
     )
       .then((data) => console.log("Data: ", data))
       .catch((e) => console.log("Create ban error: ", e));
-    // clearFields();
+    clearFields();
   }
 
   function handleDurationChange(input) {

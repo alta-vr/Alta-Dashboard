@@ -25,7 +25,10 @@ const Sidebar = ({ ...props }) => {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        if (prop.hidden){
+        if (prop.hidden) {
+          return null;
+        }
+        if (prop.isModOnly && !Sessions.getPolicies().includes("mod")) {
           return null;
         }
         // insert appropriate policy here to show moderator tab
@@ -36,10 +39,12 @@ const Sidebar = ({ ...props }) => {
         //   )}
 
         listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.layout + prop.path)});
+          [" " + classes[color]]: activeRoute(prop.layout + prop.path),
+        });
 
         whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)});
+          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path),
+        });
 
         return (
           <NavLink
@@ -71,13 +76,10 @@ const Sidebar = ({ ...props }) => {
       })}
     </List>
   );
-  
+
   var brand = (
     <div className={classes.logo}>
-      <a
-        href="http://altavr.io/"
-        className={classNames(classes.logoLink)}
-      >
+      <a href="http://altavr.io/" className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
@@ -116,32 +118,30 @@ const Sidebar = ({ ...props }) => {
       </Hidden> */}
 
       {/* <Hidden smDown implementation="css"> */}
-        <Drawer
-          anchor={"left"}
-          variant="permanent"
-          open
-          classes={{
-            paper: classNames({})
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>
-            {links}
-          </div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
-        </Drawer>
+      <Drawer
+        anchor={"left"}
+        variant="permanent"
+        open
+        classes={{
+          paper: classNames({}),
+        }}
+      >
+        {brand}
+        <div className={classes.sidebarWrapper}>{links}</div>
+        {image !== undefined ? (
+          <div
+            className={classes.background}
+            style={{ backgroundImage: "url(" + image + ")" }}
+          />
+        ) : null}
+      </Drawer>
       {/* </Hidden> */}
     </div>
   );
 };
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(sidebarStyle)(Sidebar);

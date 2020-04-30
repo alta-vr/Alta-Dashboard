@@ -1,5 +1,5 @@
-import React, { useState,  useEffect } from "react";
-import { Sessions } from 'alta-jsapi';
+import React, { useState, useEffect } from "react";
+import { Sessions } from "alta-jsapi";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -12,33 +12,32 @@ import { Switch, Route } from "react-router-dom";
 import ServersPage from "views/Servers/ServersPage.jsx";
 
 function UserProfile() {
-
   let history = useHistory();
 
   let [userInfo, setUserInfo] = useState({
     userName: "",
     userId: "",
     supporter: "",
-    policies: []
+    policies: [],
   });
 
   useEffect(() => {
     setUserInfo({
-      userName : Sessions.getUsername(),
-      userId : Sessions.getUserId(),
-      supporter : Sessions.getSupporter(),
-      policies : Sessions.getPolicies()});
-  }, [userInfo]);
+      userName: Sessions.getUsername(),
+      userId: Sessions.getUserId(),
+      supporter: Sessions.getSupporter(),
+      policies: Sessions.getPolicies(),
+    });
+  }, []);
 
   function goBack() {
     history.goBack();
   }
 
-  function showSupporter(){
-    if (userInfo.supporter){
+  function showSupporter() {
+    if (userInfo.supporter) {
       return "Yes, you legend!";
-    }
-    else {
+    } else {
       return "Nope :(";
     }
   }
@@ -46,35 +45,31 @@ function UserProfile() {
   return (
     <div>
       <Switch>
-      <Route path="/admin/Servers" component={ServersPage}>Servers</Route>
-    </Switch>
-      <Button variant="contained" onClick={goBack}>Go Back</Button>
+        <Route path="/admin/Servers" component={ServersPage}>
+          Servers
+        </Route>
+      </Switch>
+      <Button variant="contained" onClick={goBack}>
+        Go Back
+      </Button>
       <Card>
         <CardHeader plain color="primary">
           User Profile
         </CardHeader>
-        <CardBody>
-          Account Name: {userInfo.userName}
-        </CardBody>
-        <CardBody>
-          Id: {userInfo.userId}
-        </CardBody>
-        <CardBody>
-          Supporter: {showSupporter()}
-        </CardBody>
+        <CardBody>Account Name: {userInfo.userName}</CardBody>
+        <CardBody>Id: {userInfo.userId}</CardBody>
+        <CardBody>Supporter: {showSupporter()}</CardBody>
         <CardBody>
           <List>
             Policies:
-            {userInfo.policies.map(policy =>
-            <ListItem key={policy}>
-              {policy}
-            </ListItem>
-            )}
-            </List>
+            {userInfo.policies.map((policy) => (
+              <ListItem key={policy}>{policy}</ListItem>
+            ))}
+          </List>
         </CardBody>
       </Card>
     </div>
-  )
+  );
 }
 
 export default UserProfile;
