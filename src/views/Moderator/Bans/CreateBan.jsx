@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Container from "@material-ui/core/Container";
@@ -11,6 +11,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 // import { useHistory, useLocation } from 'react-router';
 import UserInputField from "components/Validator/UserInputField.jsx";
+import ServerInputField from "components/Validator/ServerInputField.jsx";
 import DropDownMenu from "../../../components/Menu/DropDownMenu";
 import { Bans } from "alta-jsapi";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
@@ -23,6 +24,11 @@ const dropDownOptions = [
 
 export default function CreateBan() {
   let [validUser, setValidUser] = useState(false);
+  let [banType, setBanType] = useState("server");
+  // let [serverList, setServerList] = useState([]);
+  let [selectedServers, setSelectedServers] = useState();
+  var selectedServer = 0;
+
   var [banInfo, setBanInfo] = useState({
     user: undefined,
     duration_hours: "",
@@ -46,6 +52,36 @@ export default function CreateBan() {
 
   function handleType(event) {
     banInfo.type = event.name;
+    setBanType(event.name);
+  }
+
+  function handleValidServer(serverId) {
+    // selectedServer = event.name;
+    if (serverId == undefined) {
+      console.log("serverId undefined");
+      return;
+    }
+    console.log("Selected server: ", serverId);
+    var tempList = selectedServers;
+    var removeIndex = selectedServers.indexOf(-1);
+    console.log("removeindex: ", removeIndex);
+    tempList.splice(removeIndex, 1, serverId);
+    selectedServer = serverId;
+  }
+
+  function handleAddServer() {
+    // selectedServer = event;
+    console.log("Adding server: ", selectedServer);
+    setSelectedServers([...selectedServers, -1]);
+  }
+
+  function handleRemoveServer(server) {
+    // selectedServer = event.name;
+    console.log("Removing server: ", server);
+    console.log("current list before temp : ", server);
+    var tempList = selectedServers.filter((id) => id != server);
+    console.log("tempList after : ", tempList);
+    setSelectedServers(tempList);
   }
 
   function clearFields() {
@@ -182,6 +218,23 @@ export default function CreateBan() {
                   handleChange={handleType}
                   values={dropDownOptions}
                 />
+                <br />
+                {banType == "server" ? (
+                  <>
+                    {selectedServers.map((server) => (
+                      <>
+                        <ServerInputField onValidateInput={handleValidServer} />
+                        <Button onClick={() => handleRemoveServer(server)}>
+                          Remove
+                        </Button>
+                        <br />
+                      </>
+                    ))}
+                    <Button onClick={handleAddServer}>Add</Button>
+                  </>
+                ) : (
+                  <></>
+                )}
               </CardBody>
               <CardFooter>
                 {validUser ? (
