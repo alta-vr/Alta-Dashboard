@@ -1,1 +1,1 @@
-# This is the Alta Dashboard for the A Township Tale!
+# This is the Alta Dashboard for A Township Tale!
