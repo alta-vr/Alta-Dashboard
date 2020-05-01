@@ -15,6 +15,9 @@ export default function UserInputField({ onValidateInput }) {
   let validateUserEntry = (e) => {
     e.preventDefault();
     var userEntry = e.target.value;
+    if (userEntry.length < 3) {
+      return;
+    }
     let getUserInfo = Users.getInfo;
 
     if (isNaN(userEntry)) {

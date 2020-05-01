@@ -11,19 +11,29 @@ import PopupDialog from "components/Notifications/PopupDialog.jsx";
 import FormattedDate from "../../../components/Formats/FormattedDate";
 
 export default function BanViewer(props) {
-  let { banInfo } = useLocation();
+  let location = useLocation();
+  let [banInfo, setBanInfo] = useState(location.banInfo);
+  let { banId } = useParams();
 
-  console.log(banInfo);
   let history = useHistory();
   let currentPath = useLocation().pathname;
+
+  useEffect(() => {
+    console.log(banInfo);
+    if (banInfo == undefined) {
+      Bans.getBan(banId)
+        .then((info) => {
+          setBanInfo(info);
+        })
+        .catch((e) => console.log("Error:", e));
+    }
+  }, [banInfo]);
 
   function goBack() {
     history.goBack();
   }
 
   function handleDelete(response) {
-    console.log("banviewer Response: ", response);
-    console.log("banviewer banInfo: ", banInfo);
     if (response) {
       Bans.deleteBan(banInfo.ban_id);
       history.goBack();
@@ -91,12 +101,16 @@ export default function BanViewer(props) {
           </CardBody>
           <CardBody>
             <GridContainer>
-              {banInfo.servers.map((server) => (
-                <ListItem>
-                  Server: {server}
-                  <br />
-                </ListItem>
-              ))}
+              {banInfo.servers != undefined ? (
+                banInfo.servers.map((server) => (
+                  <ListItem>
+                    Server: {server}
+                    <br />
+                  </ListItem>
+                ))
+              ) : (
+                <div>No servers</div>
+              )}
             </GridContainer>
           </CardBody>
         </Card>

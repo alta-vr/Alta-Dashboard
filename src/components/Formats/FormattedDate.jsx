@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 export default function FormattedDate(props) {
-  var { date } = props;
+  var { date, local } = props;
   var currentDate = new Date(Date.parse(date));
 
-  return <div>{currentDate.toDateString()}</div>;
+  // format using non-javascript ways
+  return <>{currentDate.toDateString()}</>;
 }

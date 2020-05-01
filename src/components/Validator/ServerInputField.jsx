@@ -15,17 +15,19 @@ export default function ServerInputField({ onValidateInput }) {
   let validateUserEntry = (e) => {
     e.preventDefault();
     var serverEntry = e.target.value;
+    if (serverEntry.length < 3) {
+      return;
+    }
 
     Servers.getDetails(serverEntry)
       .then((serverInfo) => {
         setError(false);
         setSuccess(true);
-        console.log("inputfield serverId: ", serverInfo.id);
         if (serverName != undefined) {
           console.log("defined: ");
           setServerName(serverInfo.name);
         }
-        onValidateInput(serverInfo.id);
+        onValidateInput(serverInfo);
       })
       .catch((e) => {
         console.log(e);

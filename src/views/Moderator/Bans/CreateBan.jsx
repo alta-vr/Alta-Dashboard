@@ -9,7 +9,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-// import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation, useParams } from "react-router";
 import UserInputField from "components/Validator/UserInputField.jsx";
 import ServerInputField from "components/Validator/ServerInputField.jsx";
 import DropDownMenu from "../../../components/Menu/DropDownMenu";
@@ -25,15 +25,18 @@ const dropDownOptions = [
 export default function CreateBan() {
   let [validUser, setValidUser] = useState(false);
   let [banType, setBanType] = useState("server");
-  // let [serverList, setServerList] = useState([]);
-  let [selectedServers, setSelectedServers] = useState();
-  var selectedServer = 0;
+  let [addServer, setAddServer] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
+  const params = useParams();
+  // let [selectedServers, setSelectedServers] = useState();
+  // var selectedServer = 0;
 
   var [banInfo, setBanInfo] = useState({
     user: undefined,
-    duration_hours: "",
+    duration_hours: undefined,
     type: dropDownOptions[0].name,
-    reason: "",
+    reason: undefined,
     method: 7,
     servers: [],
   });
@@ -50,55 +53,74 @@ export default function CreateBan() {
     setValidUser(true);
   }
 
-  function handleType(event) {
-    banInfo.type = event.name;
-    setBanType(event.name);
-  }
-
-  function handleValidServer(serverId) {
-    // selectedServer = event.name;
-    if (serverId == undefined) {
+  function handleValidServer(server) {
+    console.log("serverId: ", server.id);
+    if (server == undefined) {
       console.log("serverId undefined");
       return;
     }
     var tempList = banInfo.servers;
-    tempList = tempList.filter((id) => {
-      return id != -1;
-    });
+    console.log("templist in validServer: ", tempList);
+    // tempList = tempList.filter((id) => {
+    //   return id != -1;
+    // });
+    setAddServer(false);
     // tempList = tempList.filter(filter);
     // var removeIndex = selectedServers.indexOf(-1);
     // console.log("removeindex: ", removeIndex);
     // tempList.splice(removeIndex, 1, serverId);
     // selectedServer = serverId;
-    setBanInfo({ ...banInfo, servers: [...tempList, serverId] });
+    setBanInfo({ ...banInfo, servers: [...tempList, server.id] });
   }
 
-  function filter(filter) {
-    return filter != -1;
+  function handleType(event) {
+    banInfo.type = event.name;
+    setBanType(event.name);
   }
 
   function handleAddServer() {
     // selectedServer = event;
     console.log("Adding server: ");
-    setBanInfo({ ...banInfo, servers: [...banInfo.servers, -1] });
+    setAddServer(true);
+    // setBanInfo({ ...banInfo, servers: [...banInfo.servers, -1] });
   }
 
-  function handleRemoveServer(server) {
+  function handleRemoveServer(serverId) {
     var tempList = banInfo.servers;
-    if (server == undefined) {
+    console.log("Removing server: ", serverId);
+    if (serverId == undefined) {
       tempList = tempList.filter((id) => {
         return id != -1;
       });
       setBanInfo({ ...banInfo, servers: [...tempList] });
     }
     // selectedServer = event.name;
-    console.log("Removing server: ", server);
     console.log("current list before temp : ", tempList);
     tempList = tempList.filter((id) => {
-      return id != server;
+      return id != serverId;
     });
+    if (tempList.length < 1) {
+      setAddServer(false);
+    }
     console.log("tempList after : ", tempList);
     setBanInfo({ ...banInfo, servers: [...tempList] });
+  }
+
+  function handleDurationChange(input) {
+    setBanInfo({ ...banInfo, duration_hours: input.target.value });
+  }
+
+  function handleReasonChange(input) {
+    setBanInfo({ ...banInfo, reason: input.target.value });
+  }
+
+  function formatDateTime() {
+    var untilDate;
+    var currentDate = new Date();
+    untilDate = currentDate.setTime(
+      currentDate.getTime() + banInfo.duration_hours * 60 * 60 * 1000
+    );
+    return currentDate.toLocaleString();
   }
 
   function clearFields() {
@@ -111,38 +133,8 @@ export default function CreateBan() {
       return;
     }
     console.log("Confirmed");
-    //   if (!validUser) {
-    //     // Show more text?
-    //     console.log("Invalid user");
-    //     return;
-    //   }
-    //   // Call API createBan
-    //   // Display confirmation message
-    //   console.log("Valid user: ", banInfo);
-    //   Bans.createBan(
-    //     banInfo.user.id,
-    //     banInfo.duration_hours,
-    //     banInfo.type,
-    //     banInfo.method,
-    //     banInfo.reason,
-    //     banInfo.servers
-    //   )
-    //     .then((data) => console.log("Data: ", data))
-    //     .catch((e) => console.log("Create ban error: ", e));
-  }
-
-  function handleBan(event) {
-    event.preventDefault();
-
-    if (!validUser) {
-      // Show more text?
-      console.log("Invalid user");
-      return;
-    }
-
     // Call API createBan
-    // Display confirmation message
-    console.log("Createban Valid user: ", banInfo);
+    console.log("Valid user: ", banInfo);
     Bans.createBan(
       banInfo.user.id,
       banInfo.duration_hours,
@@ -151,30 +143,29 @@ export default function CreateBan() {
       banInfo.reason,
       banInfo.servers
     )
-      .then((data) => console.log("Data: ", data))
+      .then((data) => {
+        console.log("Data: ", data);
+        history.push(location + "./../ViewBans/" + data.ban_id);
+      })
       .catch((e) => console.log("Create ban error: ", e));
-    clearFields();
+    console.log("location: ", location);
   }
 
-  function handleDurationChange(input) {
-    setBanInfo({ ...banInfo, duration_hours: input.target.value });
-    console.log("duration input: ", input.target.value);
+  function handleBan(event) {
+    event.preventDefault();
   }
 
-  function handleReasonChange(input) {
-    setBanInfo({ ...banInfo, reason: input.target.value });
-    console.log("reason input: ", input.target.value);
-  }
-
-  function formatDateTime() {
-    console.log("Createban duration: ", banInfo.duration_hours);
-    var untilDate;
-    var currentDate = new Date();
-    untilDate = currentDate.setTime(
-      currentDate.getTime() + banInfo.duration_hours * 60 * 60 * 1000
-    );
-
-    return currentDate.toLocaleString();
+  function validateBanInfo() {
+    console.log("Calling is ready");
+    if (
+      banInfo.user != undefined &&
+      banInfo.duration_hours != undefined &&
+      banInfo.reason != undefined
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   return (
@@ -239,14 +230,21 @@ export default function CreateBan() {
                 {banInfo.type == "server" ? (
                   <>
                     {banInfo.servers.map((serverId) => (
-                      <div key={serverId}>
-                        <ServerInputField onValidateInput={handleValidServer} />
+                      <div>
+                        <label>{serverId}</label>{" "}
                         <Button onClick={() => handleRemoveServer(serverId)}>
                           Remove
                         </Button>
-                        <br />
                       </div>
                     ))}
+                    {addServer ? (
+                      <div>
+                        <ServerInputField onValidateInput={handleValidServer} />
+                        <br />
+                      </div>
+                    ) : (
+                      <div />
+                    )}
                     <Button onClick={handleAddServer}>Add</Button>
                   </>
                 ) : (
@@ -259,13 +257,11 @@ export default function CreateBan() {
                     title={"Create Ban"}
                     info={`Are you sure you want to ban user for ?`}
                     handleResponse={handleConfirmation}
+                    isReady={validateBanInfo}
                   />
                 ) : (
                   <></>
                 )}
-                {/* <Button type="submit" color="primary" simple size="lg" block>
-                  Let's Go
-                </Button> */}
               </CardFooter>
             </Card>
           </form>

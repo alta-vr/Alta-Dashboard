@@ -7,13 +7,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function PopupDialog(props) {
-  const { title, info, handleResponse } = props;
+  const { title, info, handleResponse, isReady } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    if (handleResponse != null) {
-      setOpen(true);
+    if (isReady != undefined) {
+      var ready = isReady();
+      console.log("ready: ", ready);
+      if (!ready) {
+        return;
+      }
     }
+    setOpen(true);
   };
 
   const handleClose = () => {
