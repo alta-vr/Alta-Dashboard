@@ -7,10 +7,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Button } from "@material-ui/core";
 import FormattedDate from "components/Formats/FormattedDate.jsx";
+import { Users } from "alta-jsapi";
 
 function BanList({ currentList }) {
   const fields = [
     { label: "Ban ID", getValue: (b) => b.ban_id },
+    { label: "User Name", getValue: (b) => getUserName(b.user_id) },
     { label: "User ID", getValue: (b) => b.user_id },
     // { label: "Ip addr", getValue: (b) => b.ip_address },
     // { label: "Reason", getValue: (b) => b.reason },
@@ -32,8 +34,28 @@ function BanList({ currentList }) {
       setBanList([]);
       return;
     }
+    currentList.forEach((ban) => {
+      Users.getInfo(ban.user_id)
+        .then((userInfo) => {
+          // can't figure out scope of this bit
+          ban.username = userInfo.username;
+        })
+        .catch((e) => console.log(e));
+    });
+    console.log("Current list: ", currentList);
     setBanList(currentList);
   }, [currentList]);
+
+  useEffect(() => {});
+
+  function getUserName(userId) {
+    Users.getInfo(userId)
+      .then((userName) => {
+        console.log("Username: ", userName.username);
+        return userName.username;
+      })
+      .catch((e) => console.log(e));
+  }
 
   function goToDetails(ban) {
     console.log("Ban: ", ban);
@@ -56,17 +78,15 @@ function BanList({ currentList }) {
         {banList.map((ban) => (
           <TableRow key={ban.ban_id}>
             {fields.map((field) => (
-              <TableCell key={field.label}>{field.getValue(ban)}</TableCell>
-            ))}
-            <TableCell>
-              <Button
-                variant="contained"
-                color="default"
+              <TableCell
+                key={field.label}
+                hover
+                style={{ cursor: "pointer" }}
                 onClick={() => goToDetails(ban)}
               >
-                Info
-              </Button>
-            </TableCell>
+                {field.getValue(ban)}
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
