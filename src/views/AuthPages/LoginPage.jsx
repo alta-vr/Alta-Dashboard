@@ -115,6 +115,7 @@ class LoginPage extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <CustomInput
+                    style={{ color: "red" }}
                     labelText="Username..."
                     id="username"
                     error={errors.username || errors.invalidEmailOrPassword}
@@ -176,7 +177,13 @@ class LoginPage extends React.Component {
                   />
                 </CardBody>
                 <CardFooter className={classes.justifyContentCenter}>
-                  <Button type="submit" color="primary" simple size="lg" block>
+                  <Button
+                    type="submit"
+                    color="success"
+                    variant="contained"
+                    size="lg"
+                    block
+                  >
                     Let's Go
                   </Button>
                 </CardFooter>

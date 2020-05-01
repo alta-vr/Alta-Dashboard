@@ -46,16 +46,11 @@
     "upload": "gsutil -m cp -r ./build/* gs://dash.townshiptale.com",
     "deploy": "npm i && npm run build && npm run upload"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/material-dashboard-react-nodejs.git"
-  },
-  "keywords": [],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "keywords": [
+    "alta",
+    "township tale"
+  ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/material-dashboard-react-nodejs/issues"
-  },
   "homepage": "/",
   "optionalDependencies": {
     "@types/googlemaps": "3.30.16",

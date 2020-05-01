@@ -69,17 +69,15 @@ export default function ServerList({ getListFunc }) {
       </TableHead>
       <TableBody>
         {serverList.map((server) => (
-          <TableRow key={server.id}>
+          <TableRow
+            key={server.id}
+            hover
+            style={{ cursor: "pointer" }}
+            onClick={() => goToDetails(server.id)}
+          >
             {fields.map((field) => (
               <TableCell key={field.name}>{field.getValue(server)}</TableCell>
             ))}
-            <Button
-              variant="contained"
-              color="default"
-              onClick={() => goToDetails(server.id)}
-            >
-              DashBoard
-            </Button>
           </TableRow>
         ))}
       </TableBody>

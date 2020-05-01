@@ -60,7 +60,8 @@ export default function Moderator() {
           <Button onClick={goToView}>
             <Card>
               <CardHeader plain color="success">
-                View user<br />
+                Lost items
+                <br />
                 ***Placeholder***
               </CardHeader>
             </Card>
@@ -70,7 +71,8 @@ export default function Moderator() {
           <Button onClick={goToSecret}>
             <Card>
               <CardHeader plain color="success">
-                Secret users<br />
+                Reported player
+                <br />
                 ***Placeholder***
               </CardHeader>
             </Card>
@@ -80,7 +82,8 @@ export default function Moderator() {
           <Button onClick={goToNext}>
             <Card>
               <CardHeader plain color="success">
-                What next?<br />
+                What next?
+                <br />
                 ***Placeholder***
               </CardHeader>
             </Card>

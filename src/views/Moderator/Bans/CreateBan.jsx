@@ -18,13 +18,13 @@ import PopupDialog from "components/Notifications/PopupDialog.jsx";
 
 const dropDownOptions = [
   // Check if value needs to be enum BanType
-  { label: "Server", name: "server" },
-  { label: "Global", name: "global" },
+  { label: "Server", name: "Server" },
+  { label: "Global", name: "Global" },
+  { label: "Public", name: "Public" },
 ];
 
 export default function CreateBan() {
   let [validUser, setValidUser] = useState(false);
-  let [banType, setBanType] = useState("server");
   let [addServer, setAddServer] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -74,8 +74,7 @@ export default function CreateBan() {
   }
 
   function handleType(event) {
-    banInfo.type = event.name;
-    setBanType(event.name);
+    setBanInfo({ ...banInfo, type: event.name });
   }
 
   function handleAddServer() {
@@ -227,7 +226,7 @@ export default function CreateBan() {
                   values={dropDownOptions}
                 />
                 <br />
-                {banInfo.type == "server" ? (
+                {banInfo.type == "Server" ? (
                   <>
                     {banInfo.servers.map((serverId) => (
                       <div>
