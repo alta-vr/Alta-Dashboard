@@ -44,7 +44,7 @@
     "serve": "serve -s build -l 4000",
     "pm2": "pm2",
     "upload": "gsutil -m cp -r ./build/* gs://dash.townshiptale.com",
-    "deploy": "npm update && npm i && npm run build && npm run upload"
+    "deploy": "npm i && npm run build && npm run upload"
   },
   "repository": {
     "type": "git",

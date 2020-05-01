@@ -198,7 +198,7 @@ export default function CreateBan() {
                     ),
                   }}
                 />
-                {banInfo.duration_hours == "" ? (
+                {banInfo.duration_hours == undefined ? (
                   <></>
                 ) : (
                   <label>Lasts until: {formatDateTime()}</label>

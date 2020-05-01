@@ -5,5 +5,5 @@ export default function FormattedDate(props) {
   var currentDate = new Date(Date.parse(date));
 
   // format using non-javascript ways
-  return <>{currentDate.toDateString()}</>;
+  return <div>{currentDate.toDateString()}</div>;
 }
