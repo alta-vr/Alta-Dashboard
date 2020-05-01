@@ -32,7 +32,7 @@ export default function UserBans() {
         <GridItem>
           <Button onClick={goToCreate}>
             <Card>
-              <CardHeader plain color="warning">
+              <CardHeader plain color="success">
                 Create Ban
               </CardHeader>
             </Card>

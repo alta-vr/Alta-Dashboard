@@ -127,7 +127,11 @@ export default function CreateBan() {
     }
 
     var servers = undefined;
-    if (banInfo.type == "Servers") {
+    if (banInfo.type == "Server") {
+      if (banInfo.servers.length < 1) {
+        alert("Must enter at least one server");
+        return;
+      }
       servers = banInfo.servers;
     }
 
@@ -143,7 +147,13 @@ export default function CreateBan() {
         console.log("Data: ", data);
         history.push(location + "./../ViewBans/" + data.ban_id);
       })
-      .catch((e) => console.log("Create ban error: ", e));
+      .catch((e) => {
+        console.log("Create ban error: ", e);
+        console.log("Create ban error code: ", e.statusCode);
+        if (e.statusCode == 500) {
+          alert("Cannot contain duplicate servers");
+        }
+      });
     console.log("location: ", location);
   }
 

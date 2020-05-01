@@ -101,7 +101,7 @@ export default function BanViewer(props) {
           </CardBody>
           <CardBody>
             <GridContainer>
-              {banInfo.servers != [] ? (
+              {banInfo.servers != undefined ? (
                 banInfo.servers.map((server) => (
                   <ListItem>
                     Server: {server}

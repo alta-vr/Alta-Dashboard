@@ -50,7 +50,7 @@ export default function Moderator() {
         <GridItem>
           <Button onClick={goToBans}>
             <Card>
-              <CardHeader plain color="warning">
+              <CardHeader plain color="success">
                 Ban user
               </CardHeader>
             </Card>
@@ -59,7 +59,7 @@ export default function Moderator() {
         <GridItem>
           <Button onClick={goToView}>
             <Card>
-              <CardHeader plain color="success">
+              <CardHeader plain color="danger">
                 Lost items
                 <br />
                 ***Placeholder***
@@ -70,7 +70,7 @@ export default function Moderator() {
         <GridItem>
           <Button onClick={goToSecret}>
             <Card>
-              <CardHeader plain color="success">
+              <CardHeader plain color="danger">
                 Reported player
                 <br />
                 ***Placeholder***
@@ -81,7 +81,7 @@ export default function Moderator() {
         <GridItem>
           <Button onClick={goToNext}>
             <Card>
-              <CardHeader plain color="success">
+              <CardHeader plain color="danger">
                 What next?
                 <br />
                 ***Placeholder***
