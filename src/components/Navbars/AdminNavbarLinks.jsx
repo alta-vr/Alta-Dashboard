@@ -21,16 +21,19 @@ class HeaderLinks extends React.Component {
     open: false,
     profilePopupOpen: false,
   };
-  
+
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open, profilePopupOpen: false }));
+    this.setState((state) => ({ open: !state.open, profilePopupOpen: false }));
   };
 
   handleToggleProfile = () => {
-    this.setState(state => ({ profilePopupOpen: !state.profilePopupOpen, open: false }));
+    this.setState((state) => ({
+      profilePopupOpen: !state.profilePopupOpen,
+      open: false,
+    }));
   };
 
-  handleClose = event => {
+  handleClose = (event) => {
     if (this.buttonRef.contains(event.target)) {
       return;
     }
@@ -41,24 +44,22 @@ class HeaderLinks extends React.Component {
   logout = () => {
     const { history } = this.props;
     try {
-
       Sessions.logout();
       console.log("after logout:");
       history.push("/auth/login-page");
-
     } catch ({ request }) {
-      console.log("Request:" ,request);
+      console.log("Request:", request);
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
     const { open, profilePopupOpen } = this.state;
     return (
       <div>
-        <div className={classes.manager}>
+        {/* <div className={classes.manager}>
           <Button
-            buttonRef={node => {
+            buttonRef={(node) => {
               this.buttonRef = node;
             }}
             color={window.innerWidth > 959 ? "transparent" : "white"}
@@ -71,9 +72,9 @@ class HeaderLinks extends React.Component {
           >
             <Hidden smDown implementation="css">
               <Notifications className={classes.icons} />
-              {/* <p onClick={this.handleClick} className={classes.linkText}>
+              <p onClick={this.handleClick} className={classes.linkText}>
                 Notification
-              </p> */}
+              </p>
             </Hidden>
           </Button>
           <Poppers
@@ -93,7 +94,7 @@ class HeaderLinks extends React.Component {
                 id="menu-list-grow"
                 style={{
                   transformOrigin:
-                    placement === "bottom" ? "center top" : "center bottom"
+                    placement === "bottom" ? "center top" : "center bottom",
                 }}
               >
                 <Paper>
@@ -111,9 +112,12 @@ class HeaderLinks extends React.Component {
               </Grow>
             )}
           </Poppers>
-        </div>
+        </div> */}
         <div className={classes.manager}>
           <Button
+            buttonRef={(node) => {
+              this.buttonRef = node;
+            }}
             color={window.innerWidth > 959 ? "transparent" : "white"}
             justIcon={window.innerWidth > 959}
             simple={!(window.innerWidth > 959)}
@@ -133,8 +137,7 @@ class HeaderLinks extends React.Component {
             anchorEl={this.buttonRef}
             transition
             disablePortal
-            className={{}
-            }
+            className={{}}
           >
             {({ TransitionProps, placement }) => (
               <Grow
@@ -142,13 +145,15 @@ class HeaderLinks extends React.Component {
                 id="menu-list-grow"
                 style={{
                   transformOrigin:
-                    placement === "bottom" ? "center top" : "center bottom"
+                    placement === "bottom" ? "center top" : "center bottom",
                 }}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      <NavLink to={"/admin/UserProfile/" + Sessions.getUserId()}>
+                      <NavLink
+                        to={"/admin/UserProfile/" + Sessions.getUserId()}
+                      >
                         <MenuItem
                           onClick={this.handleClose}
                           className={classes.dropdownItem}

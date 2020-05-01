@@ -21,9 +21,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 // login API
-import { Sessions } from 'alta-jsapi';
+import { Sessions } from "alta-jsapi";
 import loginPageStyle from "assets/jss/material-dashboard-react/views/loginPageStyle.jsx";
-
 
 const errorMessage = "Wrong username or password, please check your details";
 const welcomeMessage = "Please enter your username and password";
@@ -34,59 +33,56 @@ class LoginPage extends React.Component {
     this.state = {
       failedLogin: false,
       checked: false,
-      errors: {}
+      errors: {},
     };
   }
 
-  componentDidMount(){
-    Sessions.checkRemembered().then(Sessions.ensureLoggedIn)
-    .then(this.onLoggedIn.bind(this))
-    .catch(console.error);
+  componentDidMount() {
+    Sessions.checkRemembered()
+      .then(Sessions.ensureLoggedIn)
+      .then(this.onLoggedIn.bind(this))
+      .catch(console.error);
   }
 
-  onLoggedIn(){
-
-    try{
+  onLoggedIn() {
+    var policies = Sessions.getPolicies();
+    console.log(policies);
+    if (policies.includes("mod")) {
+      this.props.history.push("/admin/Moderator");
+    } else {
       this.props.history.push("/admin/Servers");
     }
-    catch (e) {
-      console.log(e)
-    }
-    console.log(this.props.history);
-
   }
 
-  login = async e => {
+  login = async (e) => {
     e.preventDefault();
     const formElements = e.target.elements;
 
     let username = formElements.namedItem("username").value;
     let password = formElements.namedItem("password").value;
-    let hashedPassword = Sessions.hashPassword(password); 
-    
+    let hashedPassword = Sessions.hashPassword(password);
+
     try {
-      console.log("username: "+ username);
-      console.log("password: "+ hashedPassword);
+      console.log("username: " + username);
+      console.log("password: " + hashedPassword);
 
       await Sessions.loginWithUsername(username, hashedPassword);
 
-      if (this.state.checked){
+      if (this.state.checked) {
         Sessions.remember();
       }
 
       this.onLoggedIn();
-    }
-    catch ({ response }) {
+    } catch ({ response }) {
       console.log("error");
       // update welcome message to error logging in
-      this.setState({failedLogin: true});
+      this.setState({ failedLogin: true });
     }
   };
 
   handleToggle = (event, value) => {
-
     this.setState({
-      checked: value
+      checked: value,
     });
   };
 
@@ -98,9 +94,11 @@ class LoginPage extends React.Component {
         <GridContainer justify="center">
           <GridItem xs={12} sm={8}>
             <h4 className={classes.textCenter} style={{ marginTop: 0 }}>
-                {this.state.failedLogin ?
-                <span>{errorMessage}</span> :
-                <span>{welcomeMessage}</span>}
+              {this.state.failedLogin ? (
+                <span>{errorMessage}</span>
+              ) : (
+                <span>{welcomeMessage}</span>
+              )}
             </h4>
           </GridItem>
         </GridContainer>
@@ -117,12 +115,12 @@ class LoginPage extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <CustomInput
-                    labelText="Email..."
-                    id="email"
+                    labelText="Username..."
+                    id="username"
                     error={errors.username || errors.invalidEmailOrPassword}
                     formControlProps={{
                       fullWidth: true,
-                      className: classes.formControlClassName
+                      className: classes.formControlClassName,
                     }}
                     inputProps={{
                       required: true,
@@ -131,7 +129,7 @@ class LoginPage extends React.Component {
                         <InputAdornment position="end">
                           <Email className={classes.inputAdornmentIcon} />
                         </InputAdornment>
-                      )
+                      ),
                     }}
                   />
                   <CustomInput
@@ -140,7 +138,7 @@ class LoginPage extends React.Component {
                     error={errors.password || errors.invalidEmailOrPassword}
                     formControlProps={{
                       fullWidth: true,
-                      className: classes.formControlClassName
+                      className: classes.formControlClassName,
                     }}
                     inputProps={{
                       type: "password",
@@ -151,7 +149,7 @@ class LoginPage extends React.Component {
                             lock_outline
                           </Icon>
                         </InputAdornment>
-                      )
+                      ),
                     }}
                   />
                   <FormControlLabel
@@ -160,7 +158,7 @@ class LoginPage extends React.Component {
                         classes.checkboxLabelControl +
                         " " +
                         classes.checkboxLabelControlClassName,
-                      label: classes.checkboxLabel
+                      label: classes.checkboxLabel,
                     }}
                     control={
                       <Checkbox
@@ -170,7 +168,7 @@ class LoginPage extends React.Component {
                         icon={<Check className={classes.uncheckedIcon} />}
                         classes={{
                           checked: classes.checked,
-                          root: classes.checkRoot
+                          root: classes.checkRoot,
                         }}
                       />
                     }
@@ -194,7 +192,7 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  errors: PropTypes.object
+  errors: PropTypes.object,
 };
 
 export default withStyles(loginPageStyle)(LoginPage);
