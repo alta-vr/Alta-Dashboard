@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import Button from "@material-ui/core/Button";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
@@ -13,8 +13,11 @@ import { useHistory, useLocation, useParams } from "react-router";
 import UserInputField from "components/Validator/UserInputField.jsx";
 import ServerInputField from "components/Validator/ServerInputField.jsx";
 import DropDownMenu from "../../../components/Menu/DropDownMenu";
-import { Bans } from "alta-jsapi";
+import { Bans, Servers } from "alta-jsapi";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
+import AutoCompleteDropDown from "components/Menu/AutoCompleteDropDown.jsx";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const dropDownOptions = [
   // Check if value needs to be enum BanType
@@ -24,13 +27,18 @@ const dropDownOptions = [
 ];
 
 export default function CreateBan() {
+  let [serverList, setServerList] = useState([]);
   let [validUser, setValidUser] = useState(false);
   let [addServer, setAddServer] = useState(false);
   const history = useHistory();
   const location = useLocation();
-  const params = useParams();
-  // let [selectedServers, setSelectedServers] = useState();
-  // var selectedServer = 0;
+
+  useEffect(() => {
+    Servers.getAll()
+      .then(setServerList)
+      .then(console.log(serverList))
+      .catch((e) => console.log("Error getting servers: ", e));
+  }, []);
 
   var [banInfo, setBanInfo] = useState({
     user: undefined,
@@ -47,29 +55,18 @@ export default function CreateBan() {
       setBanInfo({ ...banInfo, user: undefined });
       return;
     }
-    console.log("Valid user: ", userInfo);
 
     setBanInfo({ ...banInfo, user: userInfo });
     setValidUser(true);
   }
 
   function handleValidServer(server) {
-    console.log("serverId: ", server.id);
     if (server == undefined) {
       console.log("serverId undefined");
       return;
     }
     var tempList = banInfo.servers;
-    console.log("templist in validServer: ", tempList);
-    // tempList = tempList.filter((id) => {
-    //   return id != -1;
-    // });
     setAddServer(false);
-    // tempList = tempList.filter(filter);
-    // var removeIndex = selectedServers.indexOf(-1);
-    // console.log("removeindex: ", removeIndex);
-    // tempList.splice(removeIndex, 1, serverId);
-    // selectedServer = serverId;
     setBanInfo({ ...banInfo, servers: [...tempList, server.id] });
   }
 
@@ -78,10 +75,8 @@ export default function CreateBan() {
   }
 
   function handleAddServer() {
-    // selectedServer = event;
     console.log("Adding server: ");
     setAddServer(true);
-    // setBanInfo({ ...banInfo, servers: [...banInfo.servers, -1] });
   }
 
   function handleRemoveServer(serverId) {
@@ -93,7 +88,6 @@ export default function CreateBan() {
       });
       setBanInfo({ ...banInfo, servers: [...tempList] });
     }
-    // selectedServer = event.name;
     console.log("current list before temp : ", tempList);
     tempList = tempList.filter((id) => {
       return id != serverId;
@@ -131,16 +125,19 @@ export default function CreateBan() {
       console.log("Cancelled");
       return;
     }
-    console.log("Confirmed");
-    // Call API createBan
-    console.log("Valid user: ", banInfo);
+
+    var servers = undefined;
+    if (banInfo.type == "Servers") {
+      servers = banInfo.servers;
+    }
+
     Bans.createBan(
       banInfo.user.id,
       banInfo.duration_hours,
       banInfo.type,
       banInfo.method,
       banInfo.reason,
-      banInfo.servers
+      servers
     )
       .then((data) => {
         console.log("Data: ", data);
@@ -152,6 +149,13 @@ export default function CreateBan() {
 
   function handleBan(event) {
     event.preventDefault();
+  }
+
+  function handleSelectedServer(value) {
+    console.log("Value in create ban: ", value);
+    if (value) {
+      setBanInfo({ ...banInfo, servers: [...banInfo.servers, value.id] });
+    }
   }
 
   function validateBanInfo() {
@@ -175,10 +179,14 @@ export default function CreateBan() {
       <GridContainer>
         <GridItem alignItems="flex-end" alignContent="center">
           <form onSubmit={handleBan}>
-            <Card style={{ width: "800px" }}>
-              <CardBody>
-                <UserInputField onValidateInput={handleUserInput} />
+            <Card style={{ minWidth: "600px" }}>
+              <CardBody fullwidth={true}>
+                <UserInputField
+                  fullwidth={true}
+                  onValidateInput={handleUserInput}
+                />
                 <CustomInput
+                  fullwidth={true}
                   labelText="Duration..."
                   id="duration"
                   formControlProps={{
@@ -231,20 +239,29 @@ export default function CreateBan() {
                     {banInfo.servers.map((serverId) => (
                       <div>
                         <label>{serverId}</label>{" "}
-                        <Button onClick={() => handleRemoveServer(serverId)}>
-                          Remove
-                        </Button>
+                        <IconButton
+                          onClick={() => handleRemoveServer(serverId)}
+                          aria-label="delete"
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
                       </div>
                     ))}
-                    {addServer ? (
-                      <div>
-                        <ServerInputField onValidateInput={handleValidServer} />
-                        <br />
-                      </div>
-                    ) : (
-                      <div />
-                    )}
-                    <Button onClick={handleAddServer}>Add</Button>
+                    <div>
+                      <AutoCompleteDropDown
+                        style={{ maxHeight: "10px" }}
+                        title={"server"}
+                        list={serverList}
+                        onChange={handleSelectedServer}
+                      />
+                      {/* <Button
+                        variant="contained"
+                        size="medium"
+                        onClick={handleAddServer}
+                      >
+                        Add
+                      </Button> */}
+                    </div>
                   </>
                 ) : (
                   <></>

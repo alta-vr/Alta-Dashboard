@@ -51,6 +51,10 @@ export default function UserInputField({ onValidateInput }) {
     <>
       <InputLabel>{"User..."}</InputLabel>
       <Input
+        fullwidth={true}
+        classes={{
+          underline: false,
+        }}
         onChange={validateUserEntry}
         inputProps={{
           required: true,
