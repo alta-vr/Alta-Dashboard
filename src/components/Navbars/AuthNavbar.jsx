@@ -18,18 +18,21 @@ import Button from "components/CustomButtons/Button";
 import authNavbarStyle from "assets/jss/material-dashboard-react/components/authNavbarStyle.jsx";
 
 class AuthNavbar extends React.Component {
-
   render() {
     const { classes, brandText } = this.props;
-    
+
     return (
       <AppBar position="static" className={classes.appBar}>
         <Toolbar className={classes.container}>
-            <div className={{}}>
-              <Button href="http://altavr.io/" className={classes.title} color="transparent">
-                {brandText}
-              </Button>
-            </div>
+          <div className={{}}>
+            <Button
+              href="http://altavr.io/"
+              className={classes.title}
+              color="transparent"
+            >
+              {brandText}
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
     );
@@ -39,7 +42,7 @@ class AuthNavbar extends React.Component {
 AuthNavbar.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
-  brandText: PropTypes.string
+  brandText: PropTypes.string,
 };
 
 export default withStyles(authNavbarStyle)(AuthNavbar);

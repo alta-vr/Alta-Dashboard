@@ -79,7 +79,7 @@ const Sidebar = ({ ...props }) => {
 
   var brand = (
     <div className={classes.logo}>
-      <a href="http://altavr.io/" className={classNames(classes.logoLink)}>
+      <a href="/" className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>

@@ -1,17 +1,13 @@
 import React from "react";
-import classNames from "classnames";
 import { NavLink, useHistory } from "react-router-dom";
-// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 import Person from "@material-ui/icons/Person";
-import Notifications from "@material-ui/icons/Notifications";
 import Button from "components/CustomButtons/Button.jsx";
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 import { Sessions } from "alta-jsapi";
@@ -45,7 +41,6 @@ class HeaderLinks extends React.Component {
     const { history } = this.props;
     try {
       Sessions.logout();
-      console.log("after logout:");
       history.push("/auth/login-page");
     } catch ({ request }) {
       console.log("Request:", request);
@@ -118,7 +113,7 @@ class HeaderLinks extends React.Component {
             buttonRef={(node) => {
               this.buttonRef = node;
             }}
-            color={window.innerWidth > 959 ? "transparent" : "white"}
+            color={"primary"}
             justIcon={window.innerWidth > 959}
             simple={!(window.innerWidth > 959)}
             aria-label="Person"
@@ -127,10 +122,7 @@ class HeaderLinks extends React.Component {
             onClick={this.handleToggleProfile}
             className={{}}
           >
-            <Hidden smDown implementation="css">
-              <Person className={classes.icons} />
-              {/* <p className={classes.linkText}>Profile</p> */}
-            </Hidden>
+            <Person className={classes.icons} />
           </Button>
           <Poppers
             open={profilePopupOpen}
