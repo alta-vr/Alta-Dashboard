@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
-import { Button } from "@material-ui/core";
+import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -35,7 +35,7 @@ export default function ServerViewer() {
     return (
       <div>
         Server not found
-        <Button variant="contained" onClick={goBack}>
+        <Button variant="contained" color="success" onClick={goBack}>
           Go Back
         </Button>
       </div>
@@ -43,14 +43,12 @@ export default function ServerViewer() {
 
   return (
     <div className="container">
-      <GridContainer>
-        <Button variant="contained" onClick={goBack}>
-          Go Back
-        </Button>
-        <Button variant="contained" onClick={goToConsole}>
-          Console
-        </Button>
-      </GridContainer>
+      <Button variant="contained" color="success" onClick={goBack}>
+        Go Back
+      </Button>
+      <Button variant="contained" color="warning" onClick={goToConsole}>
+        Console
+      </Button>
       <GridContainer>
         <Card>
           <CardHeader plain color="primary">

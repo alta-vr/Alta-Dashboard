@@ -44,12 +44,7 @@ function UserProfile() {
 
   return (
     <div>
-      <Switch>
-        <Route path="/admin/Servers" component={ServersPage}>
-          Servers
-        </Route>
-      </Switch>
-      <Button variant="contained" onClick={goBack}>
+      <Button variant="contained" color="success" onClick={goBack}>
         Go Back
       </Button>
       <Card>

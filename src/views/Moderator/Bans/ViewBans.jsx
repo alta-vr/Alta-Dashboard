@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import { useHistory } from "react-router-dom";
-import SearchBar from "../../../components/SearchBar/SearchBar";
 import Container from "@material-ui/core/Container";
 import DropDownMenu from "../../../components/Menu/DropDownMenu";
 import BanList from "components/Lists/BanList.jsx";
-import { Bans } from "alta-jsapi";
 import UserInputField from "components/Validator/UserInputField.jsx";
+import { Bans } from "alta-jsapi";
+import { useHistory } from "react-router-dom";
 
 const listTypes = [
   // functions to get ban lists
@@ -29,6 +25,7 @@ export default function UserBans() {
   const [userId, setUserId] = useState(undefined);
   const [showInput, setShowInput] = useState(false);
   let validUser = false;
+  const history = useHistory();
 
   // useEffect(() => {
   //   getListFunc()
@@ -102,8 +99,16 @@ export default function UserBans() {
     console.log("Current list: ", currentList);
   }
 
+  function goBack() {
+    history.goBack();
+  }
+
   return (
     <div>
+      <Button variant="contained" color="success" onClick={goBack}>
+        Go Back
+      </Button>
+      <br />
       <Container>
         <h2>View Bans</h2>
       </Container>

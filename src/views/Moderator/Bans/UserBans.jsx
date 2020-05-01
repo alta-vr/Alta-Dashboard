@@ -23,8 +23,16 @@ export default function UserBans() {
     history.push(currentPath + "/ViewBans");
   }
 
+  function goBack() {
+    history.goBack();
+  }
+
   return (
     <div>
+      <Button variant="contained" color="success" onClick={goBack}>
+        Go Back
+      </Button>
+      <br />
       <Container>
         <h2>User Bans</h2>
       </Container>

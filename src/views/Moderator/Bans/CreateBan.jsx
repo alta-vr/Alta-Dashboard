@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "@material-ui/core/Button";
+import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
@@ -181,8 +181,16 @@ export default function CreateBan() {
     }
   }
 
+  function goBack() {
+    history.goBack();
+  }
+
   return (
     <div>
+      <Button variant="contained" color="success" onClick={goBack}>
+        Go Back
+      </Button>
+      <br />
       <Container>
         <h2>Create Ban</h2>
       </Container>

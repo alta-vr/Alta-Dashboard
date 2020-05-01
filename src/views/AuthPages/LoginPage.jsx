@@ -92,30 +92,30 @@ class LoginPage extends React.Component {
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={8}>
+          <GridItem>
             <h4 className={classes.textCenter} style={{ marginTop: 0 }}>
-              {this.state.failedLogin ? (
-                <span>{errorMessage}</span>
-              ) : (
-                <span>{welcomeMessage}</span>
-              )}
+              <CardHeader
+                className={`${classes.cardHeader} ${classes.textCenter}`}
+                color="primary"
+              >
+                <h4 className={classes.cardTitle}>
+                  {this.state.failedLogin ? (
+                    <span>{errorMessage}</span>
+                  ) : (
+                    <span>{welcomeMessage}</span>
+                  )}
+                </h4>
+              </CardHeader>
             </h4>
           </GridItem>
         </GridContainer>
 
         <GridContainer justify="center">
-          <GridItem xs={12} sm={6} md={4}>
+          <GridItem xs={12} sm={8} md={5}>
             <form onSubmit={this.login}>
               <Card className={classes[this.state.cardAnimaton]}>
-                <CardHeader
-                  className={`${classes.cardHeader} ${classes.textCenter}`}
-                  color="primary"
-                >
-                  <h4 className={classes.cardTitle}>Log in</h4>
-                </CardHeader>
                 <CardBody>
                   <CustomInput
-                    style={{ color: "red" }}
                     labelText="Username..."
                     id="username"
                     error={errors.username || errors.invalidEmailOrPassword}
@@ -124,8 +124,9 @@ class LoginPage extends React.Component {
                       className: classes.formControlClassName,
                     }}
                     inputProps={{
-                      required: true,
                       name: "username",
+                      required: true,
+                      style: { width: "100%" },
                       endAdornment: (
                         <InputAdornment position="end">
                           <Email className={classes.inputAdornmentIcon} />
@@ -142,8 +143,10 @@ class LoginPage extends React.Component {
                       className: classes.formControlClassName,
                     }}
                     inputProps={{
+                      name: "password",
                       type: "password",
                       required: true,
+                      style: { width: "100%" },
                       endAdornment: (
                         <InputAdornment position="end">
                           <Icon className={classes.inputAdornmentIcon}>
