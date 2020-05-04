@@ -43,6 +43,16 @@ export default function UserBans() {
     }
   }, []);
 
+  let test = { name: "me", num: "123" };
+  useEffect(() => {
+    test.newthing = "new thing";
+    console.log("test thing", test);
+    if (userId != undefined) {
+      handleCurrentFunc(currentListType);
+    }
+    setCurrentList([]);
+  }, [userId]);
+
   function getAllBans() {
     Bans.getAll()
       .then((bans) => setCurrentList(bans))

@@ -5,6 +5,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import SearchBar from "components/SearchBar/SearchBar.jsx";
 import ServerList from "components/Lists/ServerList.jsx";
 import DropDownMenu from "components/Menu/DropDownMenu.jsx";
+import SearchField from "components/ExtendedTable/SearchField.jsx";
 import { Sessions, Servers } from "alta-jsapi";
 
 const lists = [
@@ -18,6 +19,7 @@ const lists = [
 
 export default function ServersPage() {
   const [currentList, setCurrentList] = useState(lists[0]);
+  const [filter, setFilter] = useState("");
 
   function getUsername() {
     return Sessions.getUsername();
@@ -25,6 +27,11 @@ export default function ServersPage() {
 
   function handleDropDown(event) {
     setCurrentList(event);
+  }
+
+  function handleSearchField(value) {
+    console.log("Search input: ", value);
+    setFilter(value);
   }
 
   return (
@@ -35,7 +42,7 @@ export default function ServersPage() {
             All {getUsername()}'s servers
             <hr />
           </h3>
-          <SearchBar searchFor="servers" />
+          <SearchField handleInput={handleSearchField} />
         </CardHeader>
         <CardBody>
           <DropDownMenu
@@ -45,7 +52,7 @@ export default function ServersPage() {
           />
         </CardBody>
       </Card>
-      <ServerList getListFunc={currentList.func} />
+      <ServerList getListFunc={currentList.func} search={filter} />
     </>
   );
 }

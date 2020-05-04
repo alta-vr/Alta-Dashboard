@@ -10,6 +10,7 @@ import { Button } from "@material-ui/core";
 function BanList({ currentList }) {
   const fields = [
     { label: "Ban ID", getValue: (b) => b.ban_id },
+    { label: "User Name", getValue: (b) => b.username },
     { label: "User ID", getValue: (b) => b.user_id },
     // { label: "Ip addr", getValue: (b) => b.ip_address },
     // { label: "Reason", getValue: (b) => b.reason },
@@ -28,6 +29,16 @@ function BanList({ currentList }) {
       setBanList([]);
       return;
     }
+    currentList.forEach((ban) => {
+      Users.getInfo(ban.user_id)
+        .then((userInfo) => {
+          // can't figure out scope of this bit
+          ban.username = userInfo.username;
+          // console.log("Ban: ", ban);
+        })
+        .catch((e) => console.log(e));
+    });
+    console.log("Current list: ", currentList);
     setBanList(currentList);
   }, [currentList]);
 
@@ -56,22 +67,24 @@ function BanList({ currentList }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {banList.map((ban) => (
-          <TableRow key={ban.ban_id}>
-            {fields.map((field) => (
-              <TableCell key={field.label}>{field.getValue(ban)}</TableCell>
-            ))}
-            <TableCell>
-              <Button
-                variant="contained"
-                color="default"
-                onClick={() => goToDetails(ban)}
-              >
-                Info
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
+        {!banList ? (
+          <></>
+        ) : (
+          banList.map((ban) => (
+            <TableRow key={ban.ban_id}>
+              {fields.map((field) => (
+                <TableCell
+                  key={field.label}
+                  hover
+                  style={{ cursor: "pointer" }}
+                  onClick={() => goToDetails(ban)}
+                >
+                  {field.getValue(ban)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   );
