@@ -42,7 +42,6 @@ export default function ServersPage() {
             All {getUsername()}'s servers
             <hr />
           </h3>
-          <SearchField handleInput={handleSearchField} />
         </CardHeader>
         <CardBody>
           <DropDownMenu

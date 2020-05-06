@@ -8,7 +8,6 @@ import TableRow from "@material-ui/core/TableRow";
 import { Users } from "alta-jsapi";
 import { Button } from "@material-ui/core";
 import FormattedDate from "components/Formats/FormattedDate.jsx";
-import { Users } from "alta-jsapi";
 
 function BanList({ currentList }) {
   const fields = [
@@ -40,10 +39,7 @@ function BanList({ currentList }) {
         .then((userInfo) => {
           // can't figure out scope of this bit
           ban.username = userInfo.username;
-<<<<<<< HEAD
-=======
           // console.log("Ban: ", ban);
->>>>>>> test
         })
         .catch((e) => console.log(e));
     });
@@ -80,41 +76,19 @@ function BanList({ currentList }) {
         </TableRow>
       </TableHead>
       <TableBody>
-<<<<<<< HEAD
-        {banList.map((ban) => (
-          <TableRow key={ban.ban_id}>
-            {fields.map((field) => (
-              <TableCell
-                key={field.label}
-                hover
-                style={{ cursor: "pointer" }}
-                onClick={() => goToDetails(ban)}
-              >
-                {field.getValue(ban)}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-=======
         {!banList ? (
           <></>
         ) : (
           banList.map((ban) => (
-            <TableRow key={ban.ban_id}>
+            <TableRow key={ban.ban_id} hover style={{ cursor: "pointer" }}>
               {fields.map((field) => (
-                <TableCell
-                  key={field.label}
-                  hover
-                  style={{ cursor: "pointer" }}
-                  onClick={() => goToDetails(ban)}
-                >
+                <TableCell key={field.label} onClick={() => goToDetails(ban)}>
                   {field.getValue(ban)}
                 </TableCell>
               ))}
             </TableRow>
           ))
         )}
->>>>>>> test
       </TableBody>
     </Table>
   );

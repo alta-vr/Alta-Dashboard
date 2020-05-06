@@ -289,7 +289,9 @@ export default function CreateBan() {
                 {validUser ? (
                   <PopupDialog
                     title={"Create Ban"}
-                    info={`Are you sure you want to ban user for ?`}
+                    info={`Are you sure you want to ban ${
+                      banInfo.user.username
+                    } for ${banInfo.reason}?`}
                     handleResponse={handleConfirmation}
                     isReady={validateBanInfo}
                   />

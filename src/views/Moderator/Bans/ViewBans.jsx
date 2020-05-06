@@ -40,14 +40,10 @@ export default function UserBans() {
     }
   }, []);
 
-<<<<<<< HEAD
-  useEffect(() => {
-=======
   let test = { name: "me", num: "123" };
   useEffect(() => {
     test.newthing = "new thing";
     console.log("test thing", test);
->>>>>>> test
     if (userId != undefined) {
       handleCurrentFunc(currentListType);
     }

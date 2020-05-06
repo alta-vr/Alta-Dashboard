@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -37,18 +37,18 @@ function stableSort(array, comparator) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map(el => el[0]);
+  return stabilizedThis.map((el) => el[0]);
 }
 
 function EnhancedTableHead({ columns, order, orderBy, onRequestSort }) {
-  const createSortHandler = property => event => {
+  const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
     <TableHead>
       <TableRow>
-        {columns.map(column => {
+        {columns.map((column) => {
           if (column.state) {
             return (
               <TableCell
@@ -78,7 +78,7 @@ const EnhancedTableToolbar = ({
   tableName,
   columns,
   handleChange,
-  handleSearch
+  handleSearch,
 }) => {
   return (
     <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
@@ -100,18 +100,23 @@ export default function EnhancedTable({
   data,
   tableName,
   onRowClick,
-  isLoading
+  isLoading,
 }) {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("id");
   const [columns, setColumns] = React.useState(defaultColumns);
   const [filteredData, setFilteredData] = React.useState(data);
 
   const handleRequestSort = (event, property) => {
+    console.log("Sort request: ", property);
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
   function handleSearch(value) {
     var newData;
@@ -119,7 +124,7 @@ export default function EnhancedTable({
     if (value === "") {
       newData = data;
     } else {
-      newData = data.filter(item => {
+      newData = data.filter((item) => {
         return JSON.stringify(item).includes(value);
       });
     }
@@ -134,7 +139,7 @@ export default function EnhancedTable({
           handleSearch={handleSearch}
           tableName={tableName}
           columns={columns}
-          handleChange={newColumms => setColumns(newColumms)}
+          handleChange={(newColumms) => setColumns(newColumms)}
         />
         <TableContainer>
           <Table size="small">
@@ -153,6 +158,9 @@ export default function EnhancedTable({
               ) : (
                 stableSort(filteredData, getComparator(order, orderBy)).map(
                   (row, index) => {
+                    {
+                      console.log("row: ", row);
+                    }
                     return (
                       <TableRow hover onClick={() => onRowClick(row)}>
                         {columns.map((column, cIndex) => {

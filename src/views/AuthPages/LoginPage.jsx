@@ -73,8 +73,8 @@ class LoginPage extends React.Component {
       }
 
       this.onLoggedIn();
-    } catch ({ response }) {
-      console.log("error");
+    } catch (response) {
+      console.log("error:", response);
       // update welcome message to error logging in
       this.setState({ failedLogin: true });
     }

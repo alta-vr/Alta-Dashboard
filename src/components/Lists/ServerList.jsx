@@ -6,6 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Button } from "@material-ui/core";
+import ExtendedTable from "components/ExtendedTable/ExtendedTable.jsx";
 
 const fields = [
   { label: "ID", getValue: (s) => s.id },
@@ -15,56 +16,66 @@ const fields = [
   { label: "Status", getValue: (s) => s.server_status },
 ];
 
+const tableColumns = [
+  { id: "id", name: "ID", field: "id", state: true },
+  { id: "name", name: "Name", field: "name", state: true },
+  // { id: "3", name: "Online Players", field: "online_players", state: true },
+  { id: "region", name: "Region", field: "region", state: true },
+  { id: "server_status", name: "Status", field: "server_status", state: true },
+];
+
 export default function ServerList({ getListFunc, search }) {
   const [serverList, setServerList] = useState([]);
-  const [backupList, setBackupList] = useState([]);
+  // const [backupList, setBackupList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   // const [filter, setFilter] = useState(search);
   let currentPath = useLocation().pathname;
   let history = useHistory();
 
   useEffect(() => {
     getListFunc()
-      .then(setBackupList)
+      .then(setServerList)
+      .then(setIsLoading(false))
       .catch((e) => console.log("Error: " + e));
-    setServerList(backupList);
+    // setServerList(backupList);
   }, [getListFunc]);
 
-  useEffect(() => {
-    filterList(search);
-  }, [search]);
+  // useEffect(() => {
+  //   filterList(search);
+  // }, [search]);
 
   useEffect(() => {
     console.log("Changed");
   }, [serverList]);
 
-  function filterList(filter) {
-    var newList = backupList.filter((server) => {
-      if (server.name.includes(filter)) {
-        return server;
-      }
-    });
-    console.log("newlist: ", newList);
-    setServerList(newList);
-  }
+  // function filterList(filter) {
+  //   var newList = backupList.filter((server) => {
+  //     if (server.name.includes(filter)) {
+  //       return server;
+  //     }
+  //   });
+  //   console.log("newlist: ", newList);
+  //   setServerList(newList);
+  // }
 
   function goToDetails(serverId) {
     history.push(currentPath + "/" + serverId);
   }
 
-  function sortColumn(event) {
-    // Insert sorting alg
-    console.log("Sorting column: ", event);
-    var tempServerList = serverList;
+  // function sortColumn(event) {
+  //   // Insert sorting alg
+  //   console.log("Sorting column: ", event);
+  //   var tempServerList = serverList;
 
-    // console.log("Templist1: " , tempServerList);
-    tempServerList.sort(function(a, b) {
-      return a.online_players.length - b.online_players.length;
-    });
-    // console.log("Templist2: " , tempServerList);
-    // tempServerList = [];
-    setServerList(tempServerList);
-    console.log("ServerList: ", serverList);
-  }
+  //   // console.log("Templist1: " , tempServerList);
+  //   tempServerList.sort(function(a, b) {
+  //     return a.online_players.length - b.online_players.length;
+  //   });
+  //   // console.log("Templist2: " , tempServerList);
+  //   // tempServerList = [];
+  //   setServerList(tempServerList);
+  //   console.log("ServerList: ", serverList);
+  // }
 
   // function cmpPlayers(a,b){
   //   // console.log("a: " , a.online_players.length, " b: ", b);
@@ -72,32 +83,45 @@ export default function ServerList({ getListFunc, search }) {
   // }
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          {fields.map((field) => (
-            <TableCell key={field.label}>
-              <Button onClick={() => sortColumn(field.label)}>
-                {field.label}
-              </Button>
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {serverList.map((server) => (
-          <TableRow
-            key={server.id}
-            hover
-            style={{ cursor: "pointer" }}
-            onClick={() => goToDetails(server.id)}
-          >
-            {fields.map((field) => (
-              <TableCell key={field.name}>{field.getValue(server)}</TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      {isLoading ? (
+        <></>
+      ) : (
+        <ExtendedTable
+          defaultColumns={tableColumns}
+          data={serverList}
+          tableName={"Servers"}
+          onRowClick={goToDetails}
+          isLoading={isLoading}
+        />
+      )}
+    </>
+    // <Table>
+    //   <TableHead>
+    //     <TableRow>
+    //       {fields.map((field) => (
+    //         <TableCell key={field.label}>
+    //           <Button onClick={() => sortColumn(field.label)}>
+    //             {field.label}
+    //           </Button>
+    //         </TableCell>
+    //       ))}
+    //     </TableRow>
+    //   </TableHead>
+    //   <TableBody>
+    //     {serverList.map((server) => (
+    //       <TableRow
+    //         key={server.id}
+    //         hover
+    //         style={{ cursor: "pointer" }}
+    //         onClick={() => goToDetails(server.id)}
+    //       >
+    //         {fields.map((field) => (
+    //           <TableCell key={field.name}>{field.getValue(server)}</TableCell>
+    //         ))}
+    //       </TableRow>
+    //     ))}
+    //   </TableBody>
+    // </Table>
   );
 }
