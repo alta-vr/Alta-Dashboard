@@ -5,6 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Users } from "alta-jsapi";
 import { Button } from "@material-ui/core";
 
 function BanList({ currentList }) {
