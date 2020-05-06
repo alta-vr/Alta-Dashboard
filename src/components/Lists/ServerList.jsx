@@ -15,20 +15,37 @@ const fields = [
   { label: "Status", getValue: (s) => s.server_status },
 ];
 
-export default function ServerList({ getListFunc }) {
+export default function ServerList({ getListFunc, search }) {
   const [serverList, setServerList] = useState([]);
+  const [backupList, setBackupList] = useState([]);
+  // const [filter, setFilter] = useState(search);
   let currentPath = useLocation().pathname;
   let history = useHistory();
 
   useEffect(() => {
     getListFunc()
-      .then(setServerList)
+      .then(setBackupList)
       .catch((e) => console.log("Error: " + e));
+    setServerList(backupList);
   }, [getListFunc]);
+
+  useEffect(() => {
+    filterList(search);
+  }, [search]);
 
   useEffect(() => {
     console.log("Changed");
   }, [serverList]);
+
+  function filterList(filter) {
+    var newList = backupList.filter((server) => {
+      if (server.name.includes(filter)) {
+        return server;
+      }
+    });
+    console.log("newlist: ", newList);
+    setServerList(newList);
+  }
 
   function goToDetails(serverId) {
     history.push(currentPath + "/" + serverId);

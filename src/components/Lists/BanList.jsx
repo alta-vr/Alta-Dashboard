@@ -5,6 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Users } from "alta-jsapi";
 import { Button } from "@material-ui/core";
 import FormattedDate from "components/Formats/FormattedDate.jsx";
 import { Users } from "alta-jsapi";
@@ -12,7 +13,7 @@ import { Users } from "alta-jsapi";
 function BanList({ currentList }) {
   const fields = [
     { label: "Ban ID", getValue: (b) => b.ban_id },
-    { label: "User Name", getValue: (b) => getUserName(b.user_id) },
+    { label: "User Name", getValue: (b) => b.username },
     { label: "User ID", getValue: (b) => b.user_id },
     // { label: "Ip addr", getValue: (b) => b.ip_address },
     // { label: "Reason", getValue: (b) => b.reason },
@@ -39,6 +40,10 @@ function BanList({ currentList }) {
         .then((userInfo) => {
           // can't figure out scope of this bit
           ban.username = userInfo.username;
+<<<<<<< HEAD
+=======
+          // console.log("Ban: ", ban);
+>>>>>>> test
         })
         .catch((e) => console.log(e));
     });
@@ -75,6 +80,7 @@ function BanList({ currentList }) {
         </TableRow>
       </TableHead>
       <TableBody>
+<<<<<<< HEAD
         {banList.map((ban) => (
           <TableRow key={ban.ban_id}>
             {fields.map((field) => (
@@ -89,6 +95,26 @@ function BanList({ currentList }) {
             ))}
           </TableRow>
         ))}
+=======
+        {!banList ? (
+          <></>
+        ) : (
+          banList.map((ban) => (
+            <TableRow key={ban.ban_id}>
+              {fields.map((field) => (
+                <TableCell
+                  key={field.label}
+                  hover
+                  style={{ cursor: "pointer" }}
+                  onClick={() => goToDetails(ban)}
+                >
+                  {field.getValue(ban)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        )}
+>>>>>>> test
       </TableBody>
     </Table>
   );
