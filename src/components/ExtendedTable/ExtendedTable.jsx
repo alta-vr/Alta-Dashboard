@@ -10,7 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import CheckboxList from "./CheckboxList";
+import { CheckboxList } from "./CheckboxList";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchField from "./SearchField";
 
@@ -162,7 +162,11 @@ export default function EnhancedTable({
                       console.log("row: ", row);
                     }
                     return (
-                      <TableRow hover onClick={() => onRowClick(row)}>
+                      <TableRow
+                        hover
+                        style={{ cursor: "pointer" }}
+                        onClick={() => onRowClick(row)}
+                      >
                         {columns.map((column, cIndex) => {
                           if (column.state) {
                             return (

@@ -16,6 +16,8 @@ import DropDownMenu from "../../../components/Menu/DropDownMenu";
 import { Bans, Servers } from "alta-jsapi";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
 import AutoCompleteDropDown from "components/Menu/AutoCompleteDropDown.jsx";
+import Checkbox from "@material-ui/core/Checkbox";
+import { CheckboxItem } from "components/ExtendedTable/CheckboxList.jsx";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -29,6 +31,7 @@ const dropDownOptions = [
 export default function CreateBan() {
   let [serverList, setServerList] = useState([]);
   let [validUser, setValidUser] = useState(false);
+  let [isPermaBan, setIsPermaBan] = useState(false);
   let [addServer, setAddServer] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -181,6 +184,18 @@ export default function CreateBan() {
     }
   }
 
+  function handleCheckbox() {
+    console.log("Checkbox changed");
+    console.log("permaban is ", isPermaBan);
+    if (isPermaBan == false) {
+      banInfo.duration_hours = 9999999;
+      setIsPermaBan(true);
+    } else {
+      banInfo.duration_hours = undefined;
+      setIsPermaBan(false);
+    }
+  }
+
   function goBack() {
     history.goBack();
   }
@@ -203,28 +218,51 @@ export default function CreateBan() {
                   fullwidth={true}
                   onValidateInput={handleUserInput}
                 />
-                <CustomInput
-                  fullwidth={true}
-                  labelText="Duration..."
-                  id="duration"
-                  formControlProps={{
-                    fullWidth: true,
-                    className: "",
-                  }}
-                  inputProps={{
-                    onChange: handleDurationChange,
-                    required: true,
-                    name: "duration",
-                    type: "number",
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Icon>lock_outline</Icon>
-                      </InputAdornment>
-                    ),
-                  }}
+                {banInfo.duration_hours > 999998 ? (
+                  <></>
+                ) : (
+                  <>
+                    <CustomInput
+                      fullwidth={true}
+                      labelText="Duration..."
+                      id="duration"
+                      formControlProps={{
+                        fullWidth: true,
+                        className: "",
+                      }}
+                      inputProps={{
+                        onChange: handleDurationChange,
+                        required: true,
+                        name: "duration",
+                        type: "number",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon>lock_outline</Icon>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <label>Perma-Ban</label>
+                  </>
+                )}
+                <Checkbox
+                  onClick={handleCheckbox}
+                  edge="start"
+                  checked={isPermaBan}
                 />
+                {/* <CheckboxItem
+                  value={[{ name: "permaBan", state: isPermaBan }]}
+                  index={1}
+                  handleToggle={handleCheckbox}
+                  // renderButton={}
+                /> */}
                 {banInfo.duration_hours == undefined ? (
                   <></>
+                ) : banInfo.duration_hours > 999998 ? (
+                  <>
+                    {() => setIsPermaBan(true)}
+                    <label>Lasts FOREVER</label>
+                  </>
                 ) : (
                   <label>Lasts until: {formatDateTime()}</label>
                 )}

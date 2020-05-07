@@ -8,9 +8,14 @@ import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 
-function CheckBoxItem({ value, index, handleToggle }) {
+export function CheckboxItem({ value, index, handleToggle }) {
   return (
-    <ListItem dense button onClick={() => handleToggle(index)}>
+    <ListItem
+      style={{ width: "50px" }}
+      dense
+      button
+      onClick={() => handleToggle(index)}
+    >
       <ListItemIcon>
         <Checkbox edge="start" checked={value.state} />
       </ListItemIcon>
@@ -19,10 +24,10 @@ function CheckBoxItem({ value, index, handleToggle }) {
   );
 }
 
-export default function CheckboxList({ items, handleChange, renderButton }) {
+export function CheckboxList({ items, handleChange, renderButton }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -61,7 +66,7 @@ function ListContent({ defaultItems, handleChange }) {
 
   return (
     <List>
-      <CheckBoxItem
+      <CheckboxItem
         value={{ name: "Select All", state: selectAll }}
         index={-1}
         handleToggle={() => {
@@ -79,7 +84,7 @@ function ListContent({ defaultItems, handleChange }) {
       <Divider />
       {items.map((value, index) => {
         return (
-          <CheckBoxItem
+          <CheckboxItem
             value={value}
             index={index}
             handleToggle={handleToggle}

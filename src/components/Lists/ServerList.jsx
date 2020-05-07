@@ -58,8 +58,8 @@ export default function ServerList({ getListFunc, search }) {
   //   setServerList(newList);
   // }
 
-  function goToDetails(serverId) {
-    history.push(currentPath + "/" + serverId);
+  function goToDetails(server) {
+    history.push(currentPath + "/" + server.id);
   }
 
   // function sortColumn(event) {
