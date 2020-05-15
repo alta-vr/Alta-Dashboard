@@ -103,7 +103,7 @@ export default function EnhancedTable({
   isLoading,
 }) {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("id");
+  const [orderBy, setOrderBy] = React.useState("name");
   const [columns, setColumns] = React.useState(defaultColumns);
   const [filteredData, setFilteredData] = React.useState(data);
 

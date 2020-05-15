@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 export function CheckboxItem({ value, index, handleToggle }) {
   return (
     <ListItem
-      style={{ width: "50px" }}
+      // style={{ width: "50px" }}
       dense
       button
       onClick={() => handleToggle(index)}

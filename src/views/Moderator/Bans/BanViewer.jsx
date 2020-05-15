@@ -9,6 +9,7 @@ import { Bans } from "alta-jsapi";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
 import FormattedDate from "../../../components/Formats/FormattedDate";
+import { Users } from "alta-jsapi";
 
 export default function BanViewer(props) {
   let location = useLocation();
@@ -16,18 +17,34 @@ export default function BanViewer(props) {
   let { banId } = useParams();
 
   let history = useHistory();
-  let currentPath = useLocation().pathname;
 
   useEffect(() => {
-    console.log(banInfo);
     if (banInfo == undefined) {
       Bans.getBan(banId)
         .then((info) => {
-          setBanInfo(info);
+          getUserName(info);
         })
+        .then()
         .catch((e) => console.log("Error:", e));
     }
   }, [banInfo]);
+
+  function getUserName(banInfo) {
+    Users.getInfo(banInfo.user_id)
+      .then((userInfo) => {
+        setBanInfo({ ...banInfo, username: userInfo.username });
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function getCreatorName(banInfo) {
+    Users.getInfo(banInfo.created)
+      .then((userInfo) => {
+        console.log(userInfo);
+        setBanInfo({ ...banInfo, username: userInfo.username });
+      })
+      .catch((e) => console.log(e));
+  }
 
   function goBack() {
     history.goBack();
@@ -36,7 +53,7 @@ export default function BanViewer(props) {
   function handleDelete(response) {
     if (response) {
       Bans.deleteBan(banInfo.ban_id);
-      history.goBack();
+      history.push(location + "./ViewBans");
       return;
     }
     console.log("Cancelled");
@@ -65,52 +82,57 @@ export default function BanViewer(props) {
             <PopupDialog
               title={"Remove Ban"}
               info={
-                "Are you sure you want to remove ban " + banInfo.ban_id + "?"
+                "Are you sure you want to remove " +
+                banInfo.username +
+                "'s ban " +
+                banInfo.ban_id +
+                "?"
               }
               handleResponse={handleDelete}
             />
           </CardHeader>
           <CardBody>
-            <h4>User ID: {banInfo.user_id ? banInfo.user_id : "N/A"}</h4>
-            <h4>
-              IP Address: {banInfo.ip_address ? banInfo.ip_address : "N/A"}
-            </h4>
-            <h4>Reason: {banInfo.reason ? banInfo.reason : "N/A"}</h4>
-            <h4>Type: {banInfo.type ? banInfo.type : "N/A"}</h4>
-            <h4>
-              Created at:{" "}
-              {banInfo.created_at ? (
-                <FormattedDate date={banInfo.created_at} />
-              ) : (
-                "N/A"
-              )}
-            </h4>
-            <h4>
-              End time:{" "}
-              {banInfo.end_time ? (
-                <FormattedDate date={banInfo.end_time} />
-              ) : (
-                "N/A"
-              )}
-            </h4>
-            <h4>
-              Created by: {banInfo.created_by ? banInfo.created_by : "N/A"}
-            </h4>
-            <h4>Device ID: {banInfo.device_id ? banInfo.device_id : "N/A"}</h4>
-          </CardBody>
-          <CardBody>
-            <GridContainer>
-              {banInfo.servers != undefined ? (
-                banInfo.servers.map((server) => (
+            <h4>User ID: </h4>
+            {banInfo.user_id ? banInfo.user_id : "N/A"}
+            <h4>User Name: </h4>
+            {banInfo.username ? banInfo.username : "N/A"}
+            <h4>IP Address: </h4>
+            {banInfo.ip_address ? banInfo.ip_address : "N/A"}
+            <h4>Reason: </h4>
+            {banInfo.reason ? banInfo.reason : "N/A"}
+            <h4>Type: </h4>
+            {banInfo.type ? banInfo.type : "N/A"}
+            <h4>Created at:</h4>
+            {banInfo.created_at ? (
+              <FormattedDate date={banInfo.created_at} />
+            ) : (
+              "N/A"
+            )}
+            <h4>End time:</h4>
+            {banInfo.end_time ? (
+              <FormattedDate date={banInfo.end_time} />
+            ) : (
+              "N/A"
+            )}
+            <h4>Created by:</h4>
+            {banInfo.createdUser ? banInfo.createdUser : "N/A"}
+            {" with ID: "}
+            {banInfo.created_by ? banInfo.created_by : "N/A"}
+            <h4>Device ID: </h4>
+            {banInfo.device_id ? banInfo.device_id : "N/A"}
+            {banInfo.servers.length > 0 ? (
+              <div>
+                <h4>Servers: </h4>
+                {banInfo.servers.map((server) => (
                   <ListItem>
                     Server: {server}
                     <br />
                   </ListItem>
-                ))
-              ) : (
-                <div>No servers</div>
-              )}
-            </GridContainer>
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
           </CardBody>
         </Card>
       </GridContainer>

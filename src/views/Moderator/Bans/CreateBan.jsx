@@ -36,14 +36,7 @@ export default function CreateBan() {
   const history = useHistory();
   const location = useLocation();
 
-  useEffect(() => {
-    Servers.getAll()
-      .then(setServerList)
-      .then(console.log(serverList))
-      .catch((e) => console.log("Error getting servers: ", e));
-  }, []);
-
-  var [banInfo, setBanInfo] = useState({
+  const [banInfo, setBanInfo] = useState({
     user: undefined,
     duration_hours: undefined,
     type: dropDownOptions[0].name,
@@ -51,6 +44,23 @@ export default function CreateBan() {
     method: 7,
     servers: [],
   });
+
+  useEffect(() => {
+    Servers.getAll()
+      .then(setServerList)
+      .then(console.log(serverList))
+      .catch((e) => console.log("Error getting servers: ", e));
+  }, []);
+
+  useEffect(() => {
+    if (banInfo.duration_hours != undefined) {
+      if (banInfo.duration_hours > 999998) {
+        setIsPermaBan(true);
+      } else {
+        setIsPermaBan(false);
+      }
+    }
+  }, [banInfo.duration_hours]);
 
   function handleUserInput(userInfo) {
     if (userInfo == undefined) {
@@ -63,24 +73,24 @@ export default function CreateBan() {
     setValidUser(true);
   }
 
-  function handleValidServer(server) {
-    if (server == undefined) {
-      console.log("serverId undefined");
-      return;
-    }
-    var tempList = banInfo.servers;
-    setAddServer(false);
-    setBanInfo({ ...banInfo, servers: [...tempList, server.id] });
-  }
+  // function handleValidServer(server) {
+  //   if (server == undefined) {
+  //     console.log("serverId undefined");
+  //     return;
+  //   }
+  //   var tempList = banInfo.servers;
+  //   setAddServer(false);
+  //   setBanInfo({ ...banInfo, servers: [...tempList, server.id] });
+  // }
 
   function handleType(event) {
     setBanInfo({ ...banInfo, type: event.name });
   }
 
-  function handleAddServer() {
-    console.log("Adding server: ");
-    setAddServer(true);
-  }
+  // function handleAddServer() {
+  //   console.log("Adding server: ");
+  //   setAddServer(true);
+  // }
 
   function handleRemoveServer(serverId) {
     var tempList = banInfo.servers;
@@ -111,16 +121,15 @@ export default function CreateBan() {
   }
 
   function formatDateTime() {
+    if (banInfo.duration_hours == undefined) {
+      return;
+    }
     var untilDate;
     var currentDate = new Date();
     untilDate = currentDate.setTime(
       currentDate.getTime() + banInfo.duration_hours * 60 * 60 * 1000
     );
     return currentDate.toLocaleString();
-  }
-
-  function clearFields() {
-    window.location.reload(false);
   }
 
   function handleConfirmation(response) {
