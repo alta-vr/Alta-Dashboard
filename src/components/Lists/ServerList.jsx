@@ -13,15 +13,13 @@ const fields = [
   { label: "Name", getValue: (s) => s.name },
   { label: "Online Players", getValue: (s) => s.online_players.length },
   { label: "Region", getValue: (s) => s.region },
-  { label: "Status", getValue: (s) => s.server_status },
 ];
 
 const tableColumns = [
   { id: "id", name: "ID", field: "id", state: true },
   { id: "name", name: "Name", field: "name", state: true },
-  // { id: "3", name: "Online Players", field: "online_players", state: true },
+  { id: "3", name: "Online Players", field: (s) => s.online_players.length, state: true },
   { id: "region", name: "Region", field: "region", state: true },
-  { id: "server_status", name: "Status", field: "server_status", state: true },
 ];
 
 export default function ServerList({ getListFunc, search }) {

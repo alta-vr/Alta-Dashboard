@@ -1,15 +1,27 @@
 import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import classNames from "classnames";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
+// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
+// @material-ui/icons
 import Person from "@material-ui/icons/Person";
+import Notifications from "@material-ui/icons/Notifications";
+import Dashboard from "@material-ui/icons/Dashboard";
+import Search from "@material-ui/icons/Search";
+// core components
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
+
 import { Sessions } from "alta-jsapi";
 
 class HeaderLinks extends React.Component {
@@ -30,7 +42,7 @@ class HeaderLinks extends React.Component {
   };
 
   handleClose = (event) => {
-    if (this.buttonRef.contains(event.target)) {
+    if (!!this.anchorEl && this.anchorEl.contains(event.target)) {
       return;
     }
 
@@ -55,7 +67,7 @@ class HeaderLinks extends React.Component {
         {/* <div className={classes.manager}>
           <Button
             buttonRef={(node) => {
-              this.buttonRef = node;
+              this.anchorEl = node;
             }}
             color={window.innerWidth > 959 ? "transparent" : "white"}
             justIcon={window.innerWidth > 959}
@@ -74,7 +86,7 @@ class HeaderLinks extends React.Component {
           </Button>
           <Poppers
             open={open}
-            anchorEl={this.buttonRef}
+            anchorEl={this.anchorEl}
             transition
             disablePortal
             className={
@@ -110,26 +122,30 @@ class HeaderLinks extends React.Component {
         </div> */}
         <div className={classes.manager}>
           <Button
-            buttonRef={(node) => {
-              this.buttonRef = node;
-            }}
-            color={"primary"}
+            color={window.innerWidth > 959 ? "transparent" : "white"}
             justIcon={window.innerWidth > 959}
             simple={!(window.innerWidth > 959)}
             aria-label="Person"
             aria-owns={profilePopupOpen ? "menu-list-grow" : null}
             aria-haspopup="true"
             onClick={this.handleToggleProfile}
-            className={{}}
+            className={classes.buttonLink}
           >
             <Person className={classes.icons} />
+            <Hidden mdUp implementation="css">
+              <p className={classes.linkText}>Profile</p>
+            </Hidden>
           </Button>
           <Poppers
             open={profilePopupOpen}
-            anchorEl={this.buttonRef}
+            anchorEl={this.anchorEl}
             transition
             disablePortal
-            className={{}}
+            className={
+              classNames({ [classes.popperClose]: !profilePopupOpen }) +
+              " " +
+              classes.pooperNav
+            }
           >
             {({ TransitionProps, placement }) => (
               <Grow

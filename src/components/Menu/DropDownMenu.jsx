@@ -7,22 +7,12 @@ import TextField from "@material-ui/core/TextField";
 import { Autocomplete } from "@material-ui/lab/";
 
 export default function DropDownMenu(props) {
-  const { title, values, handleChange, inputChanged } = props;
-  const [current, setCurrent] = useState(values[0]);
-
-  //   useEffect(() => {
-  //     setCurrent(current);
-  //   }, [values, current]);
-
-  const handleChangeInternal = (event) => {
-    setCurrent(event.target.value);
-    handleChange(event.target.value);
-  };
+  const { title, values, handleChange, value } = props;
 
   return (
     <FormControl>
       <FormHelperText>Select {title}</FormHelperText>
-      <Select id="dropDownMenu" value={current} onChange={handleChangeInternal}>
+      <Select id="dropDownMenu" value={value} onChange={handleChange}>
         {values.map((value) => (
           <MenuItem value={value} key={value.label}>
             {value.label}

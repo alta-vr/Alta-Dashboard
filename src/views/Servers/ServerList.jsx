@@ -7,6 +7,10 @@ import ServerList from "components/Lists/ServerList.jsx";
 import DropDownMenu from "components/Menu/DropDownMenu.jsx";
 import SearchField from "components/ExtendedTable/SearchField.jsx";
 import { Sessions, Servers } from "alta-jsapi";
+import GridContainer from "../../components/Grid/GridContainer";
+import { Container } from "@material-ui/core";
+import GridItem from "../../components/Grid/GridItem";
+import ViewWrapper from "../ViewWrapper";
 
 const lists = [
   { func: Servers.getOpen, label: "Open" },
@@ -18,7 +22,7 @@ const lists = [
 ];
 
 export default function ServersPage() {
-  const [currentList, setCurrentList] = useState(lists[0]);
+  const [currentList, setCurrentList] = useState(lists[4]);
   const [filter, setFilter] = useState("");
 
   function getUsername() {
@@ -26,7 +30,7 @@ export default function ServersPage() {
   }
 
   function handleDropDown(event) {
-    setCurrentList(event);
+    setCurrentList(event.target.value);
   }
 
   function handleSearchField(value) {
@@ -35,23 +39,16 @@ export default function ServersPage() {
   }
 
   return (
-    <>
-      <Card plain>
-        <CardHeader color="primary">
-          <h3>
-            All {getUsername()}'s servers
-            <hr />
-          </h3>
-        </CardHeader>
-        <CardBody>
-          <DropDownMenu
-            title="server list"
-            values={lists}
-            handleChange={(event) => handleDropDown(event)}
-          />
-        </CardBody>
-      </Card>
+    <ViewWrapper
+      title={`Welcome ${getUsername()}`}
+      subtitle="Select a server to continue">
+      <DropDownMenu
+        title="server list"
+        value={currentList}
+        values={lists}
+        handleChange={(event) => handleDropDown(event)}
+      />
       <ServerList getListFunc={currentList.func} search={filter} />
-    </>
+    </ViewWrapper>
   );
 }

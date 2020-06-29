@@ -63,10 +63,14 @@ class LoginPage extends React.Component {
     let hashedPassword = Sessions.hashPassword(password);
 
     try {
-      console.log("username: " + username);
-      console.log("password: " + hashedPassword);
-
-      await Sessions.loginWithUsername(username, hashedPassword);
+        if (username.includes('@'))
+        {
+            await Sessions.loginWithEmail(username, hashedPassword);
+        }
+        else
+        {
+            await Sessions.loginWithUsername(username, hashedPassword);
+        }
 
       if (this.state.checked) {
         Sessions.remember();

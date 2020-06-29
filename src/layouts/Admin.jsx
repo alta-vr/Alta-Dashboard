@@ -67,6 +67,12 @@ class Admin extends React.Component {
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
+  
+  resizeFunction = () => {
+    if (window.innerWidth >= 960) {
+      this.setState({ mobileOpen: false });
+    }
+  };
 
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
@@ -103,7 +109,7 @@ class Admin extends React.Component {
             {...rest}
           />
           <div className={classes.content}>
-            <div className={{}}>{switchRoutes}</div>
+            <div className={undefined}>{switchRoutes}</div>
           </div>
           <Footer />
         </div>

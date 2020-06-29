@@ -70,10 +70,17 @@ const defaultFont = {
   lineHeight: "1.5em",
 };
 
-const primaryColor = ["#64b5f6", "#64b5f6", "#64b5f6", "#64b5f6"];
-const warningColor = ["#ff9800", "#ffa726", "#fb8c00", "#ffa21a"];
-const dangerColor = ["#f44336", "#ef5350", "#e53935", "#f55a4e"];
-const successColor = ["#4caf50", "#66bb6a", "#43a047", "#5cb860"];
+const primaryColorOld = ["#9c27b0", "#ab47bc", "#8e24aa", "#af2cc5"];
+const warningColorOld = ["#ff9800", "#ffa726", "#fb8c00", "#ffa21a"];
+const dangerColorOld = ["#f44336", "#ef5350", "#e53935", "#f55a4e"];
+const successColorOld = ["#4caf50", "#66bb6a", "#43a047", "#5cb860"];
+const infoColorOld = ["#00acc1", "#26c6da", "#00acc1", "#00d3ee"];
+const roseColorOld = ["#e91e63", "#ec407a", "#d81b60", "#eb3573"];
+
+const primaryColor = ["#2B6E6D", "#2B6E6D", "#2B6E6D", "#2B6E6D"];
+const warningColor = ["#E8A623", "#E8A623", "#E8A623", "#E8A623"];
+const dangerColor = ["#B7482C", "#B7482C", "#B7482C", "#B7482C"];
+const successColor = ["#1D867D", "#1D867D", "#1D867D", "#1D867D"];
 const infoColor = ["#00acc1", "#26c6da", "#00acc1", "#00d3ee"];
 const roseColor = ["#e91e63", "#ec407a", "#d81b60", "#eb3573"];
 const grayColor = [

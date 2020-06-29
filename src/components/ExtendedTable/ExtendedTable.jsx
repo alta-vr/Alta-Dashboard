@@ -133,8 +133,7 @@ export default function EnhancedTable({
   }
 
   return (
-    <div>
-      <Paper>
+    <>
         <EnhancedTableToolbar
           handleSearch={handleSearch}
           tableName={tableName}
@@ -186,8 +185,7 @@ export default function EnhancedTable({
             </TableBody>
           </Table>
         </TableContainer>
-      </Paper>
-    </div>
+    </>
   );
 }
 

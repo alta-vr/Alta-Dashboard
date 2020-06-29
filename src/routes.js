@@ -3,8 +3,8 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import Login from "@material-ui/icons/LockOpen";
 // core components/views for Auth layout
 import LoginPage from "views/AuthPages/LoginPage.jsx";
-import ServersPage from "views/Servers/ServersPage.jsx";
-import ServerViewer from "views/Servers/ServerViewer.jsx";
+import ServerList from "views/Servers/ServerList.jsx";
+import ServerDashboard from "views/Servers/ServerDashboard.jsx";
 import ServerConsole from "views/Servers/ServerConsole.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import Moderator from "views/Moderator/Moderator.jsx";
@@ -37,7 +37,7 @@ const dashboardRoutes = [
     path: "/Servers/:serverId",
     name: "Server : serverId",
     icon: Dashboard,
-    component: ServerViewer,
+    component: ServerDashboard,
     layout: "/admin",
     hidden: true,
   },
@@ -45,7 +45,7 @@ const dashboardRoutes = [
     path: "/Servers",
     name: "All Servers",
     icon: Dashboard,
-    component: ServersPage,
+    component: ServerList,
     layout: "/admin",
   },
   {

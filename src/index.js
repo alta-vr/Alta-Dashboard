@@ -10,15 +10,20 @@ import {
 } from "react-router-dom";
 import Admin from "layouts/Admin.jsx";
 import Auth from "layouts/Auth.jsx";
-import { Sessions } from "alta-jsapi";
+import { Sessions, setEndpoint } from "alta-jsapi";
 import { withCookies } from "react-cookie";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
+
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 const hist = createBrowserHistory();
 
 const SessionConnect = withCookies(
   (props) => Sessions.connectToCookies(props.cookies) || null
 );
+
+// setEndpoint('local');
 
 ReactDOM.render(
   <div>

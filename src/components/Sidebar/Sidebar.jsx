@@ -2,14 +2,19 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
+// core components
+import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
+
 import { Sessions } from "alta-jsapi";
 
 const Sidebar = ({ ...props }) => {
@@ -90,7 +95,7 @@ const Sidebar = ({ ...props }) => {
 
   return (
     <div>
-      {/* <Hidden mdUp implementation="css">
+      <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
           anchor={"left"}
@@ -115,9 +120,8 @@ const Sidebar = ({ ...props }) => {
             />
           ) : null}
         </Drawer>
-      </Hidden> */}
-
-      {/* <Hidden smDown implementation="css"> */}
+      </Hidden>
+      <Hidden smDown implementation="css">
       <Drawer
         anchor={"left"}
         variant="permanent"
@@ -135,7 +139,7 @@ const Sidebar = ({ ...props }) => {
           />
         ) : null}
       </Drawer>
-      {/* </Hidden> */}
+      </Hidden>
     </div>
   );
 };

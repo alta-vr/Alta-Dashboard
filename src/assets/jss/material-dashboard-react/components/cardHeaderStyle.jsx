@@ -10,6 +10,7 @@ import {
 
 const cardHeaderStyle = {
   cardHeader: {
+    width: 'fit-content',
     padding: "0.75rem 1.25rem",
     marginBottom: "0",
     borderBottom: "none",
@@ -49,6 +50,7 @@ const cardHeaderStyle = {
       marginBottom: "1px"
     },
     "&$cardHeaderStats$cardHeaderIcon": {
+      width: 'auto',
       textAlign: "right"
     }
   },
@@ -58,6 +60,7 @@ const cardHeaderStyle = {
   },
   cardHeaderStats: {
     "& $cardHeaderIcon": {
+      width: 'auto',
       textAlign: "right"
     },
     "& h1,& h2,& h3,& h4,& h5,& h6": {

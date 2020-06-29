@@ -13,6 +13,7 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
+
 .ct-grid {
   stroke: rgba(255, 255, 255, 0.2);
   stroke-width: 1px;
@@ -221,7 +222,7 @@ footer ul li a:hover {
   text-decoration: none;
 }
 
-/* @media (max-width: 991px) {
+@media (max-width: 991px) {
   body,
   html {
     position: relative;
@@ -240,7 +241,7 @@ footer ul li a:hover {
     z-index: 9999;
     overflow-x: hidden;
   }
-} */
+}
 .fixed-plugin {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
