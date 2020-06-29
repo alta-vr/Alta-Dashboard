@@ -39,7 +39,7 @@ Open cmd within the project folder, or open the project in VS Code and run the f
 This will open a hot-loading dev server (most likely at localhost:3000).
 You will be able to modify code, save it, and have the website automatically update.
 
-## How to add a module.
+## How to add a module
 Within the folder "dashboardModules" you will find the existing modules.
 For a barebones module, you can duplicate the "Template.jsx" file.
 Of course, you can look at any existing modules for examples of how to do various things.
@@ -54,3 +54,7 @@ Add to the top section: `import * as <Name> from '../<Name>`;
 Add within the export: `<Name>,`
 
 To test your module, simply go to a dashboard and select your newly created module from the dropdown.
+
+## License
+This project is under the MIT license (see the license file).
+This license only applies to the dashboard code, not any image files included within the project.
