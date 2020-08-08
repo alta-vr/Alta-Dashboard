@@ -5,6 +5,7 @@ import * as PlayerList from '../PlayerList';
 import * as ConnectionInfo from '../ConnectionInfo';
 import * as CommandRunner from '../CommandRunner';
 import * as Toolbar from '../Toolbar';
+import * as SelectionHelper from '../SelectionHelper';
 
 export default {
     Template,
@@ -13,5 +14,6 @@ export default {
     PlayerList,
     ConnectionInfo,
     CommandRunner,
-    Toolbar
+    Toolbar,
+    SelectionHelper
 };

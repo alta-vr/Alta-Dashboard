@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "dependencies": {
     "@material-ui/core": "^4.9.12",
-    "@material-ui/icons": "3.0.2",
+    "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.51",
     "alta-jsapi": "git+https://github.com/alta-vr/alta-jsapi.git",
     "att-websockets": "git+https://github.com/alta-vr/att-websockets.git",
