@@ -376,6 +376,7 @@ export default function ServerViewer()
             onLayoutChange={modifyLayout}
             onBreakpointChange={modifyBreakpoint}
             rowHeight={120}
+            draggableCancel={'p, span, input, label, h1, h2, h3, h4, h5, h6'}
             breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
             cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}>
             {!!layouts[breakpoint] ? layouts[breakpoint].map(createElement) : undefined}
