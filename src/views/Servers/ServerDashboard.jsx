@@ -118,7 +118,7 @@ export default function ServerViewer()
     var currentPath = useLocation().pathname;
 
     var [server, setServer] = useState(undefined);
-    var [group, setGroup] = useState(undefined);
+    const [group, setGroup] = useState(undefined);
     var [error, setError] = useState(undefined);
 
     var [addModuleSearch, setAddModuleSearch] = useState('');
@@ -135,8 +135,10 @@ export default function ServerViewer()
         setJunk(junk + 1);
     }
 
-    function refresh()
+    const refreshInfo = () =>
     {
+        console.log("Refresh!!");
+        
         let isMounted = true;
 
         if (!!connection && connection.serverId != serverId)
@@ -162,16 +164,24 @@ export default function ServerViewer()
                 {
                     if ((!group || group.id != server.group_id) && !!server.group_id)
                     {
+                        let requestId = server.group_id;
+                        
+                        console.log(group);
+                        console.log(server.group_id);
+                        console.log("Getting group information");
                         Groups.getGroupInfo(server.group_id)
-                            .then(group => { if (isMounted && server.group_id == group.id) setGroup(group) })
-                            .catch(error => { if (isMounted && server.group_id == group.id) setError(error) });
+                            .then(result => { if (isMounted && requestId == server.group_id) { setGroup(result); } })
+                            .catch(error => { if (isMounted && requestId == server.group_id) setError(error); });
                     }
 
                     let time = Date.parse(server.online_ping);
                     let elapsed = Date.now() - time;
                     let hasTime = elapsed < 600000;
 
-                    setTimeout(refresh, hasTime ? 32000 - elapsed : 60000);
+                    console.log("Setting server information");
+                    console.log(elapsed);
+
+                    setTimeout(() => refreshRef.current()(), hasTime ? Math.max(32000 - elapsed, 5000) : 60000);
                     setServer(server);
 
                     if (server.online_players.length > 0)
@@ -192,12 +202,20 @@ export default function ServerViewer()
                 connection = null;
             }
         };
-    }
+    };
 
+    const refreshRef = React.useRef(() => refreshInfo);
+
+    useEffect(() => refreshRef.current = () => refreshInfo);
+
+    const test = () => console.log("what ");
     useEffect(() =>
     {
-        setGroup(undefined);
-        return refresh();
+        test();
+        // setGroup(undefined);
+         return refreshRef.current()();
+
+        return () => console.log("Test");
     }, [serverId]);
 
     if (!!error)
@@ -245,6 +263,8 @@ export default function ServerViewer()
         {
             useEffect(() =>
             {
+                console.log("Use Command : " + command);
+
                 let cache = connection;
                 let run = () => cache.send(command).then(callback);
 
@@ -265,7 +285,7 @@ export default function ServerViewer()
         {
             useEffect(() =>
             {
-                console.log("Use Effect " + event);
+                console.log("Use Subscription " + event);
                 
                 let cache = connection;
 

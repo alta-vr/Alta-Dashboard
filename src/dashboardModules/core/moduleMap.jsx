@@ -4,6 +4,7 @@ import * as ServerInfo from '../ServerInfo';
 import * as PlayerList from '../PlayerList';
 import * as ConnectionInfo from '../ConnectionInfo';
 import * as CommandRunner from '../CommandRunner';
+import * as SelectionHelper from '../SelectionHelper';
 
 export default {
     Template,
@@ -11,5 +12,6 @@ export default {
     ServerInfo,
     PlayerList,
     ConnectionInfo,
-    CommandRunner
+    CommandRunner,
+    SelectionHelper
 };
