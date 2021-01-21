@@ -6,6 +6,8 @@ import * as ConnectionInfo from '../ConnectionInfo';
 import * as CommandRunner from '../CommandRunner';
 import * as Toolbar from '../Toolbar';
 import * as SelectionHelper from '../SelectionHelper';
+import * as CommandBreakdown from '../CommandBreakdown';
+import * as AdvancedConsole from '../AdvancedConsole.jsx';
 
 export default {
     Template,
@@ -15,5 +17,7 @@ export default {
     ConnectionInfo,
     CommandRunner,
     Toolbar,
-    SelectionHelper
+    SelectionHelper,
+    CommandBreakdown,
+    AdvancedConsole
 };

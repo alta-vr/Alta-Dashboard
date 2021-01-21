@@ -15,7 +15,7 @@ export const moduleSize =
     maxHeight: 2
 }
 
-export const module = ({config, onConfigChange, group, server, connection}) =>
+export const module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     return (
         <ModuleWrapper>

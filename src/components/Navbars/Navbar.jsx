@@ -18,7 +18,7 @@ import SimpleBreadcrumbs from "components/Breadcrumbs/SimpleBreadcrumbs.jsx";
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
 function Header({ ...props }) {
-  const { history, classes, color } = props;
+  const { history, classes, color, breadcrumbBase } = props;
 
   const appBarClasses = classNames({
     [" " + classes[color]]: color,
@@ -28,7 +28,7 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          <SimpleBreadcrumbs />
+          <SimpleBreadcrumbs base={breadcrumbBase}/>
         </div>
         <Hidden smDown implementation="css">
           <AdminNavbarLinks history={history} />

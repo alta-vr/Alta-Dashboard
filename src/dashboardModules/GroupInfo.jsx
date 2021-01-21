@@ -37,7 +37,7 @@ function ElapsedTimer({time, callback, callbackTime})
   return Math.round((Date.now() - time) / 1000);
 }
 
-export const module = ({config, onConfigChange, group, server, connection}) =>
+export const module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     return (
         <ModuleWrapper>

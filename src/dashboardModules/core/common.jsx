@@ -17,7 +17,7 @@ export const ModuleWrapper = withStyles(sharedStyles)(({children, classes}) =>
 
 export function Field({label, valueStyle, children})
 {
-  return <><label>{label}</label><br/><span style={valueStyle}>{children}</span><p/></> 
+  return <><label style={{display:"block"}}>{label}</label><span style={valueStyle}>{children}</span><p/></> 
 }
 
 export const BasicHeader = withStyles(sharedStyles)(({color, title, value, classes}) =>

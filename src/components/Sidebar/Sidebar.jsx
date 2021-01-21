@@ -23,7 +23,8 @@ const Sidebar = ({ ...props }) => {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
-  // var userPolicys = Sessions.getPolicies();
+  var userPolicies = Sessions.getPolicies() || [];
+
   var listItemClasses = null;
   var whiteFontClasses = null;
   const { classes, color, logo, image, logoText, routes } = props;
@@ -33,7 +34,7 @@ const Sidebar = ({ ...props }) => {
         if (prop.hidden) {
           return null;
         }
-        if (prop.isModOnly && !Sessions.getPolicies().includes("mod")) {
+        if (prop.isModOnly && !userPolicies.includes("mod")) {
           return null;
         }
         // insert appropriate policy here to show moderator tab

@@ -25,9 +25,9 @@ export function usePlayers(server, connection)
     var [players, setPlayers] = React.useState(undefined);
 
     //Get live player list, and update it whenever a user joins or leaves
-    connection.useCommand('player list', result => setPlayers(sort(result.Result)));
-    connection.useSubscription('PlayerJoined', data => setPlayers(old => sort([...old, data.user])));
-    connection.useSubscription('PlayerLeft', data => setPlayers(old => old.filter(item => item.id != data.user.id)));
+    connection.useCommand('player list', result => setPlayers(sort(result.data.Result)));
+    connection.useSubscription('PlayerJoined', result => setPlayers(old => sort([...old, result.data.user])));
+    connection.useSubscription('PlayerLeft', result => setPlayers(old => old.filter(item => item.id != result.data.user.id)));
     
     return  players || sort(server.online_players);
 };

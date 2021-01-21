@@ -10,6 +10,10 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import PopupDialog from "components/Notifications/PopupDialog.jsx";
 import FormattedDate from "../../../components/Formats/FormattedDate";
 import { Users } from "alta-jsapi";
+import { ServerCard, ProfileCard } from "../../../util/social";
+import ViewWrapper from "../../ViewWrapper";
+import { Redirect } from 'react-router';
+import { Field } from "../../../dashboardModules/core/common";
 
 export default function BanViewer(props) {
   let location = useLocation();
@@ -43,12 +47,9 @@ export default function BanViewer(props) {
         console.log(userInfo);
         setBanInfo({ ...banInfo, username: userInfo.username });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => { console.log(e); setBanInfo(null) });
   }
 
-  function goBack() {
-    history.goBack();
-  }
 
   function handleDelete(response) {
     if (response) {
@@ -60,25 +61,63 @@ export default function BanViewer(props) {
   }
 
   if (banInfo === undefined)
+  {
+      return <p>Loading...</p>;
+  }
+
+  if (banInfo === null)
     return (
-      <div>
-        Ban not found
-        <Button variant="contained" color="success" onClick={goBack}>
-          Go Back
-        </Button>
-      </div>
+      <Redirect to='/not_found'/>
     );
 
   return (
-    <div>
-      <Button variant="contained" color="success" onClick={goBack}>
-        Go Back
-      </Button>
-      <br />
-      <GridContainer>
-        <Card>
-          <CardHeader plain color="primary">
-            <h3>Ban ID: {banInfo.ban_id}</h3>
+    <ViewWrapper title={"Ban ID: " + banInfo.ban_id}>
+            <Field label="User">
+            <ProfileCard userId={banInfo.user_id} username={banInfo.username}/>
+            </Field>
+            <Field label="IP Address">
+            {banInfo.ip_address ? banInfo.ip_address : "N/A"}
+            </Field>
+            <Field label="Reason">
+            {banInfo.reason ? banInfo.reason : "N/A"}
+            </Field>
+            <Field label="Type">
+            {banInfo.type ? banInfo.type : "N/A"}
+            </Field>
+            <Field label="Created at">
+            {banInfo.created_at ? (
+              <FormattedDate date={banInfo.created_at} />
+            ) : (
+              "N/A"
+            )}
+            </Field>
+            <Field label="End time">
+            {banInfo.end_time ? (
+              <FormattedDate date={banInfo.end_time} />
+            ) : (
+              "N/A"
+            )}
+            </Field>
+            <Field label="Created by">
+            {banInfo.createdUser ? banInfo.createdUser : "N/A"}
+            {" with ID: "}
+            {banInfo.created_by ? banInfo.created_by : "N/A"}
+            </Field>
+            <Field label="Device ID">
+            {banInfo.device_id ? banInfo.device_id : "N/A"}
+            </Field>
+                <Field label="Servers">
+            {banInfo.servers.length > 0 ? (
+              <div>
+                {banInfo.servers.map((server) => (
+                    <ServerCard key={server} serverId={server}/>
+                ))}
+              </div>
+            ) : (
+              "None"
+            )}
+            </Field>
+            
             <PopupDialog
               title={"Remove Ban"}
               info={
@@ -90,52 +129,6 @@ export default function BanViewer(props) {
               }
               handleResponse={handleDelete}
             />
-          </CardHeader>
-          <CardBody>
-            <h4>User ID: </h4>
-            {banInfo.user_id ? banInfo.user_id : "N/A"}
-            <h4>User Name: </h4>
-            {banInfo.username ? banInfo.username : "N/A"}
-            <h4>IP Address: </h4>
-            {banInfo.ip_address ? banInfo.ip_address : "N/A"}
-            <h4>Reason: </h4>
-            {banInfo.reason ? banInfo.reason : "N/A"}
-            <h4>Type: </h4>
-            {banInfo.type ? banInfo.type : "N/A"}
-            <h4>Created at:</h4>
-            {banInfo.created_at ? (
-              <FormattedDate date={banInfo.created_at} />
-            ) : (
-              "N/A"
-            )}
-            <h4>End time:</h4>
-            {banInfo.end_time ? (
-              <FormattedDate date={banInfo.end_time} />
-            ) : (
-              "N/A"
-            )}
-            <h4>Created by:</h4>
-            {banInfo.createdUser ? banInfo.createdUser : "N/A"}
-            {" with ID: "}
-            {banInfo.created_by ? banInfo.created_by : "N/A"}
-            <h4>Device ID: </h4>
-            {banInfo.device_id ? banInfo.device_id : "N/A"}
-            {banInfo.servers.length > 0 ? (
-              <div>
-                <h4>Servers: </h4>
-                {banInfo.servers.map((server) => (
-                  <ListItem>
-                    Server: {server}
-                    <br />
-                  </ListItem>
-                ))}
-              </div>
-            ) : (
-              <></>
-            )}
-          </CardBody>
-        </Card>
-      </GridContainer>
-    </div>
+    </ViewWrapper>
   );
 }

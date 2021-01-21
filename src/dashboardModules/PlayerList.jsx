@@ -5,6 +5,7 @@ import { ModuleWrapper, StatHeader } from './core/common';
 import { ListItem } from '@material-ui/core';
 
 import { usePlayers } from './helpers/players';
+import { ProfileCard } from '../util/social';
 
 export const moduleName = 'Player List';
 
@@ -27,7 +28,8 @@ export const module = ({ config, onConfigChange, group, server, connection }) =>
             <StatHeader color='info' icon='accessibility' title={moduleName} value={list.length + ' online'} />
             <CardBody style={{ overflowY: 'auto' }}>
                 {list.map((player) => (
-                    <ListItem>{player.username} <code>({player.id})</code></ListItem>
+                    <ProfileCard userId={player.id} username={player.username}/>
+                    // <ListItem>{player.username} <code>({player.id})</code></ListItem>
                 ))}
             </CardBody>
             <CardFooter></CardFooter>

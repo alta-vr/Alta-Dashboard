@@ -8,132 +8,119 @@ import BanList from "components/Lists/BanList.jsx";
 import UserInputField from "components/Validator/UserInputField.jsx";
 import { Bans } from "alta-jsapi";
 import { useHistory } from "react-router-dom";
+import { Grid, Select, MenuItem } from "@material-ui/core";
 
 const listTypes = [
-  // functions to get ban lists
-  // { func: Bans.getAll, label: "All" },
-  // { func: (event ) =>Bans.getModBans(event), label: "Created by" },
-  // { func: getUserBans, label: "For user" },
-  { label: "All", func: "all" },
-  { label: "Created by", func: "by" },
-  { label: "For user", func: "for" },
+    // functions to get ban lists
+    // { func: Bans.getAll, label: "All" },
+    // { func: (event ) =>Bans.getModBans(event), label: "Created by" },
+    // { func: getUserBans, label: "For user" },
+    { label: "All", func: "all" },
+    { label: "Created by", func: "by" },
+    { label: "For user", func: "for" },
 ];
 
-export default function UserBans() {
-  const [currentListType, setCurrentListType] = useState(listTypes[0]);
-  const [currentList, setCurrentList] = useState([]);
-  const [userId, setUserId] = useState(undefined);
-  const [showInput, setShowInput] = useState(false);
-  let validUser = false;
-  const history = useHistory();
+export default function UserBans()
+{
+    const [currentListType, setCurrentListType] = useState(listTypes[0].func);
+    const [currentList, setCurrentList] = useState([]);
+    const [userId, setUserId] = useState(undefined);
 
-  // useEffect(() => {
-  //   getListFunc()
-  //     .then(setBanList)
-  //     .catch((e) => console.log("Error: " + e), setBanList([]));
-  //   console.log("Ban list: ", banList);
-  // }, [currentList]);
-
-  useEffect(() => {
-    if (currentList != undefined) {
-      getAllBans();
+    function getAllBans()
+    {
+        Bans.getAll()
+            .then((bans) => setCurrentList(bans))
+            .catch((e) => setCurrentList([]));
     }
-  }, []);
 
-  // let test = { name: "me", num: "123" };
-  // useEffect(() => {
-  //   test.newthing = "new thing";
-  //   console.log("test thing", test);
-  //   if (userId != undefined) {
-  //     handleCurrentFunc(currentListType);
-  //   }
-  //   setCurrentList([]);
-  // }, [userId]);
+    function getUserBans(userId)
+    {
+        if (!userId)
+        {
+            setCurrentList([]);
+            return;
+        }
 
-  function getAllBans() {
-    Bans.getAll()
-      .then((bans) => setCurrentList(bans))
-      .catch((e) => console.log("viewbans error: ", e));
-  }
-
-  function getUserBans() {
-    Bans.getUserBans(userId)
-      .then((bans) => setCurrentList(bans))
-      .catch((e) => console.log("viewbans error: ", e));
-  }
-
-  function getModBans() {
-    console.log("viewbans getmod userId: ", userId);
-    Bans.getModBans(userId)
-      .then((bans) => setCurrentList(bans))
-      .catch((e) => console.log("viewbans error: ", e));
-  }
-
-  function handleUserInput(userInfo) {
-    if (userInfo == undefined) {
-      validUser = false;
-      setUserId(undefined);
-      return;
+        Bans.getUserBans(userId)
+            .then((bans) => setCurrentList(bans))
+            .catch((e) => setCurrentList([]));
     }
-    validUser = true;
-    setUserId(userInfo.id);
-  }
 
-  function handleDropDown(banListType) {
-    setCurrentListType(banListType);
-    handleCurrentFunc(banListType);
-  }
+    function getModBans(userId)
+    {
+        if (!userId)
+        {
+            setCurrentList([]);
+            return;
+        }
 
-  function handleCurrentFunc(banListType) {
-    switch (banListType.func) {
-      case "all":
-        setCurrentList(getAllBans());
-        setShowInput(false);
-        break;
-      case "by":
-        setCurrentList(getModBans(userId));
-        setShowInput(true);
-        break;
-      case "for":
-        setCurrentList(getUserBans(userId));
-        setShowInput(true);
-        break;
+        Bans.getModBans(userId)
+            .then((bans) => setCurrentList(bans))
+            .catch((e) => setCurrentList([]));
     }
-    console.log("Current list: ", currentList);
-  }
 
-  function goBack() {
-    history.goBack();
-  }
+    function update(listType, user)
+    {
+        switch (listType)
+        {
+            case "all":
+                getAllBans();
+                break;
+            case "by":
+                getModBans(user);
+                break;
+            case "for":
+                getUserBans(user);
+                break;
+        }
+    }
 
-  return (
-    <div>
-      <Button variant="contained" color="success" onClick={goBack}>
-        Go Back
-      </Button>
-      <br />
-      <Container>
-        <h2>View Bans</h2>
-      </Container>
-      <GridContainer>
-        <GridItem>
-          <DropDownMenu
-            title="bans list"
-            values={listTypes}
-            handleChange={(banListType) => handleDropDown(banListType)}
-          />
-        </GridItem>
-        {showInput ? (
-          <GridItem>
-            <form>
-              <UserInputField onValidateInput={handleUserInput} />
-            </form>
-          </GridItem>
-        ) : (
-          <></>
-        )}
-      </GridContainer>
-      <BanList currentList={currentList} />
-    </div>
-  );
+    useEffect(() =>
+    {
+        update('all');
+    }, []);
+
+
+    function handleUserInput(userInfo)
+    {
+        if (userInfo == undefined)
+        {
+            setUserId(undefined);
+            return;
+        }
+
+        setUserId(userInfo.id);
+        update(currentListType, userInfo.id);
+    }
+
+    function handleDropDown(e)
+    {
+        setCurrentListType(e.target.value.func);
+        update(e.target.value.func, userId);
+    }
+
+    return (
+        <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+        >
+            <Grid item xs={12} sm={10} lg={8} xl={6} style={{ width: '100%' }}>
+                <BanList currentList={currentList}>
+                    <Select
+                        onChange={(banListType) => handleDropDown(banListType)}
+                        defaultValue={listTypes[0]}
+                    >
+                        {listTypes.map((value) => (
+                        <MenuItem value={value} key={value.label}>
+                            {value.label}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                    <UserInputField onValidateInput={handleUserInput} />
+                </BanList>
+            </Grid>
+        </Grid>
+    );
 }

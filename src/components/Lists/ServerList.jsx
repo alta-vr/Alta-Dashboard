@@ -22,7 +22,7 @@ const tableColumns = [
   { id: "region", name: "Region", field: "region", state: true },
 ];
 
-export default function ServerList({ getListFunc, search }) {
+export default function ServerList({ getListFunc, search, children }) {
   const [serverList, setServerList] = useState([]);
   // const [backupList, setBackupList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,7 +91,9 @@ export default function ServerList({ getListFunc, search }) {
           tableName={"Servers"}
           onRowClick={goToDetails}
           isLoading={isLoading}
-        />
+        >
+            {children}
+        </ExtendedTable>
       )}
     </>
     // <Table>

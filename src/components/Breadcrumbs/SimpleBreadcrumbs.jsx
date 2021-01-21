@@ -6,17 +6,33 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 // import Breadcrumbs from '@bit/mui-org.material-ui.breadcrumbs';
 import Link from '@material-ui/core/Link';
 
-function SimpleBreadcrumbs() {
+function SimpleBreadcrumbs({base}) {
   return (
     <Route>
       {({ location }) => {
-        let pathnames = location.pathname.split("/").filter(x => x);
-        pathnames = pathnames.slice(1);
+        var path = location.pathname;
+
+        if (!!base)
+        {
+            var searchPattern = new RegExp('^' + base);
+            
+            if (!searchPattern.test(path))
+            {
+                return null;
+            }
+            
+            var match = path.match(searchPattern);
+
+            path = path.replace(searchPattern, '');
+        }
+
+        let pathnames = path.split("/").filter(x => x);
+
         return (
           <Breadcrumbs aria-label="Breadcrumb">
             {pathnames.map((value, index) => {
               const last = index === pathnames.length - 1;
-              const to = `/admin/${pathnames.slice(0, index + 1).join("/")}`;
+              const to = `${match || ''}${pathnames.slice(0, index + 1).join("/")}`;
 
               return last ? (
                 <Typography color="textPrimary" key={to}>

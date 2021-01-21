@@ -16,7 +16,7 @@ export const moduleSize =
     maxHeight: 10
 }
 
-export const module = ({config, onConfigChange, group, server, connection}) =>
+export const module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     var [commands, setCommands] = React.useState(config.commands || ['player list']);
 

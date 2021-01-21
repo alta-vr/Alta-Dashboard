@@ -79,12 +79,14 @@ const EnhancedTableToolbar = ({
   columns,
   handleChange,
   handleSearch,
+  children
 }) => {
   return (
     <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
       <Typography variant="h6" id="tableTitle" component="div">
         {tableName}
       </Typography>
+      {children}
       <SearchField handleInput={handleSearch} />
       <CheckboxList
         items={columns}
@@ -101,11 +103,12 @@ export default function EnhancedTable({
   tableName,
   onRowClick,
   isLoading,
+  children
 }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [columns, setColumns] = React.useState(defaultColumns);
-  const [filteredData, setFilteredData] = React.useState(data);
+  const [filteredData, setFilteredData] = React.useState();
 
   const handleRequestSort = (event, property) => {
     console.log("Sort request: ", property);
@@ -138,8 +141,9 @@ export default function EnhancedTable({
           handleSearch={handleSearch}
           tableName={tableName}
           columns={columns}
-          handleChange={(newColumms) => setColumns(newColumms)}
-        />
+          handleChange={(newColumms) => setColumns(newColumms)}>
+              {children}
+        </EnhancedTableToolbar>
         <TableContainer>
           <Table size="small">
             <EnhancedTableHead
@@ -149,7 +153,7 @@ export default function EnhancedTable({
               onRequestSort={handleRequestSort}
             />
             <TableBody>
-              {isLoading ? (
+              {isLoading || filteredData === undefined ? (
                 <div style={{ height: 50 }}>
                   {" "}
                   <CircularProgress />
@@ -158,7 +162,7 @@ export default function EnhancedTable({
                 stableSort(filteredData, getComparator(order, orderBy)).map(
                   (row, index) => {
                     {
-                      console.log("row: ", row);
+                    //   console.log("row: ", row);
                     }
                     return (
                       <TableRow
@@ -189,14 +193,22 @@ export default function EnhancedTable({
   );
 }
 
-function RenderField({ data, column }) {
-  if (column.render) {
-    return column.render(data);
-  } else {
-    if (typeof column.field === "function") {
-      return column.field(data);
+function RenderField({ data, column }) 
+{
+    var result = RenderFieldInternal({data, column});
+
+    return result !== undefined ? result : "Missing";
+}
+
+function RenderFieldInternal({ data, column})
+{
+    if (column.render) {
+      return column.render(data);
     } else {
-      return data[column.field];
+      if (typeof column.field === "function") {
+        return column.field(data);
+      } else {
+        return data[column.field];
+      }
     }
-  }
 }

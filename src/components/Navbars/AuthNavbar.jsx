@@ -26,7 +26,7 @@ class AuthNavbar extends React.Component {
         <Toolbar className={classes.container}>
           <div className={{}}>
             <Button
-              href="http://altavr.io/"
+              href="/"
               className={classes.title}
               color="transparent"
             >

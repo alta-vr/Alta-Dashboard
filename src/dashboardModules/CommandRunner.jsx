@@ -18,7 +18,7 @@ export const moduleSize =
     maxHeight: Infinity
 }
 
-export const module = ({config, onConfigChange, group, server, connection}) =>
+export const module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     var [input, setInput] = useState('');
     var [result, setResult] = useState(undefined);
@@ -29,6 +29,7 @@ export const module = ({config, onConfigChange, group, server, connection}) =>
         evt.preventDefault();
 
         connection.send(input)
+        .then(raw => raw.data)
         .then(item =>
         {
             if (item.Exception != null)

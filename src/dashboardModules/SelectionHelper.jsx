@@ -18,7 +18,7 @@ export const moduleSize =
     maxHeight: 10
 }
 
-export const module = ({config, onConfigChange, group, server, connection}) =>
+export const module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     var [player, setPlayer] = React.useState();
     var [length, setLength] = React.useState(2);
@@ -33,7 +33,7 @@ export const module = ({config, onConfigChange, group, server, connection}) =>
         var command = `select find ${player} ${length}`;
         var result = await connection.send(command);
 
-        var items = result.Result;
+        var items = result.data.Result;
 
         setResults(items);
     }
@@ -44,7 +44,7 @@ export const module = ({config, onConfigChange, group, server, connection}) =>
 
         var result = await connection.send(command);
 
-        if (!result.Exception)
+        if (!result.data.Exception)
         {
             setSelected(id);
         }

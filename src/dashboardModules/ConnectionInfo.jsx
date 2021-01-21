@@ -17,7 +17,7 @@ export const moduleSize =
     maxHeight: 6
 }
 
-export var module = ({config, onConfigChange, group, server, connection}) =>
+export var module = ({box, config, onConfigChange, group, server, connection}) =>
 {
     var [messages, setMessages] = useState([]);
 

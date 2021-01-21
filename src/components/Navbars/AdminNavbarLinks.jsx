@@ -130,6 +130,9 @@ class HeaderLinks extends React.Component {
             aria-haspopup="true"
             onClick={this.handleToggleProfile}
             className={classes.buttonLink}
+            buttonRef={(node) => {
+              this.anchorEl = node;
+            }}
           >
             <Person className={classes.icons} />
             <Hidden mdUp implementation="css">

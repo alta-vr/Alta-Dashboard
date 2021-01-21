@@ -24,6 +24,9 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import { Sessions } from "alta-jsapi";
 import loginPageStyle from "assets/jss/material-dashboard-react/views/loginPageStyle.jsx";
 
+
+import qs from "query-string";
+
 const errorMessage = "Wrong username or password, please check your details";
 const welcomeMessage = "Please enter your username and password";
 
@@ -43,13 +46,24 @@ class LoginPage extends React.Component {
       .then(this.onLoggedIn.bind(this))
       .catch(console.error);
   }
-
+  
   onLoggedIn() {
+    console.log(Sessions.getUserId());
+
     var policies = Sessions.getPolicies();
-    console.log(policies);
-    if (policies.includes("mod")) {
+    
+    var parsed = qs.parse(this.props.location.search);
+
+    if (!!parsed.redirect)
+    {
+        this.props.history.push('/' + parsed.redirect.substr(1));
+    }
+    else if (policies.includes("mod")) 
+    {
       this.props.history.push("/admin/Moderator");
-    } else {
+    }
+    else
+    {
       this.props.history.push("/admin/Servers");
     }
   }

@@ -26,7 +26,7 @@ const fields = [
   { label: "Created by", getValue: (b) => b.created_by },
 ];
 
-function BanList({ currentList }) {
+function BanList({ currentList, children }) {
   const tableColumns = [
     { id: "ban_id", name: "ID", field: "ban_id", state: true },
     // { id: "username", name: "Name", field: "username", state: true },
@@ -102,7 +102,6 @@ function BanList({ currentList }) {
   // }
 
   function goToDetails(ban) {
-    console.log("Ban: ", ban);
     history.push({
       pathname: currentPath + "/" + ban.ban_id,
       banInfo: ban,
@@ -120,7 +119,9 @@ function BanList({ currentList }) {
           tableName={"Bans"}
           onRowClick={goToDetails}
           isLoading={isLoading}
-        />
+        >
+            {children}
+        </ExtendedTable>
       )}
     </>
     // <Table>

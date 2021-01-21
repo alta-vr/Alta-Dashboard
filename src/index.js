@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Admin from "layouts/Admin.jsx";
 import Auth from "layouts/Auth.jsx";
+import Forms from "layouts/Forms.jsx";
 import { Sessions, setEndpoint } from "alta-jsapi";
 import { withCookies } from "react-cookie";
 import "assets/css/material-dashboard-react.css?v=1.6.0";
@@ -23,16 +24,20 @@ const SessionConnect = withCookies(
   (props) => Sessions.connectToCookies(props.cookies) || null
 );
 
-// setEndpoint('local');
+if (process.env.NODE_ENV == 'development')
+{
+    //setEndpoint('local');
+}
 
 ReactDOM.render(
   <div>
     <SessionConnect />
     <Router history={hist}>
       <Switch>
-        <Route path="/admin" component={Admin} />
         <Route path="/auth" component={Auth} />
-        <Redirect from="/" to="/auth/login-page" />
+        <Route path="/forms" component={Forms} />
+        <Redirect path="/admin/*" to="/*"/>
+        <Route path="/" component={Admin} />
       </Switch>
     </Router>
   </div>,

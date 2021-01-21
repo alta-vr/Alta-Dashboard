@@ -10,7 +10,7 @@ import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import { Button } from "@material-ui/core";
 
-import routes from "routes.js";
+import allRoutes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
@@ -21,38 +21,27 @@ import { withLogin } from "../components/SessionCheck";
 const logoText = "Alta VR";
 let userInfo = {};
 
+const routes = allRoutes.filter(item => item.layout == '/forms');
+
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (!prop.isModOnly) {
-        // put drop down menu thing here
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={(props) => {
-              const Component = prop.component;
-              return <Component {...props} {...userInfo} />;
-            }}
-            key={key}
-          />
-        );
-      } else if (prop.layout === "") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={(props) => {
-              const Component = prop.component;
-              return <Component {...props} {...userInfo} />;
-            }}
-            key={key}
-          />
-        );
-      }
+        console.log(prop.layout + prop.path);
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={(props) => {
+            const Component = prop.component;
+            return <Component {...props} {...userInfo} />;
+          }}
+          key={key}
+        />
+      );
     })}
   </Switch>
 );
 
-class Admin extends React.Component {
+class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +95,7 @@ class Admin extends React.Component {
           <Navbar
             routes={routes}
             handleDrawerToggle={this.handleDrawerToggle}
-            breadcrumbBase='/'
+            breadcrumbBase={'/forms/[0-9]+/'}
             {...rest}
           />
           <div className={classes.content}>
@@ -119,8 +108,8 @@ class Admin extends React.Component {
   }
 }
 
-Admin.propTypes = {
+Forms.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withLogin(withStyles(dashboardStyle)(Admin));
+export default withLogin(withStyles(dashboardStyle)(Forms));

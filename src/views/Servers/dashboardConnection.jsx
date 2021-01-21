@@ -147,11 +147,11 @@ export default class DashboardConnection extends EventEmitter
                 break;
 
             case MessageType.Subscription:
-                this.subscriptionEmitter.emit(data.eventType, data.data);
+                this.subscriptionEmitter.emit(data.eventType, data);
                 break;
 
             case MessageType.CommandResult:
-                this.commandEmitter.emit('' + data.commandId, data.data);
+                this.commandEmitter.emit('' + data.commandId, data);
                 break;
 
             default:
@@ -192,6 +192,7 @@ export default class DashboardConnection extends EventEmitter
         if (!!this.internal)
         {
             var result = await this.send('websocket subscribe ' + event);
+            result = result.data;
 
             if (!!result.Exception)
             {
@@ -222,6 +223,7 @@ export default class DashboardConnection extends EventEmitter
         if (!!this.internal)
         {
             var result = await this.send('websocket unsubscribe ' + event);
+            result = result.data;
 
             if (!!result.Exception)
             {

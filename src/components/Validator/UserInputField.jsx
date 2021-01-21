@@ -7,7 +7,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import { Users } from "alta-jsapi";
 
-export default function UserInputField({ onValidateInput }) {
+export default function UserInputField({ onValidateInput, label }) {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [userName, setUserName] = useState(undefined);
@@ -49,7 +49,7 @@ export default function UserInputField({ onValidateInput }) {
 
   return (
     <>
-      <InputLabel>{"User..."}</InputLabel>
+      {!!label ? <InputLabel>{"User..."}</InputLabel> : null}
       <Input
         fullwidth={true}
         classes={{
