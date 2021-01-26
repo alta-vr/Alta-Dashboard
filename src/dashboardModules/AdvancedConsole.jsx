@@ -32,21 +32,25 @@ export const module = ({ box, config, onConfigChange, group, server, connection 
 {
     var [messages, setMessages] = React.useState([]);
     var [limit, setLimit] = React.useState(100);
+    var callbackRef = React.useRef();
 
-    function callback(item)
+    React.useEffect(() =>
     {
-        setMessages(prev => 
-        {
-            var result = [...prev, item];
-
-            if (result.length > limit)
+        callbackRef.current = (item) =>
+        {   
+            setMessages(prev => 
             {
-                return result.splice(result.length - limit, limit);
-            }
-
-            return result;
-        });
-    }
+                var result = [...prev, item];
+    
+                if (result.length > limit)
+                {
+                    return result.splice(result.length - limit, limit);
+                }
+    
+                return result;
+            });
+        }
+    }, [])
 
     function limitChanged(event)
     {
@@ -76,7 +80,7 @@ export const module = ({ box, config, onConfigChange, group, server, connection 
                     {box.w > 3 ?
                         <>
                             <Toolbar>
-                                <SubscriptionBar wide connection={connection} callback={callback}/>    
+                                <SubscriptionBar wide connection={connection} callback={callbackRef.current}/>    
                                 <div style={{margin:'10px'}}>
                                     <InputLabel>
                                         Message Limit

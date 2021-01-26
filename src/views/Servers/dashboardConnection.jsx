@@ -62,12 +62,13 @@ export default class DashboardConnection extends EventEmitter
     
                             this.internal.onClose = this.terminate.bind(this);
     
-                            var subscriptions = this.subscriptionEmitter.eventNames();
+                            // var subscriptions = this.subscriptionEmitter.eventNames();
 
-                            for (var event of subscriptions)
-                            {
-                                this.subscribe(event, undefined);
-                            }
+                            // for (var event of subscriptions)
+                            // {
+                            //     console.log(event);
+                            //     this.subscribe(event, undefined);
+                            // }
 
                             this.isConnecting = false;
                             
@@ -180,28 +181,36 @@ export default class DashboardConnection extends EventEmitter
 
     async subscribe(event, callback)
     {
-        console.log("Subscribing to " + event);
-        
-        if (callback !== undefined)
+        if (callback == undefined)
         {
-            this.subscriptionEmitter.addListener(event, callback);
+            console.error("Cannot subscribe without a callback");
+            return;
         }
+     
+        console.log("Subscribing to " + event);
+           
+        this.subscriptionEmitter.addListener(event, callback);
 
-        this.emit('subscriptionChanged', {event, count:this.subscriptionEmitter.listenerCount(event)});
+        var count = this.subscriptionEmitter.listenerCount(event);
+
+        this.emit('subscriptionChanged', {event, count});
         
         if (!!this.internal)
         {
-            var result = await this.send('websocket subscribe ' + event);
-            result = result.data;
+            if (count == 1)
+            {
+                var result = await this.send('websocket subscribe ' + event);
+                result = result.data;
 
-            if (!!result.Exception)
-            {
-                console.error(`Failed to subscribe to ${event}`);
-                console.error(result.Exception);
-            }
-            else
-            {
-                console.log(`Subscribed to ${event} : ${result.ResultString}`);
+                if (!!result.Exception)
+                {
+                    console.error(`Failed to subscribe to ${event}`);
+                    console.error(result.Exception);
+                }
+                else
+                {
+                    console.log(`Subscribed to ${event} : ${result.ResultString}`);
+                }
             }
         }
         else
@@ -214,25 +223,38 @@ export default class DashboardConnection extends EventEmitter
 
     async unsubscribe(event, callback)
     {
-        console.log("Unsubscribing from " + event);
+        var oldCount = this.subscriptionEmitter.listenerCount(event);
 
         this.subscriptionEmitter.removeListener(event, callback);
 
-        this.emit('subscriptionChanged', {event, count:this.subscriptionEmitter.listenerCount(event)});
+        var count = this.subscriptionEmitter.listenerCount(event);
+
+        if (count == oldCount)
+        {
+            console.error("Trying to remove a subscription that doesn't exist");
+            return;
+        }
+        
+        console.log("Unsubscribing from " + event);
+
+        this.emit('subscriptionChanged', {event, count});
 
         if (!!this.internal)
         {
-            var result = await this.send('websocket unsubscribe ' + event);
-            result = result.data;
+            if (count == 0)
+            {
+                var result = await this.send('websocket unsubscribe ' + event);
+                result = result.data;
 
-            if (!!result.Exception)
-            {
-                console.error(`Failed to unsubscribe from ${event}`);
-                console.error(result.Exception);
-            }
-            else
-            {
-                console.log(`Unsubscribed from ${event} : ${result.ResultString}`);
+                if (!!result.Exception)
+                {
+                    console.error(`Failed to unsubscribe from ${event}`);
+                    console.error(result.Exception);
+                }
+                else
+                {
+                    console.log(`Unsubscribed from ${event} : ${result.ResultString}`);
+                }
             }
         }
         else

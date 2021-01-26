@@ -124,7 +124,7 @@ function searchCommands(commands, query)
 
 function renderModule(item)
 {
-    return <Accordion>
+    return <Accordion >
         <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
         >
