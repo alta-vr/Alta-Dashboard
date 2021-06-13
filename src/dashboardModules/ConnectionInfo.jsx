@@ -4,6 +4,8 @@ import CardFooter from 'components/Card/CardFooter';
 import { ModuleWrapper, BasicHeader } from './core/common';
 import { Field } from './core/common';
 import { ListItem } from '@material-ui/core';
+import Button from '../components/CustomButtons/Button';
+import { Sessions } from 'alta-jsapi';
 
 export const moduleName = 'Connection Info';
 
@@ -38,6 +40,13 @@ export var module = ({box, config, onConfigChange, group, server, connection}) =
     if (connection.isTerminated) status = "Disconnected";
     if (connection.isForbidden) status = "Forbidden";
 
+    var boot = null;
+
+    if (status != "Connected" && Sessions.getPolicies().includes('dev'))
+    {
+        boot = <Button onClick={() => connection.launch()}>Boot</Button>;
+    }
+
     return (
         <ModuleWrapper>
             <BasicHeader color='info' title={moduleName}/>
@@ -45,7 +54,7 @@ export var module = ({box, config, onConfigChange, group, server, connection}) =
                 <Field label="Status">{status}</Field>
                 <Field label="System Messages">{messages.map(item => <ListItem>{item}</ListItem>)}</Field>
             </CardBody>
-            <CardFooter></CardFooter>
+            <CardFooter>{boot}</CardFooter>
         </ModuleWrapper>
     );
 };

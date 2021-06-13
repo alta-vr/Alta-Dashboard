@@ -124,6 +124,7 @@ export default function ServerDashboard()
     }
 
     var connectionInfo = {
+        launch: () => connection.attempt(true),
         subscribe: connection.subscribe.bind(connection),
         unsubscribe: connection.unsubscribe.bind(connection),
         send: connection.send.bind(connection),

@@ -27,7 +27,7 @@ export default class DashboardConnection extends EventEmitter
     }
 
 
-    attempt()
+    attempt(launch = false)
     {
         if (!this.isConnected && !this.isForbidden && !this.isConnecting)
         {
@@ -36,7 +36,7 @@ export default class DashboardConnection extends EventEmitter
             this.isTerminated = false;
             this.isConnecting = true;
             
-            Servers.joinConsole(this.serverId)
+            Servers.joinConsole(this.serverId, launch)
             .then(details =>
             {
                 if (details.allowed)
