@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import Connection, { Message, MessageType } from "att-websockets/dist/connection";
+import Connection, { Message, MessageType, JsapiAccessProvider } from "att-websockets/dist/connection";
 import { Servers } from "alta-jsapi";
 
 export default class DashboardConnection extends EventEmitter
@@ -39,54 +39,38 @@ export default class DashboardConnection extends EventEmitter
             Servers.joinConsole(this.serverId, launch)
             .then(details =>
             {
-                if (details.allowed)
+                var newConnection = new Connection(new JsapiAccessProvider(this.serverId, Servers), "Server Connection");
+                
+                newConnection.onMessage = this.handleMessage.bind(this);
+
+                newConnection.open()
+                .then(() =>
                 {
-                    var ip = details.connection.address;
-                    var port = details.connection.websocket_port || 1760;
-                    var token = details.token;
+                    this.internal = newConnection;
 
-                    if (!this.isTerminated)
-                    {
-                        this.emit("system", "Permission granted. Attempting connection.");
+                    this.isConnected = true;
 
-                        var newConnection = new Connection("Server Connection");
-                        
-                        newConnection.onMessage = this.handleMessage.bind(this);
+                    this.internal.onClose = this.terminate.bind(this);
 
-                        newConnection.connect(ip, port, token)
-                        .then(() =>
-                        {
-                            this.internal = newConnection;
-    
-                            this.isConnected = true;
-    
-                            this.internal.onClose = this.terminate.bind(this);
-    
-                            // var subscriptions = this.subscriptionEmitter.eventNames();
+                    // var subscriptions = this.subscriptionEmitter.eventNames();
 
-                            // for (var event of subscriptions)
-                            // {
-                            //     console.log(event);
-                            //     this.subscribe(event, undefined);
-                            // }
+                    // for (var event of subscriptions)
+                    // {
+                    //     console.log(event);
+                    //     this.subscribe(event, undefined);
+                    // }
 
-                            this.isConnecting = false;
-                            
-                            this.emit("system", "Connection Succeeded");
-                            this.emit("connected");
-                        })
-                        .catch(error =>
-                        {
-                            this.emit("system", "Connection failed");
-                            console.error(error);
-                            this.isConnecting = false;   
-                        });
-                    }
-                }
-                else
-                {
                     this.isConnecting = false;
-                }
+                    
+                    this.emit("system", "Connection Succeeded");
+                    this.emit("connected");
+                })
+                .catch(error =>
+                {
+                    this.emit("system", "Connection failed");
+                    console.error(error);
+                    this.isConnecting = false;   
+                });
             })
             .catch(error =>
             {
@@ -97,6 +81,7 @@ export default class DashboardConnection extends EventEmitter
                 }
                 else
                 {
+                    console.error(error);
                     this.emit("system", "Connection rejected");
                 }
 

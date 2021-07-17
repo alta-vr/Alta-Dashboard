@@ -6,15 +6,35 @@ export function withLogin(Component)
 {
     return withRouter((props) =>
     {
-        if (!!Sessions.getUserId())
-        {
-            return <Component {...props}/>;
-        }
-        
-        var path = props.location.pathname;
-
-        return <Redirect to={'/auth/login-page?redirect=' + path}/>;
+        return <CheckLogin {...props}><Component {...props}/></CheckLogin>;
     });
+}
+
+export function CheckLogin({children, location})
+{
+    const [loggedIn, setLoggedIn] = React.useState(undefined);
+    
+    React.useEffect(() =>
+    {
+        Sessions.ensureLoggedIn()
+        .then(() => setLoggedIn(true))
+        .catch(() => setLoggedIn(false));
+    },
+    [location.pathname]);
+
+    if (loggedIn === undefined)
+    {
+        return null;
+    }
+
+    if (!loggedIn)
+    {
+        return <Redirect to={'/auth/login-page?redirect=' + location.pathname}/>;
+    }
+    
+    return <>
+        {children}
+    </>;
 }
 
 export function withPolicies(...policies)

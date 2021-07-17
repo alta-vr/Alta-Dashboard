@@ -10,11 +10,17 @@ import DashboardConnection from './dashboardConnection';
 import DashboardBase from '../../components/DashboardBase';
 
 const originalLayouts = {
-    lg: [{ i: 'o-1', x: 0, y: 0, w: 2, h: 2 }],
+    lg: [
+        { i: 'o-1', x: 0, y: 0, w: 3, h: 4 }, 
+        { i: 'o-2', x: 3, y: 0, w: 3, h: 4 }, 
+        { i: 'o-3', x: 6, y: 0, w: 3, h: 4 }
+    ],
 };
 
 const originalDatas = {
-    ['o-1']: { content: 'Template' }
+    ['o-1']: { content: 'ServerInfo' },
+    ['o-2']: { content: 'CommandRunner' },
+    ['o-3']: { content: 'PlayerList' },
 }
 
 
